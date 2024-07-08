@@ -1,3 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   DivideAndRule.cpp                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/08 11:08:46 by gacorrei          #+#    #+#             */
+/*   Updated: 2024/07/08 14:16:24 by gacorrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+// TODO - The bank must receive 5 % of each money inflow on these client accounts
+// TOD - The accounts must never have two identical IDs
+// TODO - The attributes of the structures must not be modifiable from the outside
+// TOD - The bank must be able to create, delete and modify the accounts of these customers
+// TODO - The bank must be able to give a loan to a customer, within the limits of its funds
+// TOD - It must be impossible to add money to a client account without going through the bank
+// TOD - If it makes sense, the creation of a Getter and a Setter is mandatory.Getter(s) by copy will not be accepted
+// TOD - If it makes sense, the creation of a const Getter is mandatory.const Getter(s) by copy will not be accepted
 #include <iostream>
 #include <vector>
 
@@ -41,33 +61,3 @@ struct Bank
 		return (p_os);
 	}
 };
-
-int main()
-{
-	Account accountA = Account();
-	accountA.id = 0;
-	accountA.value = 100;
-
-	Account accountB = Account();
-	accountB.id = 1;
-	accountB.value = 100;
-
-	Bank bank = Bank();
-	bank.liquidity = 999;
-	bank.clientAccounts.push_back(&accountA);
-	bank.clientAccounts.push_back(&accountB);
-
-	bank.liquidity -= 200;
-	accountA.value += 400;
-
-	std::cout << "Account : " << std::endl;
-	std::cout << accountA << std::endl;
-	std::cout << accountB << std::endl;
-
-	std::cout << " ----- " << std::endl;
-
-	std::cout << "Bank : " << std::endl;
-	std::cout << bank << std::endl;
-
-	return (0);
-}
