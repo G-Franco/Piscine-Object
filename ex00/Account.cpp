@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/08 14:10:17 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:42:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,46 @@
 
 Account::Account() {}
 
-Account::Account(int id, long long value) : id(id), value(value) {}
+Account::Account(int id, unsigned long value) : _id(id), _value(value) {}
 
-Account::Account(const Account &copy) {}
+Account::Account(const Account &copy) : _id(copy._id), _value(copy._value) {}
 
 Account::~Account() {}
 
 Account &Account::operator=(const Account &copy)
 {
+    (void)copy;
     return *this;
 }
 
 bool Account::operator==(int test) const
 {
-    return id == test;
+    return _id == test;
 }
 
 const int &Account::get_id() const
 {
-    return id;
+    return _id;
 }
 
-const long long &Account::get_value() const
+const unsigned long &Account::get_value() const
 {
-    return value;
+    return _value;
 }
 
-void Account::deposit(long long amount)
+void Account::deposit(unsigned long amount)
 {
-    value += amount;
+    _value += amount;
 }
 
-void Account::withdrawal(long long amount)
+void Account::withdrawal(unsigned long amount)
 {
-    if (amount > value)
+    if (amount > _value)
     {
         std::cout << "Amount exceeds account value\n";
         return;
     }
-    value -= amount;
+    _value -= amount;
 }
 
 std::ostream &operator<<(std::ostream &out, const Account &account)

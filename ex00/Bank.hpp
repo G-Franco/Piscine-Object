@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:16:54 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/08 14:01:21 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:53:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,28 @@
 
 class Bank
 {
-    private:
-        long long liquidity;
-        std::vector<Account> clientAccounts;
-        int size;
-        Bank(const Bank &copy);
-        Bank &operator=(const Bank &copy);
-    public:
-        Bank();
-        ~Bank();
-        const long long &get_liquidity() const;
-        const std::vector<Account> &get_accounts() const;
-        void open_account(long long value);
-        int get_valid_id();
-        void close_account(Account &account);
-        void deposit(Account &account, long long value);
-        void withdrawal(Account &account, long long value);
+private:
+    unsigned long _liquidity;
+    std::vector<Account> _clientAccounts;
+    unsigned int _size;
+    Bank(const Bank &copy);
+    Bank &operator=(const Bank &copy);
+
+public:
+    Bank();
+    Bank(unsigned long liquidity);
+    ~Bank();
+    const unsigned long &get_liquidity() const;
+    const std::vector<Account> &get_accounts() const;
+    int open_account(unsigned long value);
+    int get_valid_id();
+    void close_account(int account_id);
+    void deposit(int account_id, unsigned long value);
+    void withdrawal(int account_id, unsigned long value);
+    void loan(int account_id, unsigned long amount);
+    void inflation_machine(unsigned long amount);
+    void invest_in_crypto(unsigned long amount);
+    void print_account_info(int account_id);
 };
 
 std::ostream &operator<<(std::ostream &out, const Bank &bank);

@@ -6,39 +6,35 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:09:54 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/08 11:19:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:10:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Account.hpp"
 #include "Bank.hpp"
 
+// TODO - Review liquidity and 5% tax
+
+// Adjusted main case using subject values
 int main()
 {
-    Account accountA = Account();
-    accountA.id = 0;
-    accountA.value = 100;
+    Bank too_big_to_fail(999);
+    int account_A = too_big_to_fail.open_account(100);
+    int account_B = too_big_to_fail.open_account(100);
 
-    Account accountB = Account();
-    accountB.id = 1;
-    accountB.value = 100;
+    too_big_to_fail.invest_in_crypto(200);
+    too_big_to_fail.deposit(account_A, 400);
 
-    Bank bank = Bank();
-    bank.liquidity = 999;
-    bank.clientAccounts.push_back(&accountA);
-    bank.clientAccounts.push_back(&accountB);
+    std::cout << "Account : " << "\n";
+    std::cout << "accountA: ";
+    too_big_to_fail.print_account_info(account_A);
+    std::cout << "accountB: ";
+    too_big_to_fail.print_account_info(account_B);
 
-    bank.liquidity -= 200;
-    accountA.value += 400;
+    std::cout << " ----- " << "\n";
 
-    std::cout << "Account : " << std::endl;
-    std::cout << accountA << std::endl;
-    std::cout << accountB << std::endl;
-
-    std::cout << " ----- " << std::endl;
-
-    std::cout << "Bank : " << std::endl;
-    std::cout << bank << std::endl;
+    std::cout << "Bank : " << "\n";
+    std::cout << too_big_to_fail << "\n";
 
     return (0);
 }
