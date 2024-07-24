@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:16:54 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/22 16:53:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:11:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ public:
     Bank();
     Bank(unsigned long liquidity);
     ~Bank();
-    const unsigned long &get_liquidity() const;
-    const std::vector<Account> &get_accounts() const;
     int open_account(unsigned long value);
     int get_valid_id();
     void close_account(int account_id);
@@ -40,6 +38,7 @@ public:
     void inflation_machine(unsigned long amount);
     void invest_in_crypto(unsigned long amount);
     void print_account_info(int account_id);
+    std::ostream &print_accounts(std::ostream &out) const;
 };
 
 std::ostream &operator<<(std::ostream &out, const Bank &bank);

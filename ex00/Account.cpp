@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/22 16:42:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:34:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ void Account::deposit(unsigned long amount)
 
 void Account::withdrawal(unsigned long amount)
 {
-    if (amount > _value)
-    {
-        std::cout << "Amount exceeds account value\n";
-        return;
-    }
     _value -= amount;
 }
 
