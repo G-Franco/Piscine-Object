@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:16:54 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/24 16:11:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:51:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <climits>
 #include "Account.hpp"
+#include "Colors.hpp"
 
 class Bank
 {

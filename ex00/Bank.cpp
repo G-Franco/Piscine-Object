@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:25:22 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/24 16:34:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:23:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,14 @@ int Bank::open_account(unsigned long value)
 {
     int id = get_valid_id();
 
+    if (value < 100)
+    {
+        std::cerr << RED << "Opening an account requires an initial deposit of 100\n" << DEFAULT;
+        return id;
+    }
     if (id == -1)
     {
-        std::cerr << "Maximum amount of accounts reached\n";
+        std::cerr << RED << "Maximum amount of accounts reached\n" << DEFAULT;
         return id;
     }
     _clientAccounts.push_back(Account(id, 0));
@@ -49,7 +54,7 @@ void Bank::close_account(int account_id)
     std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
     if (acc == _clientAccounts.end())
     {
-        std::cerr << "Could not find specified account\n";
+        std::cerr << RED << "Could not find specified account\n" << DEFAULT;
         return;
     }
     _liquidity -= acc->get_value();
@@ -77,10 +82,10 @@ void Bank::deposit(int account_id, unsigned long value)
     std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
     if (acc == _clientAccounts.end())
     {
-        std::cerr << "Could not find specified account\n";
+        std::cerr << RED << "Could not find specified account\n" << DEFAULT;
         return;
     }
-    std::cout << "Account id: " << account_id << " was credited: " << acc_deposit << "\n";
+    std::cout << BLUE << "Account id: " << account_id << " was credited: " << acc_deposit << "\n" << DEFAULT;
     _liquidity += value;
     acc->deposit(acc_deposit);
 }
@@ -90,15 +95,15 @@ void Bank::withdrawal(int account_id, unsigned long value)
     std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
     if (acc == _clientAccounts.end())
     {
-        std::cerr << "Could not find specified account\n";
+        std::cerr << RED << "Could not find specified account\n" << DEFAULT;
         return;
     }
     if (value > acc->get_value())
     {
-        std::cerr << "Amount exceeds account value\n";
+        std::cerr << RED << "Amount exceeds account value\n" << DEFAULT;
         return;
     }
-    std::cout << "Account id: " << account_id << " was charged: " << value << "\n";
+    std::cout << BLUE << "Account id: " << account_id << " was charged: " << value << "\n" << DEFAULT;
     acc->withdrawal(value);
 }
 
@@ -106,13 +111,13 @@ void Bank::loan(int account_id, unsigned long amount)
 {
     if (amount > _liquidity)
     {
-        std::cerr << "Loan amount exceeds bank liquidity\n";
+        std::cerr << RED << "Loan amount exceeds bank liquidity\n" << DEFAULT;
         return;
     }
     std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
     if (acc == _clientAccounts.end())
     {
-        std::cerr << "Could not find specified account\n";
+        std::cerr << RED << "Could not find specified account\n" << DEFAULT;
         return;
     }
     _liquidity -= amount;
@@ -128,7 +133,7 @@ void Bank::invest_in_crypto(unsigned long amount)
 {
     if (_liquidity < amount)
     {
-        std::cerr << "Investment amount exceeds liquidity\n";
+        std::cerr << RED << "Investment amount exceeds liquidity\n" << DEFAULT;
         return;
     }
     _liquidity -= amount;
@@ -139,7 +144,7 @@ void Bank::print_account_info(int account_id)
     std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
     if (acc == _clientAccounts.end())
     {
-        std::cerr << "Could not find specified account\n";
+        std::cerr << RED << "Could not find specified account\n" << DEFAULT;
         return;
     }
     std::cout << *acc << "\n";
@@ -150,8 +155,8 @@ std::ostream &Bank::print_accounts(std::ostream &out) const
     std::vector<Account>::const_iterator it = _clientAccounts.begin();
     std::vector<Account>::const_iterator end = _clientAccounts.end();
 
-    out << "Bank informations : " << "\n";
-    out << "Liquidity : " << _liquidity << "\n";
+    out << "Bank information: " << "\n";
+    out << "Liquidity: " << (_liquidity > 0 ? GREEN : RED) << _liquidity << "\n" << DEFAULT;
     for (; it != end; it++)
         out << *it << "\n";
     return out;

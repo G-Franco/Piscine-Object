@@ -6,11 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/24 16:34:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:52:15 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Account.hpp"
+#include "Colors.hpp"
 
 Account::Account() {}
 
@@ -53,6 +54,7 @@ void Account::withdrawal(unsigned long amount)
 
 std::ostream &operator<<(std::ostream &out, const Account &account)
 {
-    out << "[" << account.get_id() << "] - [" << account.get_value() << "]";
+    unsigned long value = account.get_value();
+    out << "[" << BLUE << account.get_id() << DEFAULT << "] - [" << (value > 0 ? GREEN : RED) << value << DEFAULT << "]";
     return out;
 }
