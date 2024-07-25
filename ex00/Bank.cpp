@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:25:22 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/24 17:23:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:04:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,20 @@ int Bank::get_valid_id()
     for (; id < _size; id++)
         if (std::find(_clientAccounts.begin(), _clientAccounts.end(), id) == _clientAccounts.end())
             return id;
-    if (id <= INT_MAX)
+    // if (id <= INT_MAX)
+    // THIS IS ONLY FOR TESTING PURPOSES!!
+    if (id < 10)
         return id;
     return -1;
 }
 
 void Bank::deposit(int account_id, unsigned long value)
 {
+    if (value < 10)
+    {
+        std::cerr << RED << "Deposit amount must be at least 10\n" << DEFAULT;
+        return;
+    }
     unsigned long acc_deposit = value * 0.95;
     std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
     if (acc == _clientAccounts.end())
@@ -109,6 +116,11 @@ void Bank::withdrawal(int account_id, unsigned long value)
 
 void Bank::loan(int account_id, unsigned long amount)
 {
+    if (amount < 50)
+    {
+        std::cerr << RED << "Loan amount must be at least 50\n" << DEFAULT;
+        return;
+    }
     if (amount > _liquidity)
     {
         std::cerr << RED << "Loan amount exceeds bank liquidity\n" << DEFAULT;
@@ -126,6 +138,11 @@ void Bank::loan(int account_id, unsigned long amount)
 
 void Bank::inflation_machine(unsigned long amount)
 {
+    if (amount < 100)
+    {
+        std::cerr << RED << "Extra funds must be greater than 100\n" << DEFAULT;
+        return;
+    }
     _liquidity += amount;
 }
 
