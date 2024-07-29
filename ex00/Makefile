@@ -6,7 +6,7 @@
 #    By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 10:53:19 by gacorrei          #+#    #+#              #
-#    Updated: 2024/07/24 16:26:32 by gacorrei         ###   ########.fr        #
+#    Updated: 2024/07/29 14:56:43 by gacorrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ DNAME = bank_debug
 SRC = main.cpp Account.cpp Bank.cpp
 CC = @c++
 CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -g -std=c++98
-CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -g -std=c++98 -fsanitize=address,undefined
+CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -Woverflow -g -std=c++98 -fsanitize=address,undefined
 
 all: 		$(NAME)
 

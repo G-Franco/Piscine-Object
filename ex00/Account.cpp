@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:25:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/24 18:52:15 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:03:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 Account::Account() {}
 
-Account::Account(int id, unsigned long value) : _id(id), _value(value) {}
+Account::Account(int id, int value) : _id(id), _value(value) {}
 
 Account::Account(const Account &copy) : _id(copy._id), _value(copy._value) {}
 
@@ -37,24 +37,24 @@ const int &Account::get_id() const
     return _id;
 }
 
-const unsigned long &Account::get_value() const
+const int &Account::get_value() const
 {
     return _value;
 }
 
-void Account::deposit(unsigned long amount)
+void Account::deposit(int amount)
 {
     _value += amount;
 }
 
-void Account::withdrawal(unsigned long amount)
+void Account::withdrawal(int amount)
 {
     _value -= amount;
 }
 
 std::ostream &operator<<(std::ostream &out, const Account &account)
 {
-    unsigned long value = account.get_value();
+    int value = account.get_value();
     out << "[" << BLUE << account.get_id() << DEFAULT << "] - [" << (value > 0 ? GREEN : RED) << value << DEFAULT << "]";
     return out;
 }
