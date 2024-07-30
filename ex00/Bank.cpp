@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:25:22 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/30 16:37:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:55:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,10 @@ Bank &Bank::operator=(const Bank &copy)
     return *this;
 }
 
-int Bank::open_account(long value)
+int Bank::open_account(int value)
 {
     int id = get_valid_id();
 
-    if (value > INT_MAX || value < INT_MIN)
-    {
-        std::cerr << RED << "Overflow when opening account\n" << DEFAULT;
-        return -1;
-    }
     if (value < 100)
     {
         std::cerr << RED << "Opening an account requires an initial deposit of 100\n" << DEFAULT;
@@ -55,8 +50,8 @@ int Bank::open_account(long value)
         std::cerr << RED << "Maximum amount of accounts reached\n" << DEFAULT;
         return -1;
     }
-    _clientAccounts.push_back(Account(id, 0));
-    this->deposit(id, value, true);
+    _clientAccounts.push_back(Account(id, value));
+    std::cout << BLUE << "Account id: " << id << " was opened with a deposit of: " << value * 0.95 << "\n" << DEFAULT;
     _size++;
     return id;
 }
@@ -76,21 +71,21 @@ void Bank::close_account(int account_id)
 
 int Bank::get_valid_id()
 {
-    unsigned int id = 0;
+    int id = 0;
 
     if (!_size)
         return 0;
     for (; id < _size; id++)
         if (std::find(_clientAccounts.begin(), _clientAccounts.end(), id) == _clientAccounts.end())
             return id;
-    // if (id <= INT_MAX)
     // THIS IS ONLY FOR TESTING PURPOSES!!
-    if (id < 10)
+    // if (id < 10)
+    if (id <= INT_MAX)
         return id;
     return -1;
 }
 
-void Bank::deposit(int account_id, long value, bool open)
+void Bank::deposit(int account_id, int value)
 {
     std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
     if (acc == _clientAccounts.end())
@@ -98,20 +93,20 @@ void Bank::deposit(int account_id, long value, bool open)
         std::cerr << RED << "Could not find specified account\n" << DEFAULT;
         return;
     }
-    if (value > INT_MAX || value < INT_MIN || INT_MAX - acc->get_value() < value)
+    long acc_deposit = value * 0.95;
+    if (INT_MAX - acc->get_value() < acc_deposit)
     {
         std::cerr << RED << "Overflow in deposit\n" << DEFAULT;
+        return;
+    }
+    if (INT_MAX - _liquidity < value)
+    {
+        std::cerr << RED << "Overflow in bank liquidity during deposit\n" << DEFAULT;
         return;
     }
     if (value < 10)
     {
         std::cerr << RED << "Deposit amount must be at least 10\n" << DEFAULT;
-        return;
-    }
-    long acc_deposit = value * 0.95;
-    if (INT_MAX - _liquidity < value)
-    {
-        std::cerr << RED << "Overflow in bank liquidity during deposit\n" << DEFAULT;
         return;
     }
     _liquidity += value;
@@ -121,19 +116,14 @@ void Bank::deposit(int account_id, long value, bool open)
         return;
     }
     acc->deposit(acc_deposit);
-    std::cout << BLUE << "Account id: " << account_id << (open ? " was opened with a deposit of: " : " was credited: ") << acc_deposit << "\n" << DEFAULT;
+    std::cout << BLUE << "Account id: " << account_id << " was credited: " << acc_deposit << "\n" << DEFAULT;
 }
 
-void Bank::withdrawal(int account_id, long value)
+void Bank::withdrawal(int account_id, int value)
 {
     if (value <= 0)
     {
         std::cerr << RED << "Withdrawal amount must be greater than 0\n" << DEFAULT;
-        return;
-    }
-    if (value > INT_MAX)
-    {
-        std::cerr << RED << "Overflow in withdrawal\n" << DEFAULT;
         return;
     }
     std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
@@ -151,7 +141,7 @@ void Bank::withdrawal(int account_id, long value)
     std::cout << BLUE << "Account id: " << account_id << " was charged: " << value << "\n" << DEFAULT;
 }
 
-void Bank::loan(int account_id, long amount)
+void Bank::loan(int account_id, int amount)
 {
     std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
     if (acc == _clientAccounts.end())
@@ -159,7 +149,7 @@ void Bank::loan(int account_id, long amount)
         std::cerr << RED << "Could not find specified account\n" << DEFAULT;
         return;
     }
-    if (amount > INT_MAX || amount < INT_MIN || INT_MAX - acc->get_value() < amount)
+    if (INT_MAX - acc->get_value() < amount)
     {
         std::cerr << RED << "Overflow in loan\n" << DEFAULT;
         return;
@@ -179,13 +169,8 @@ void Bank::loan(int account_id, long amount)
     std::cout << BLUE << "Account id: " << account_id << " was loaned: " << amount << "\n" << DEFAULT;
 }
 
-void Bank::inflation_machine(long amount)
+void Bank::inflation_machine(int amount)
 {
-    if (amount > INT_MAX)
-    {
-        std::cerr << RED << "Overflow in inflation machine\n" << DEFAULT;
-        return;
-    }
     if (amount < 100)
     {
         std::cerr << RED << "Extra funds must be greater than 100\n" << DEFAULT;
@@ -195,13 +180,8 @@ void Bank::inflation_machine(long amount)
     std::cout << BLUE << "Bank liquidity was increased by: " << amount << "\n" << DEFAULT;
 }
 
-void Bank::invest_in_crypto(long amount)
+void Bank::invest_in_crypto(int amount)
 {
-    if (amount > INT_MAX)
-    {
-        std::cerr << RED << "Overflow in investment\n" << DEFAULT;
-        return;
-    }
     if (amount < 100)
     {
         std::cerr << RED << "Investment amount must be greater than 100\n" << DEFAULT;

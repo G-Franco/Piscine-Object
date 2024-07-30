@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:16:54 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/29 16:35:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:55:16 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Bank
     private:
         long _liquidity;
         std::vector<Account> _clientAccounts;
-        unsigned int _size;
+        int _size;
         Bank(const Bank &copy);
         Bank &operator=(const Bank &copy);
     
@@ -30,14 +30,14 @@ class Bank
         Bank();
         Bank(long liquidity);
         ~Bank();
-        int open_account(long value);
+        int open_account(int value);
         int get_valid_id();
         void close_account(int account_id);
-        void deposit(int account_id, long value, bool open);
-        void withdrawal(int account_id, long value);
-        void loan(int account_id, long amount);
-        void inflation_machine(long amount);
-        void invest_in_crypto(long amount);
+        void deposit(int account_id, int value);
+        void withdrawal(int account_id, int value);
+        void loan(int account_id, int amount);
+        void inflation_machine(int amount);
+        void invest_in_crypto(int amount);
         void print_account_info(int account_id);
         std::ostream &print_accounts(std::ostream &out) const;
 };

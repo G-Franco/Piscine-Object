@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:09:54 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/29 17:03:17 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:56:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,237 +15,170 @@
 
 // TODO - Add more test cases for overflows and edge cases, as well as for bank with negative liquidity when too many accounts close
 
-// Adjusted main case using subject values
-// int main()
-// {
-//     Bank too_big_to_fail(999);
-//     int account_A = too_big_to_fail.open_account(100);
-//     int account_B = too_big_to_fail.open_account(100);
+void bank_creation(long liquidity, bool def)
+{
+    try
+    {
+        if (def)
+        {
+            Bank united_bank_of_money;
+            std::cout << united_bank_of_money;
+        }
+        else
+        {
+            Bank united_bank_of_money(liquidity);
+            std::cout << united_bank_of_money;
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
 
-//     too_big_to_fail.invest_in_crypto(200);
-//     too_big_to_fail.deposit(account_A, 400);
+void test_account_open(long bank_liq, int acc_val)
+{
+    Bank united_bank_of_money(bank_liq);
+    std::cout << united_bank_of_money;
+    united_bank_of_money.open_account(acc_val);
+    std::cout << united_bank_of_money;
+}
 
-//     std::cout << "Accounts: " << "\n";
-//     std::cout << "accountA: ";
-//     too_big_to_fail.print_account_info(account_A);
-//     std::cout << "accountB: ";
-//     too_big_to_fail.print_account_info(account_B);
+void test_account_close(long bank_liq, int acc_id)
+{
+    Bank united_bank_of_money(bank_liq);
+    std::cout << united_bank_of_money;
+    united_bank_of_money.open_account(100);
+    std::cout << united_bank_of_money;
+    united_bank_of_money.close_account(acc_id);
+    std::cout << united_bank_of_money;
+}
 
-//     std::cout << " ----- " << "\n";
+void test_account_deposit(long bank_liq, long acc_val, long acc_dep)
+{
+    Bank united_bank_of_money(bank_liq);
+    std::cout << united_bank_of_money;
+    int acc = united_bank_of_money.open_account(acc_val);
+    std::cout << united_bank_of_money;
+    united_bank_of_money.deposit(acc, acc_dep);
+    std::cout << united_bank_of_money;
+}
 
-//     std::cout << "Bank: " << "\n";
-//     std::cout << too_big_to_fail;
+void test_account_withdrawal(long bank_liq, long acc_val, long acc_dep)
+{
+    Bank united_bank_of_money(bank_liq);
+    std::cout << united_bank_of_money;
+    int acc = united_bank_of_money.open_account(acc_val);
+    std::cout << united_bank_of_money;
+    united_bank_of_money.withdrawal(acc, acc_dep);
+    std::cout << united_bank_of_money;
+}
 
-//     return 0;
-// }
+void test_account_loan(long bank_liq, long acc_val, long acc_loan)
+{
+    Bank united_bank_of_money(bank_liq);
+    std::cout << united_bank_of_money;
+    int acc = united_bank_of_money.open_account(acc_val);
+    std::cout << united_bank_of_money;
+    united_bank_of_money.loan(acc, acc_loan);
+    std::cout << united_bank_of_money;
+}
 
-// My main
+void test_inflation(long bank_liq, long bailout)
+{
+    Bank united_bank_of_money(bank_liq);
+    std::cout << united_bank_of_money;
+    united_bank_of_money.inflation_machine(bailout);
+    std::cout << united_bank_of_money;
+}
+
+void test_invest_in_crypto(long bank_liq, long bad_decision)
+{
+    Bank united_bank_of_money(bank_liq);
+    std::cout << united_bank_of_money;
+    united_bank_of_money.invest_in_crypto(bad_decision);
+    std::cout << united_bank_of_money;
+}
+
 int main()
 {
     std::cout << "Test bank creation with default constructor\n";
-    {
-        Bank united_bank_of_money;
-        std::cout << united_bank_of_money;
-    }
+    bank_creation(0, true);
     std::cout << "\nTest bank creation with negative initial liquidity\n";
-    {
-        try
-        {
-            Bank united_bank_of_money(-1000);
-            std::cout << united_bank_of_money;
-        }
-        catch(const std::exception& e)
-        {
-            std::cerr << e.what() << '\n';
-        }
-    }
+    bank_creation(-1000, false);
     std::cout << "\nTest bank creation with 0 initial liquidity\n";
-    {
-        try
-        {
-            Bank united_bank_of_money(0);
-            std::cout << united_bank_of_money;
-        }
-        catch (const std::exception &e)
-        {
-            std::cerr << e.what() << '\n';
-        }
-    }
+    bank_creation(0, false);
     // Uncomment to see error while compiling
     // std::cout << "\nTest bank creation with positive overflowing initial liquidity\n";
-    // {
-    //     Bank united_bank_of_money(LONG_MAX + 1);
-    //     std::cout << united_bank_of_money;
-    // }
+    // bank_creation(LONG_MAX + 1, false);
     std::cout << "\nTest bank creation with positive initial liquidity\n";
-    Bank united_bank_of_money(1000);
-    std::cout << united_bank_of_money;
+    bank_creation(1000, false);
     std::cout << "\nTest account creation with less than 100 initial value\n";
-    {
-        united_bank_of_money.open_account(50);
-        std::cout << united_bank_of_money;
-    }
+    test_account_open(1000, 50);
     std::cout << "\nTest account creation with negative initial value\n";
-    {
-        united_bank_of_money.open_account(-100);
-    }
+    test_account_open(1000, -100);
     std::cout << "\nTest account creation with 0 initial value\n";
-    {
-        united_bank_of_money.open_account(0);
-    }
+    test_account_open(1000, 0);
     std::cout << "\nTest account creation with positive initial value\n";
-    {
-        united_bank_of_money.open_account(100);
-        united_bank_of_money.close_account(0);
-    }
+    test_account_open(1000, 100);
+    std::cout << "\nTest closing account with correct id\n";
+    test_account_close(1000, 0);
     std::cout << "\nTest closing account with wrong positive id\n";
-    {
-        united_bank_of_money.open_account(100);
-        united_bank_of_money.close_account(1);
-        // This is only for the test case to not accumulate accounts
-        united_bank_of_money.close_account(0);
-    }
+    test_account_close(1000, 1);
     std::cout << "\nTest closing account with wrong negative id\n";
-    {
-        united_bank_of_money.open_account(100);
-        united_bank_of_money.close_account(-1);
-        // This is only for the test case to not accumulate accounts
-        united_bank_of_money.close_account(0);
-    }
+    test_account_close(1000, -1);
     std::cout << "\nTest deposit with positive amount\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.deposit(acc, 100, false);
-        united_bank_of_money.print_account_info(acc);
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_deposit(1000, 100, 100);
     std::cout << "\nTest deposit with negative amount\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.deposit(acc, -100, false);
-        united_bank_of_money.print_account_info(acc);
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_deposit(1000, 100, -100);
     std::cout << "\nTest deposit with 0 amount\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.deposit(acc, 0, false);
-        united_bank_of_money.print_account_info(acc);
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_deposit(1000, 100, 0);
     std::cout << "\nTest deposit with positive amount less than 10\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.deposit(acc, 9, false);
-        united_bank_of_money.print_account_info(acc);
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_deposit(1000, 100, 9);
     std::cout << "\nTest withdrawal with positive amount\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.withdrawal(acc, 50);
-        united_bank_of_money.print_account_info(acc);
-        united_bank_of_money.close_account(acc);
-    }
-    std::cout << "\nTest withdrawal with negative amount\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.withdrawal(acc, -100);
-        united_bank_of_money.print_account_info(acc);
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_withdrawal(1000, 100, 50);
+    std::cout << "\nTest withdrawal with negative amount\n";\
+    test_account_withdrawal(1000, 100, -50);
     std::cout << "\nTest withdrawal with 0 amount\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.withdrawal(acc, 0);
-        united_bank_of_money.print_account_info(acc);
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_withdrawal(1000, 100, 0);
     std::cout << "\nTest withdrawal with positive amount greater than account value\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.withdrawal(acc, 200);
-        united_bank_of_money.print_account_info(acc);
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_withdrawal(1000, 100, 200);
     std::cout << "\nTest loan with positive amount\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        std::cout << united_bank_of_money;
-        united_bank_of_money.loan(acc, 100);
-        std::cout << united_bank_of_money;
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_loan(1000, 100, 100);
     std::cout << "\nTest loan with negative amount\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.loan(acc, -100);
-        std::cout << united_bank_of_money;
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_loan(1000, 100, -100);
     std::cout << "\nTest loan with 0 amount\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.loan(acc, 0);
-        std::cout << united_bank_of_money;
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_loan(1000, 100, 0);
     std::cout << "\nTest loan with positive amount greater than bank liquidity\n";
-    {
-        int acc = united_bank_of_money.open_account(100);
-        united_bank_of_money.loan(acc, 2000);
-        std::cout << united_bank_of_money;
-        united_bank_of_money.close_account(acc);
-    }
+    test_account_loan(1000, 100, 2000);
     std::cout << "\nTest inflation machine with positive amount\n";
-    {
-        std::cout << united_bank_of_money;
-        united_bank_of_money.inflation_machine(100);
-        std::cout << united_bank_of_money;
-    }
+    test_inflation(1000, 100);
     std::cout << "\nTest inflation machine with negative amount\n";
-    {
-        united_bank_of_money.inflation_machine(-100);
-        std::cout << united_bank_of_money;
-    }
+    test_inflation(1000, -100);
     std::cout << "\nTest inflation machine with 0 amount\n";
-    {
-        united_bank_of_money.inflation_machine(0);
-        std::cout << united_bank_of_money;
-    }
+    test_inflation(1000, 0);
     std::cout << "\nTest inflation machine with positive amount less than 100\n";
-    {
-        united_bank_of_money.inflation_machine(99);
-        std::cout << united_bank_of_money;
-    }
+    test_inflation(1000, 99);
     std::cout << "\nTest invest in crypto with positive amount\n";
-    {
-        united_bank_of_money.invest_in_crypto(100);
-        std::cout << united_bank_of_money;
-    }
+    test_invest_in_crypto(1000, 100);
     std::cout << "\nTest invest in crypto with negative amount\n";
-    {
-        united_bank_of_money.invest_in_crypto(-100);
-        std::cout << united_bank_of_money;
-    }
+    test_invest_in_crypto(1000, -100);
     std::cout << "\nTest invest in crypto with 0 amount\n";
-    {
-        united_bank_of_money.invest_in_crypto(0);
-        std::cout << united_bank_of_money;
-    }
+    test_invest_in_crypto(1000, 0);
     std::cout << "\nTest 5% tax on deposit\n";
     std::cout << "Initial liquidity is 1000 and 1000 more from openings and deposits\n";
     {
+        Bank united_bank_of_money(1000);
         std::cout << united_bank_of_money;
         int acc = united_bank_of_money.open_account(100);
         std::cout << united_bank_of_money;
         int acc2 = united_bank_of_money.open_account(100);
         std::cout << united_bank_of_money;
-        united_bank_of_money.deposit(acc, 100, false);
+        united_bank_of_money.deposit(acc, 100);
         std::cout << united_bank_of_money;
-        united_bank_of_money.deposit(acc, 200, false);
+        united_bank_of_money.deposit(acc, 200);
         std::cout << united_bank_of_money;
-        united_bank_of_money.deposit(acc2, 500, false);
+        united_bank_of_money.deposit(acc2, 500);
         std::cout << united_bank_of_money;
         united_bank_of_money.close_account(acc);
         united_bank_of_money.close_account(acc2);
@@ -253,6 +186,7 @@ int main()
     std::cout << "!!!CHANGE get_valid_id TO ONLY ALLOW FOR 10 ACCOUNTS FOR THIS TO WORK!!!\n";
     std::cout << "\nTest opening too many accounts\n";
     {
+        Bank united_bank_of_money(1000);
         for (int i = 0; i < 11; i++)
             united_bank_of_money.open_account(100);
         for (int i = 0; i < 10; i++)
@@ -260,6 +194,7 @@ int main()
     }
     std::cout << "\nTest opening accounts after some have been closed\n";
     {
+        Bank united_bank_of_money(1000);
         std::cout << united_bank_of_money;
         int acc1 = united_bank_of_money.open_account(100);
         std::cout << united_bank_of_money;
