@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:25:22 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/29 17:01:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:37:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,13 @@ int Bank::get_valid_id()
 
 void Bank::deposit(int account_id, long value, bool open)
 {
-    if (value > INT_MAX || value < INT_MIN)
+    std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
+    if (acc == _clientAccounts.end())
+    {
+        std::cerr << RED << "Could not find specified account\n" << DEFAULT;
+        return;
+    }
+    if (value > INT_MAX || value < INT_MIN || INT_MAX - acc->get_value() < value)
     {
         std::cerr << RED << "Overflow in deposit\n" << DEFAULT;
         return;
@@ -100,12 +106,6 @@ void Bank::deposit(int account_id, long value, bool open)
     if (value < 10)
     {
         std::cerr << RED << "Deposit amount must be at least 10\n" << DEFAULT;
-        return;
-    }
-    std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
-    if (acc == _clientAccounts.end())
-    {
-        std::cerr << RED << "Could not find specified account\n" << DEFAULT;
         return;
     }
     long acc_deposit = value * 0.95;
@@ -153,7 +153,13 @@ void Bank::withdrawal(int account_id, long value)
 
 void Bank::loan(int account_id, long amount)
 {
-    if (amount > INT_MAX || amount < INT_MIN)
+    std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
+    if (acc == _clientAccounts.end())
+    {
+        std::cerr << RED << "Could not find specified account\n" << DEFAULT;
+        return;
+    }
+    if (amount > INT_MAX || amount < INT_MIN || INT_MAX - acc->get_value() < amount)
     {
         std::cerr << RED << "Overflow in loan\n" << DEFAULT;
         return;
@@ -166,12 +172,6 @@ void Bank::loan(int account_id, long amount)
     if (amount > _liquidity)
     {
         std::cerr << RED << "Loan amount exceeds bank liquidity\n" << DEFAULT;
-        return;
-    }
-    std::vector<Account>::iterator acc = std::find(_clientAccounts.begin(), _clientAccounts.end(), account_id);
-    if (acc == _clientAccounts.end())
-    {
-        std::cerr << RED << "Could not find specified account\n" << DEFAULT;
         return;
     }
     _liquidity -= amount;
