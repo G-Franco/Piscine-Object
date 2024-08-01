@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:25:22 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/30 17:55:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:28:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int Bank::open_account(int value)
 {
     int id = get_valid_id();
 
+    if (LONG_MAX - _liquidity < value)
+    {
+        std::cerr << RED << "Overflow in bank liquidity during account opening\n" << DEFAULT;
+        return -1;
+    }
     if (value < 100)
     {
         std::cerr << RED << "Opening an account requires an initial deposit of 100\n" << DEFAULT;
@@ -50,7 +55,8 @@ int Bank::open_account(int value)
         std::cerr << RED << "Maximum amount of accounts reached\n" << DEFAULT;
         return -1;
     }
-    _clientAccounts.push_back(Account(id, value));
+    _clientAccounts.push_back(Account(id, value * 0.95));
+    _liquidity += value;
     std::cout << BLUE << "Account id: " << id << " was opened with a deposit of: " << value * 0.95 << "\n" << DEFAULT;
     _size++;
     return id;
@@ -75,12 +81,14 @@ int Bank::get_valid_id()
 
     if (!_size)
         return 0;
+    // If an account was closed after one or more were opened after it,
+    // get the lowest available id
     for (; id < _size; id++)
         if (std::find(_clientAccounts.begin(), _clientAccounts.end(), id) == _clientAccounts.end())
             return id;
     // THIS IS ONLY FOR TESTING PURPOSES!!
     // if (id < 10)
-    if (id <= INT_MAX)
+    if (_size < INT_MAX)
         return id;
     return -1;
 }
@@ -99,7 +107,7 @@ void Bank::deposit(int account_id, int value)
         std::cerr << RED << "Overflow in deposit\n" << DEFAULT;
         return;
     }
-    if (INT_MAX - _liquidity < value)
+    if (LONG_MAX - _liquidity < value)
     {
         std::cerr << RED << "Overflow in bank liquidity during deposit\n" << DEFAULT;
         return;

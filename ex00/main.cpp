@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:09:54 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/07/30 17:56:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:33:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int main()
     test_account_open(1000, 0);
     std::cout << "\nTest account creation with positive initial value\n";
     test_account_open(1000, 100);
+    std::cout << "\nTest account creation with value that will overflow bank liquidity\n";
+    test_account_open(LONG_MAX, 100);
     std::cout << "\nTest closing account with correct id\n";
     test_account_close(1000, 0);
     std::cout << "\nTest closing account with wrong positive id\n";
@@ -135,6 +137,10 @@ int main()
     test_account_deposit(1000, 100, 0);
     std::cout << "\nTest deposit with positive amount less than 10\n";
     test_account_deposit(1000, 100, 9);
+    std::cout << "\nTest deposit with value that will cause overflow\n";
+    test_account_deposit(1000, INT_MAX, INT_MAX);
+    std::cout << "\nTest deposit with value that will overflow bank liquidity\n";
+    test_account_deposit(LONG_MAX - 100, 100, 200);
     std::cout << "\nTest withdrawal with positive amount\n";
     test_account_withdrawal(1000, 100, 50);
     std::cout << "\nTest withdrawal with negative amount\n";\
@@ -151,6 +157,8 @@ int main()
     test_account_loan(1000, 100, 0);
     std::cout << "\nTest loan with positive amount greater than bank liquidity\n";
     test_account_loan(1000, 100, 2000);
+    std::cout << "\nTest loan with value that will overflow account value\n";
+    test_account_loan(1000, INT_MAX, INT_MAX);
     std::cout << "\nTest inflation machine with positive amount\n";
     test_inflation(1000, 100);
     std::cout << "\nTest inflation machine with negative amount\n";
