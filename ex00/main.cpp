@@ -6,14 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:09:54 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/08/01 15:33:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/08/04 15:51:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Account.hpp"
 #include "Bank.hpp"
-
-// TODO - Add more test cases for overflows and edge cases, as well as for bank with negative liquidity when too many accounts close
 
 void bank_creation(long liquidity, bool def)
 {
@@ -143,7 +141,7 @@ int main()
     test_account_deposit(LONG_MAX - 100, 100, 200);
     std::cout << "\nTest withdrawal with positive amount\n";
     test_account_withdrawal(1000, 100, 50);
-    std::cout << "\nTest withdrawal with negative amount\n";\
+    std::cout << "\nTest withdrawal with negative amount\n";
     test_account_withdrawal(1000, 100, -50);
     std::cout << "\nTest withdrawal with 0 amount\n";
     test_account_withdrawal(1000, 100, 0);
@@ -223,6 +221,15 @@ int main()
         united_bank_of_money.open_account(100);
         std::cout << united_bank_of_money;
         united_bank_of_money.open_account(100);
+        std::cout << united_bank_of_money;
+    }
+    std::cout << "\nJust to see red\n";
+    {
+        Bank united_bank_of_money(1000);
+        std::cout << united_bank_of_money;
+        int acc = united_bank_of_money.open_account(100);
+        united_bank_of_money.loan(acc, 1000);
+        united_bank_of_money.close_account(acc);
         std::cout << united_bank_of_money;
     }
     return 0;
