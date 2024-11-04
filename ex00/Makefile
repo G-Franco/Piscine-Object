@@ -3,7 +3,7 @@ DEBUG = bank
 SRC = src/main.cpp src/Bank.cpp src/account.cpp
 CC = @c++
 CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98
-CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98 -g -fsanitize=address,undefined
+CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -DTEST -std=c++98 -g -fsanitize=address,undefined
 
 all:			$(NAME)
 

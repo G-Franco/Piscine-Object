@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:31 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/01 16:16:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:15:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 
 Account::Account() {}
 
-Account::Account(int id, long long value)
-  : _id(id), _value(value) {}
+Account::Account(int id, int value)
+  : _id(id),
+  _value(value) {}
 
 Account::Account(const Account &copy)
-  : _id(copy._id), _value(copy._value) {}
+  : _id(copy._id),
+  _value(copy._value) {}
 
 Account &Account::operator=(const Account &copy) {
   _id = copy._id;
   _value = copy._value;
   return *this;
+}
+
+bool Account::operator==(int id) {
+  return _id == id;
 }
 
 Account::~Account() {}
