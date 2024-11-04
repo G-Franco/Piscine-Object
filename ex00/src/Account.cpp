@@ -6,25 +6,31 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:31 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/04 11:15:21 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:55:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Account.hpp"
 
-Account::Account() {}
+Account::Account()
+  : _id(-1),
+  _value(0),
+  _debt(0) {}
 
 Account::Account(int id, int value)
   : _id(id),
-  _value(value) {}
+  _value(value),
+  _debt(0) {}
 
 Account::Account(const Account &copy)
   : _id(copy._id),
-  _value(copy._value) {}
+  _value(copy._value),
+  _debt(0) {}
 
 Account &Account::operator=(const Account &copy) {
   _id = copy._id;
   _value = copy._value;
+  _debt = copy._debt;
   return *this;
 }
 
@@ -38,6 +44,14 @@ std::string Account::get_account_info() const {
   std::stringstream out;
   out << "ID: " << _id << " | Value: " << _value << "\n";
   return out.str();
+}
+
+const int &Account::get_value() const {
+  return _value;
+}
+
+const int &Account::get_debt() const {
+  return _debt;
 }
 
 std::ostream &operator<<(std::ostream &out, const Account &account) {

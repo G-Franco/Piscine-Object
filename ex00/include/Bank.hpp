@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/04 11:35:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:00:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "Account.hpp"
 
 #define COMMISSION 0.05
+#define INTEREST 0.1
 #ifdef TEST
 #define MAX_ACCOUNTS 5
 #else
@@ -45,6 +46,7 @@ class Bank {
     void deposit(int id, int value);
     void withdrawal(int id, int value);
     void loan(int id, int value);
+    void repay_loan(int id, int value);
 };
 
 std::ostream &operator<<(std::ostream &out, const Bank &bank);
