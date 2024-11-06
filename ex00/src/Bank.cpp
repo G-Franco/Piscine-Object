@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:24 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/04 15:02:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/06 11:05:02 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int Bank::get_id() {
   return _current_id;
 }
 
-// TODO - Add the money logic to open and close account
 void Bank::open_account(int value) {
   if (value < 100) {
     std::cout << "Cannot open an account with an amount below 100\n";
@@ -170,9 +169,26 @@ void Bank::loan(int id, int value) {
   std::cout << "Loan was successful\n";
 }
 
-// TODO - Check how repaying should work in account class
-void repay_loan(int id, int value) {
-  
+void Bank::repay_loan(int id, int value) {
+  std::map<int, Account>::iterator entry = _accounts.find(id);
+  if (entry == _accounts.end()) {
+    std::cout << "Provided id (" << id << ") does not match any account\n";
+    return;
+  }
+  if (value <= 0) {
+    std::cout << "Value must be positive\n";
+    return;
+  }
+  if (value > entry->second.get_debt()) {
+    std::cout << "Amount should not exceed debt value\n";
+    return;
+  }
+  entry->second.repay_loan(value);
+  if (!entry->second.get_debt()) {
+    std::cout << "Debt paid in full\n";
+    return;
+  }
+  std::cout << "Partial payment accepted, " << entry->second.get_debt() << " remaining\n";
 }
 
 std::ostream &operator<<(std::ostream &out, const Bank &bank) {

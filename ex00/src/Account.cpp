@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:31 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/04 14:55:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/06 11:04:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,23 @@ const int &Account::get_value() const {
 
 const int &Account::get_debt() const {
   return _debt;
+}
+
+void Account::deposit(int value) {
+  _value += value;
+}
+
+void Account::withdrawal(int value) {
+  _value -= value;
+}
+
+void Account::loan(int value, float interest_rate) {
+  _value += value;
+  _debt += value * interest_rate;
+}
+
+void Account::repay_loan(int value) {
+  _debt -= value;
 }
 
 std::ostream &operator<<(std::ostream &out, const Account &account) {
