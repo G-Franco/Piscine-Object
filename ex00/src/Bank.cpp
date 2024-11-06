@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:24 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/06 11:05:02 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:50:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ std::string Bank::get_bank_info() const {
   for (; it != end; it++) {
     out << it->second.get_account_info() << "\n----------\n";
   }
+  return out.str();
 }
 
-// TODO - Check if this is really necessary
 std::string Bank::get_account_info(int id) const {
   std::map<int, Account>::const_iterator entry = _accounts.find(id);
   if (entry == _accounts.end()) {
@@ -67,7 +67,7 @@ int Bank::get_id() {
   return _current_id;
 }
 
-void Bank::open_account(int value) {
+int Bank::open_account(int value) {
   if (value < 100) {
     std::cout << "Cannot open an account with an amount below 100\n";
     return;

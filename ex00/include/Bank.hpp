@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/04 15:00:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:50:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ class Bank {
     std::string get_bank_info() const;
     std::string get_account_info(int id) const;
     int get_id();
-    void open_account(int value);
+    int open_account(int value);
     void close_account(int id);
     void deposit(int id, int value);
     void withdrawal(int id, int value);
