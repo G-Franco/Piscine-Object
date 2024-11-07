@@ -1,5 +1,5 @@
 NAME = bank
-DEBUG = bank
+DEBUG = bank_debug
 SRC = src/main.cpp src/Bank.cpp src/Account.cpp
 CC = @c++
 CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98
@@ -18,7 +18,7 @@ $(DEBUG):	$(SRC)
 clean:
 
 fclean:
-					@rm -rf $(NAME)
+					@rm -rf $(NAME) $(DEBUG)
 
 re:				fclean all
 

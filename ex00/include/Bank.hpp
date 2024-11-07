@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/06 16:50:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:40:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "Account.hpp"
 
 #define COMMISSION 0.05
-#define INTEREST 0.1
+#define INTEREST 1.1
 #ifdef TEST
 #define MAX_ACCOUNTS 5
 #else
@@ -26,7 +26,7 @@
 
 class Bank {
   private:
-    long long _liquidity;
+    long _liquidity;
     std::map<int, Account> _accounts;
     int _current_id;
     std::stack<int> _reusable_ids;
@@ -36,7 +36,7 @@ class Bank {
     Bank &operator=(const Bank &copy);
 
   public:
-    Bank(long long liquidity);
+    Bank(long liquidity);
     ~Bank();
     std::string get_bank_info() const;
     std::string get_account_info(int id) const;

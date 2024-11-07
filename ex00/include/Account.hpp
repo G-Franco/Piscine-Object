@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:27 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/06 11:04:22 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/07 09:55:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ class Account {
     int _value;
     int _debt;
 
-    Account();
-
   public:
+    Account();
     Account(int id, int value);
     Account(const Account &copy);
     Account &operator=(const Account &copy);
