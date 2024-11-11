@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:24 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/07 11:03:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:13:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int Bank::open_account(int value) {
   int bank_commission = value * COMMISSION;
   int acc_value = value - bank_commission;
   _liquidity += value;
-  _accounts[id] = Account(id, acc_value);
+  _accounts.insert(std::pair<int, Account>(id, Account(id, acc_value)));
   _accounts[id].get_account_info();
   if (_current_id == MAX_ACCOUNTS) {
     _current_id = 0;
@@ -129,7 +129,7 @@ void Bank::deposit(int id, int value) {
   }
   int bank_commission = value * COMMISSION;
   int deposit_value = value - bank_commission;
-  entry->second.deposit(deposit_value);
+  entry->second._value += deposit_value;
   _liquidity += value;
   std::cout << "Deposit was successful\n";
 }
@@ -148,7 +148,7 @@ void Bank::withdrawal(int id, int value) {
     std::cout << "Withdrawal amount cannot exceed account value\n";
     return;
   }
-  entry->second.withdrawal(value);
+  entry->second._value -= value;
   _liquidity -= value;
   std::cout << "Withdrawal was successful\n";
 }
@@ -171,7 +171,8 @@ void Bank::loan(int id, int value) {
     std::cout << "This loan amount would overflow the account value\n";
     return;
   }
-  entry->second.loan(value, INTEREST);
+  entry->second._value += value;
+  entry->second._debt += value * INTEREST;
   std::cout << "Loan was successful\n";
 }
 
@@ -189,12 +190,21 @@ void Bank::repay_loan(int id, int value) {
     std::cout << "Amount should not exceed debt value\n";
     return;
   }
-  entry->second.repay_loan(value);
+  entry->second._value -= value;
+  entry->second._debt -= value;
   if (!entry->second.get_debt()) {
     std::cout << "Debt paid in full\n";
     return;
   }
   std::cout << "Partial payment accepted, " << entry->second.get_debt() << " remaining\n";
+}
+
+Bank::Account &Bank::operator[](int id) {
+  return _accounts.at(id);
+}
+
+const Bank::Account &Bank::operator[](int id) const {
+  return _accounts.at(id);
 }
 
 std::ostream &operator<<(std::ostream &out, const Bank &bank) {

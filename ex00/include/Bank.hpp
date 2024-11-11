@@ -6,15 +6,16 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/07 10:40:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:08:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include <map>
-#include <stack>
+#include <iostream>
 #include <limits>
-#include "Account.hpp"
+#include <map>
+#include <sstream>
+#include <stack>
 
 #define COMMISSION 0.05
 #define INTEREST 1.1
@@ -26,6 +27,27 @@
 
 class Bank {
   private:
+    class Account {
+    private:
+      int _id;
+      int _value;
+      int _debt;
+
+      Account(int id, int value);
+      Account &operator=(const Account &copy);
+      bool operator==(int id);
+
+    public:
+      Account();
+      Account(const Account &copy);
+      ~Account();
+      const std::string get_account_info() const;
+      const int &get_value() const;
+      const int &get_debt() const;
+
+      friend class Bank;
+    };
+
     long _liquidity;
     std::map<int, Account> _accounts;
     int _current_id;
@@ -47,6 +69,9 @@ class Bank {
     void withdrawal(int id, int value);
     void loan(int id, int value);
     void repay_loan(int id, int value);
+
+    Account &operator[](int id);
+    const Account &operator[](int id) const;
 };
 
 std::ostream &operator<<(std::ostream &out, const Bank &bank);
