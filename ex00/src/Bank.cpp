@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:24 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/11 13:13:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/11 14:20:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,7 @@ std::string Bank::get_bank_info() const {
 }
 
 std::string Bank::get_account_info(int id) const {
-  std::map<int, Account>::const_iterator entry = _accounts.find(id);
-  if (entry == _accounts.end()) {
-    std::ostringstream ret;
-    ret << "Provided id (" << id << ") does not match any account\n";
-    return ret.str();
-  }
-  return entry->second.get_account_info();
+  return (*this)[id].get_account_info();
 }
 
 int Bank::get_id() {
@@ -69,17 +63,14 @@ int Bank::get_id() {
 
 int Bank::open_account(int value) {
   if (value < 100) {
-    std::cout << "Cannot open an account with an amount below 100\n";
-    return -1;
+    throw (std::runtime_error("Cannot open an account with an amount below 100\n"));
   }
   if (_liquidity > std::numeric_limits<long>::max() - value) {
-    std::cout << "Account initial deposit would overflow bank liquidity\n";
-    return -1;
+    throw (std::runtime_error("Account initial deposit would overflow bank liquidity\n"));
   }
   int id = get_id();
   if (!id) {
-    std::cout << "Account id limit reached, can't open more accounts\n";
-    return -1;
+    throw (std::runtime_error("Account id limit reached, can't open more accounts\n"));
   }
   int bank_commission = value * COMMISSION;
   int acc_value = value - bank_commission;
@@ -97,114 +88,99 @@ int Bank::open_account(int value) {
 }
 
 void Bank::close_account(int id) {
-  std::map<int, Account>::iterator entry = _accounts.find(id);
-  if (entry == _accounts.end()) {
-    std::cout << "Provided id (" << id << ") does not match any account\n";
-    return;
-  }
-  const int acc_debt = entry->second.get_debt();
+  Account acc = (*this)[id];
+  const int acc_debt = acc.get_debt();
   if (acc_debt) {
-    std::cout << "Can't close account.\nOutstanding debt: " << acc_debt << "\n";
-    return;
+    std::ostringstream err;
+    err << "Can't close account.\nOutstanding debt: " << acc_debt << "\n";
+    throw (std::runtime_error(err.str()));
   }
   _reusable_ids.push(id);
-  _liquidity -= entry->second.get_value();
-  _accounts.erase(entry);
+  _liquidity -= acc.get_value();
+  _accounts.erase(id);
   std::cout << "Successfully closed account\n";
 }
 
 void Bank::deposit(int id, int value) {
-  std::map<int, Account>::iterator entry = _accounts.find(id);
-  if (entry == _accounts.end()) {
-    std::cout << "Provided id (" << id << ") does not match any account\n";
-    return;
-  }
+  Account acc = (*this)[id];
   if (value < 20) {
-    std::cout << "The minimum allowed deposit amount is 20\n";
-    return;
+    throw (std::runtime_error("The minimum allowed deposit amount is 20\n"));
   }
-  if (entry->second.get_value() > std::numeric_limits<int>::max() - value) {
-    std::cout << "This deposit would overflow the account value\n";
-    return;
+  if (acc.get_value() > std::numeric_limits<int>::max() - value) {
+    throw (std::runtime_error("This deposit would overflow the account value\n"));
   }
   int bank_commission = value * COMMISSION;
   int deposit_value = value - bank_commission;
-  entry->second._value += deposit_value;
+  acc._value += deposit_value;
   _liquidity += value;
   std::cout << "Deposit was successful\n";
 }
 
 void Bank::withdrawal(int id, int value) {
-  std::map<int, Account>::iterator entry = _accounts.find(id);
-  if (entry == _accounts.end()) {
-    std::cout << "Provided id (" << id << ") does not match any account\n";
-    return;
-  }
+  Account acc = (*this)[id];
   if (value < 0) {
-    std::cout << "Can't withdraw negative amount\n";
-    return;
+    throw (std::runtime_error("Can't withdraw negative amount\n"));
   }
-  if (entry->second.get_value() < value) {
-    std::cout << "Withdrawal amount cannot exceed account value\n";
-    return;
+  if (acc.get_value() < value) {
+    throw (std::runtime_error("Withdrawal amount cannot exceed account value\n"));
   }
-  entry->second._value -= value;
+  acc._value -= value;
   _liquidity -= value;
   std::cout << "Withdrawal was successful\n";
 }
 
 void Bank::loan(int id, int value) {
-  std::map<int, Account>::iterator entry = _accounts.find(id);
-  if (entry == _accounts.end()) {
-    std::cout << "Provided id (" << id << ") does not match any account\n";
-    return;
-  }
+  Account acc = (*this)[id];
   if (value < 100) {
-    std::cout << "Minimum loan amount is 100\n";
-    return;
+    throw (std::runtime_error("Minimum loan amount is 100\n"));
   }
   if (value > _liquidity) {
-    std::cout << "Loan amount cannot exceed bank liquidity\n";
-    return;
+    throw (std::runtime_error("Loan amount cannot exceed bank liquidity\n"));
   }
-  if (entry->second.get_value() > std::numeric_limits<int>::max() - value) {
-    std::cout << "This loan amount would overflow the account value\n";
-    return;
+  if (acc.get_value() > std::numeric_limits<int>::max() - value) {
+    throw (std::runtime_error("This loan amount would overflow the account value\n"));
   }
-  entry->second._value += value;
-  entry->second._debt += value * INTEREST;
+  acc._value += value;
+  acc._debt += value * INTEREST;
   std::cout << "Loan was successful\n";
 }
 
 void Bank::repay_loan(int id, int value) {
-  std::map<int, Account>::iterator entry = _accounts.find(id);
-  if (entry == _accounts.end()) {
-    std::cout << "Provided id (" << id << ") does not match any account\n";
-    return;
-  }
+  Account acc = (*this)[id];
   if (value <= 0) {
-    std::cout << "Value must be positive\n";
-    return;
+    throw (std::runtime_error("Can't repay negative or zero amount\n"));
   }
-  if (value > entry->second.get_debt()) {
-    std::cout << "Amount should not exceed debt value\n";
-    return;
+  int acc_debt = acc.get_debt();
+  if (value > acc_debt) {
+    throw (std::runtime_error("Amount should not exceed debt value\n"));
   }
-  entry->second._value -= value;
-  entry->second._debt -= value;
-  if (!entry->second.get_debt()) {
+  acc._value -= value;
+  acc._debt -= value;
+  if (!acc_debt) {
     std::cout << "Debt paid in full\n";
     return;
   }
-  std::cout << "Partial payment accepted, " << entry->second.get_debt() << " remaining\n";
+  std::cout << "Partial payment accepted, " << acc_debt << " remaining\n";
 }
 
 Bank::Account &Bank::operator[](int id) {
-  return _accounts.at(id);
+  try {
+    return _accounts.at(id);
+  } catch (std::out_of_range &e) {
+    std::ostringstream err;
+    err << "Provided id (" << id << ") does not match any account\n";
+    throw (std::runtime_error(err.str()));
+  }
 }
 
 const Bank::Account &Bank::operator[](int id) const {
-  return _accounts.at(id);
+  try {
+    return _accounts.at(id);
+  } catch (std::out_of_range &e) {
+    std::ostringstream err;
+    err << "Provided id (" << id << ") does not match any account\n";
+    throw(std::runtime_error(err.str()));
+  }
 }
 
 std::ostream &operator<<(std::ostream &out, const Bank &bank) {
