@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:44:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/14 11:40:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:12:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <cmath>
 #include <sstream>
 
 class Graph {
@@ -38,6 +39,7 @@ class Graph {
     Vector2 _size;
     std::vector<Vector2> _points;
     std::vector<std::string> _graph;
+    void build_graph();
 
   public:
     Graph();
@@ -45,8 +47,7 @@ class Graph {
     Graph(const Graph &copy);
     Graph &operator=(const Graph &copy);
     ~Graph();
-    void build_graph();
     void print_graph();
-    void add_point(float x, float y);
+    void add_point(float xf, float yf);
     void display_points() const;
 };

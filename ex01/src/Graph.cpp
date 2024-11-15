@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:47:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/14 12:08:34 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:17:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,35 @@ void Graph::print_graph() {
   }
 }
 
-void Graph::add_point(float x, float y) {
-  _points.push_back(Vector2(x, y));
+void Graph::add_point(float xf, float yf) {
+  int x = static_cast<int>(std::floor(xf + 0.5));
+  int y = static_cast<int>(std::floor(yf + 0.5));
+  if (x < 0 || x >= _size.getX() || y < 0 || y >= _size.getY()) {
+    throw (std::runtime_error("Point coordinates out of bounds\n"));
+  }
+  _points.push_back(Vector2(xf, yf));
+  int row = _size.getY() - y - 1;
+  int len = _graph[row].size();
+  int count = -1;
+  for (int i = 3; i < len; i++) {
+    if (_graph[row][i] == '.') {
+      count++;
+    }
+    if (count == x) {
+      _graph[row][i] = 'x';
+      return;
+    }
+  }
 }
 
 void Graph::display_points() const {
-  int width = _size.getX();
-  int height = _size.getY();
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
-      // REMOVE??
-    }
+  if (_points.empty()) {
+    std::cout << "No points to display\n";
+    return;
+  }
+  std::vector<Vector2>::const_iterator it = _points.begin();
+  std::vector<Vector2>::const_iterator end = _points.end();
+  for (; it < end; it++) {
+    std::cout << "Point: (" << it->getX() << ", " << it->getY() << ")\n";
   }
 }
