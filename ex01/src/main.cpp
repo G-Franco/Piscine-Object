@@ -6,13 +6,16 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:20:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/15 10:51:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/23 11:29:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Graph.hpp"
 
-int main() {
+// TODO - rewrite main with new file reading in mind
+
+int main(int ac, char **av) {
+  
   try {
     Graph graph(6, 6);
     graph.print_graph();
