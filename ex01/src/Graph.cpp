@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:47:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/23 11:27:04 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/24 10:17:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,9 @@ std::vector<Graph::Vector2> Graph::read_points_from_file(const std::string &file
     if (!file) {
         throw std::runtime_error("Can't open file\n");
     }
+    if (file.peek() == std::ifstream::traits_type::eof()) {
+        throw std::runtime_error("File is empty\n");
+    }
     std::vector<Vector2> points;
     std::string line;
     std::ostringstream error;
@@ -151,18 +154,18 @@ std::vector<Graph::Vector2> Graph::read_points_from_file(const std::string &file
         if (line.empty()) continue;
         size_t comma = line.find(',');
         if (comma == std::string::npos || comma == 0 || comma == line.length() - 1) {
-            error << "Invalid format at line " << line_number;
+            error << "Invalid format at line " << line_number << "\n";
             throw std::runtime_error(error.str());
         }
         std::istringstream left(line.substr(0, comma));
         std::istringstream right(line.substr(comma + 1));
         float x, y;
         if (!(left >> x) || !(right >> y)) {
-            error << "Invalid number format at line " << line_number;
+            error << "Invalid number format at line " << line_number << "\n";
             throw std::runtime_error(error.str());
         }
         if (x < 0 || x >= _size.getX() || y < 0 || y >= _size.getY()) {
-            error << "Coordinates out of bounds at line " << line_number;
+            error << "Coordinates out of bounds at line " << line_number << "\n";
             throw std::runtime_error(error.str());
         }
         Vector2 new_point(x, y);
