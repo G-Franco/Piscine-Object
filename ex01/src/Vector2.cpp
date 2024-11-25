@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:44:05 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/14 11:22:16 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:11:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ Graph::Vector2 &Graph::Vector2::operator=(const Vector2 &copy) {
   }
   return *this;
 }
+
+bool Graph::Vector2::operator==(const Vector2 &other) const {
+  return _x == other._x && _y == other._y;
+}
+
 Graph::Vector2::~Vector2() {}
 
 const float &Graph::Vector2::getX() const {
@@ -36,12 +41,4 @@ const float &Graph::Vector2::getX() const {
 
 const float &Graph::Vector2::getY() const {
   return _y;
-}
-
-void Graph::Vector2::setX(float x) {
-  _x = x;
-}
-
-void Graph::Vector2::setY(float y) {
-  _y = y;
 }

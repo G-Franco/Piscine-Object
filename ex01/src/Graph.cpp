@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:47:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/24 10:17:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:48:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,19 @@ Graph::Graph()
     build_graph();
   }
 
-Graph::Graph(float width, float height)
+Graph::Graph(float width, float height, int ac, char **av)
   : _size(width, height) {
     if (_size.getX() < 1 || _size.getY() < 1) {
       throw std::runtime_error("Graph size must be positive\n");
     }
-    if (_size.getX() > 100 || _size.getY() > 100) {
-      throw std::runtime_error("Graph size cannot exceed 100\n");
+    if (_size.getX() > MAX_SIZE || _size.getY() > MAX_SIZE) {
+      std::ostringstream err;
+      err << "Graph size cannot exceed " << MAX_SIZE << "\n";
+      throw std::runtime_error(err.str());
     }
+    std::cout << "Graph size: " << _size.getX() << "x" << _size.getY() << "\n";
     build_graph();
+    validate_input(ac, av);
   }
 
 Graph::Graph(const Graph &copy)
@@ -57,12 +61,16 @@ void Graph::validate_input(int ac, char **av) {
       }
     }
     if (!file_points.empty()) {
-      _points.insert(_points.end(), file_points.begin(), file_points.end());
+      for (std::vector<Vector2>::iterator it = file_points.begin(); it != file_points.end(); it++) {
+        add_point(it->getX(), it->getY());
+      }
     }
   }
   catch (const std::runtime_error &err) {
     throw std::runtime_error("Error in file: " + path + "\n\t" + err.what());
   }
+  display_points();
+  print_graph();
 }
 
 void Graph::build_graph() {
@@ -166,6 +174,7 @@ std::vector<Graph::Vector2> Graph::read_points_from_file(const std::string &file
         }
         if (x < 0 || x >= _size.getX() || y < 0 || y >= _size.getY()) {
             error << "Coordinates out of bounds at line " << line_number << "\n";
+            error << "Coordinates must be between 0 and " << _size.getX() - 1 << " for x and 0 and " << _size.getY() - 1 << " for y\n";
             throw std::runtime_error(error.str());
         }
         Vector2 new_point(x, y);

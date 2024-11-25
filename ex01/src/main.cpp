@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:20:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/23 11:29:04 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:55:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,25 @@
 // TODO - rewrite main with new file reading in mind
 
 int main(int ac, char **av) {
-  
   try {
-    Graph graph(6, 6);
+    Graph graph(5, 11, ac, av);
+  }
+  catch (std::exception &e) {
+    std::cerr << e.what() << "\n";
+  }
+
+  try {
+    // Test with files in the files folder as input args
+    // TODO - Check points added to the wrong place in test ok file
+    Graph graph(10, 10, ac, av);
+  }
+  catch(const std::exception& e) {
+    // std::cerr << e.what() << '\n';
+  }
+
+  try {
+    ac = 1;
+    Graph graph(10, 10, ac, av);
     graph.print_graph();
     graph.add_point(0, 0);
     graph.display_points();
@@ -32,6 +48,6 @@ int main(int ac, char **av) {
     graph.display_points();
     graph.print_graph();
   } catch (std::exception &e) {
-    std::cerr << e.what();
+    std::cerr << e.what() << "\n";
   }
 }
