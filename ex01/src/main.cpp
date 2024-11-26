@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:20:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/25 15:55:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:23:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,23 @@ int main(int ac, char **av) {
     // std::cerr << e.what() << '\n';
   }
 
-  try {
-    ac = 1;
-    Graph graph(10, 10, ac, av);
-    graph.print_graph();
-    graph.add_point(0, 0);
-    graph.display_points();
-    graph.print_graph();
-    graph.add_point(5, 5);
-    graph.display_points();
-    graph.print_graph();
-    graph.add_point(4, 3);
-    graph.display_points();
-    graph.print_graph();
-    graph.add_point(1.2, 3.9);
-    graph.display_points();
-    graph.print_graph();
-  } catch (std::exception &e) {
-    std::cerr << e.what() << "\n";
-  }
+  // try {
+  //   ac = 1;
+  //   Graph graph(10, 10, ac, av);
+  //   graph.print_graph();
+  //   graph.add_point(0, 0);
+  //   graph.display_points();
+  //   graph.print_graph();
+  //   graph.add_point(5, 5);
+  //   graph.display_points();
+  //   graph.print_graph();
+  //   graph.add_point(4, 3);
+  //   graph.display_points();
+  //   graph.print_graph();
+  //   graph.add_point(1.2, 3.9);
+  //   graph.display_points();
+  //   graph.print_graph();
+  // } catch (std::exception &e) {
+  //   std::cerr << e.what() << "\n";
+  // }
 }

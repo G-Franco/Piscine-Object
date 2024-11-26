@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:44:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/25 15:20:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:21:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ class Graph {
       private:
         float _x;
         float _y;
+        int _nearest_x;
+        int _nearest_y;
         
       public:
         Vector2();
@@ -40,6 +42,8 @@ class Graph {
         ~Vector2();
         const float &getX() const;
         const float &getY() const;
+        const int &get_nearest_X() const;
+        const int &get_nearest_Y() const;
     };
 
     Vector2 _size;
@@ -47,6 +51,7 @@ class Graph {
     std::vector<std::string> _graph;
     void build_graph();
     void validate_input(int ac, char **av);
+    void add_point(Vector2 point, bool from_file, std::vector<Vector2> &target);
 
   public:
     Graph();
@@ -55,7 +60,7 @@ class Graph {
     Graph &operator=(const Graph &copy);
     ~Graph();
     void print_graph();
-    void add_point(float xf, float yf);
+    void add_point(float x, float y);
     void display_points() const;
     std::vector<Vector2> read_points_from_file(const std::string &filename);
 };

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:47:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/25 15:48:26 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:19:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,20 @@ void Graph::validate_input(int ac, char **av) {
     return;
   }
   std::string path;
-  std::vector<Vector2> file_points;
+  std::vector<Vector2> points_to_add;
   try {
     for (int i = 1; i < ac; i++) {
       path = FILE_DIR + av[i];
       std::vector<Vector2> temp = read_points_from_file(path);
       if (!temp.empty()) {
-        file_points.insert(file_points.end(), temp.begin(), temp.end());
+        points_to_add.insert(points_to_add.end(), temp.begin(), temp.end());
       }
     }
-    if (!file_points.empty()) {
-      for (std::vector<Vector2>::iterator it = file_points.begin(); it != file_points.end(); it++) {
-        add_point(it->getX(), it->getY());
-      }
+    if (points_to_add.empty()) {
+      throw std::runtime_error("No points to add from file(s), check formatting\n");
+    }
+    for (std::vector<Vector2>::iterator it = points_to_add.begin(); it != points_to_add.end(); it++) {
+      add_point(it->getX(), it->getY());
     }
   }
   catch (const std::runtime_error &err) {
@@ -107,25 +108,30 @@ void Graph::print_graph() {
   }
 }
 
-void Graph::add_point(float xf, float yf) {
-  int x = static_cast<int>(std::floor(xf + 0.5));
-  int y = static_cast<int>(std::floor(yf + 0.5));
-  if (x < 0 || x >= _size.getX() || y < 0 || y >= _size.getY()) {
+void Graph::add_point(float x, float y) {
+  add_point(Vector2(x, y), false, _points);
+}
+
+void Graph::add_point(Vector2 point, bool from_file, std::vector<Vector2> &target) {
+  if (point.getX() < 0 || point.getX() >= _size.getX() ||
+      point.getY() < 0 || point.getY() >= _size.getY()) {
     throw std::runtime_error("Point coordinates out of bounds\n");
   }
-  Vector2 new_point(xf, yf);
-  if (std::find(_points.begin(), _points.end(), new_point) != _points.end()) {
+  if (std::find(_points.begin(), _points.end(), point) != _points.end()) {
     throw std::runtime_error("Error: Point already exists\n");
   }
-  _points.push_back(new_point);
-  int row = _size.getY() - y - 1;
+  target.push_back(point);
+  if (from_file) {
+    return;
+  }
+  int row = _size.getY() - point.get_nearest_Y() - 1;
   int len = _graph[row].size();
   int count = -1;
   for (int i = 3; i < len; i++) {
     if (_graph[row][i] == '.') {
       count++;
     }
-    if (count == x) {
+    if (count == point.get_nearest_X()) {
       _graph[row][i] = 'x';
       return;
     }
@@ -152,7 +158,7 @@ std::vector<Graph::Vector2> Graph::read_points_from_file(const std::string &file
     if (file.peek() == std::ifstream::traits_type::eof()) {
         throw std::runtime_error("File is empty\n");
     }
-    std::vector<Vector2> points;
+    std::vector<Vector2> file_points;
     std::string line;
     std::ostringstream error;
     size_t line_number = 0;
@@ -172,17 +178,15 @@ std::vector<Graph::Vector2> Graph::read_points_from_file(const std::string &file
             error << "Invalid number format at line " << line_number << "\n";
             throw std::runtime_error(error.str());
         }
-        if (x < 0 || x >= _size.getX() || y < 0 || y >= _size.getY()) {
-            error << "Coordinates out of bounds at line " << line_number << "\n";
-            error << "Coordinates must be between 0 and " << _size.getX() - 1 << " for x and 0 and " << _size.getY() - 1 << " for y\n";
-            throw std::runtime_error(error.str());
+        try {
+          add_point(Vector2(x, y), true, file_points);
         }
-        Vector2 new_point(x, y);
-        if (std::find(_points.begin(), _points.end(), new_point) != _points.end() ||
-            std::find(points.begin(), points.end(), new_point) != points.end()) {
-          throw std::runtime_error("Error: Point already exists\n");
+        catch(const std::exception& e) {
+          std::ostringstream err;
+          err << "Error in file: " << filename << "at line " << line_number << "\n\t"
+          << e.what() << "\n";
+          std::cerr << err.str();
         }
-        points.push_back(new_point);
     }
-    return points;
+    return file_points;
 }
