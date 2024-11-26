@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:44:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/26 11:21:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:41:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 #define FORMATTING std::string("Error: Bad formatting\nUse \"x,y\" to define points\n")
 #define FILE_DIR std::string("files/")
+#define SPACING 2
 #define MAX_SIZE 10
 
 class Graph {

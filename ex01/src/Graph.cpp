@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:47:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/26 11:19:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:42:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,17 @@ void Graph::validate_input(int ac, char **av) {
 void Graph::build_graph() {
   int width = _size.getX();
   int height = _size.getY();
-  int spacing = 2;
   std::string line;
   for (int i = 0; i < width; i++) {
     line += "  .";
   }
   std::ostringstream oss;
   for (int i = height - 1; i >= 0; i--) {
-    oss << std::setw(spacing) << i;
+    oss << std::setw(SPACING) << i;
     _graph.push_back(oss.str() + line); 
     oss.str("");
   }
-  oss << std::setw(spacing) << "    " << 0;
+  oss << std::setw(SPACING) << "    " << 0;
   for (int i = 1; i < width; i++) {
     if (i > 9) {
       oss << " " << i;
@@ -125,17 +124,8 @@ void Graph::add_point(Vector2 point, bool from_file, std::vector<Vector2> &targe
     return;
   }
   int row = _size.getY() - point.get_nearest_Y() - 1;
-  int len = _graph[row].size();
-  int count = -1;
-  for (int i = 3; i < len; i++) {
-    if (_graph[row][i] == '.') {
-      count++;
-    }
-    if (count == point.get_nearest_X()) {
-      _graph[row][i] = 'x';
-      return;
-    }
-  }
+  int col = SPACING + 2 + (point.get_nearest_X() * 3);
+  _graph[row][col] = 'x';
 }
 
 void Graph::display_points() const {
