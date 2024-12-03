@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:47:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/26 14:42:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:26:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Graph::Graph()
     build_graph();
   }
 
-Graph::Graph(float width, float height, int ac, char **av)
+Graph::Graph(float width, float height, std::vector<std::string> &args)
   : _size(width, height) {
     if (_size.getX() < 1 || _size.getY() < 1) {
       throw std::runtime_error("Graph size must be positive\n");
@@ -27,10 +27,9 @@ Graph::Graph(float width, float height, int ac, char **av)
       err << "Graph size cannot exceed " << MAX_SIZE << "\n";
       throw std::runtime_error(err.str());
     }
-    std::cout << "Graph size: " << _size.getX() << "x" << _size.getY() << "\n";
     build_graph();
-    validate_input(ac, av);
-  }
+    validate_input(args);
+}
 
 Graph::Graph(const Graph &copy)
   : _size(copy._size), _points(copy._points), _graph(copy._graph) {}
@@ -46,15 +45,15 @@ Graph &Graph::operator=(const Graph &copy) {
 
 Graph::~Graph() {}
 
-void Graph::validate_input(int ac, char **av) {
-  if (ac == 1) {
+void Graph::validate_input(std::vector<std::string> &args) {
+  if (args.empty()) {
     return;
   }
   std::string path;
   std::vector<Vector2> points_to_add;
   try {
-    for (int i = 1; i < ac; i++) {
-      path = FILE_DIR + av[i];
+    for (std::vector<std::string>::iterator it = args.begin(); it != args.end(); it++) {
+      path = FILE_DIR + *it;
       std::vector<Vector2> temp = read_points_from_file(path);
       if (!temp.empty()) {
         points_to_add.insert(points_to_add.end(), temp.begin(), temp.end());
@@ -141,42 +140,47 @@ void Graph::display_points() const {
 }
 
 std::vector<Graph::Vector2> Graph::read_points_from_file(const std::string &filename) {
-    std::ifstream file(filename.c_str());
-    if (!file) {
-        throw std::runtime_error("Can't open file\n");
-    }
-    if (file.peek() == std::ifstream::traits_type::eof()) {
-        throw std::runtime_error("File is empty\n");
-    }
-    std::vector<Vector2> file_points;
-    std::string line;
-    std::ostringstream error;
-    size_t line_number = 0;
-    while (std::getline(file, line)) {
-        line_number++;
-        line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
-        if (line.empty()) continue;
-        size_t comma = line.find(',');
-        if (comma == std::string::npos || comma == 0 || comma == line.length() - 1) {
-            error << "Invalid format at line " << line_number << "\n";
-            throw std::runtime_error(error.str());
-        }
-        std::istringstream left(line.substr(0, comma));
-        std::istringstream right(line.substr(comma + 1));
-        float x, y;
-        if (!(left >> x) || !(right >> y)) {
-            error << "Invalid number format at line " << line_number << "\n";
-            throw std::runtime_error(error.str());
-        }
-        try {
-          add_point(Vector2(x, y), true, file_points);
-        }
-        catch(const std::exception& e) {
-          std::ostringstream err;
-          err << "Error in file: " << filename << "at line " << line_number << "\n\t"
-          << e.what() << "\n";
-          std::cerr << err.str();
-        }
-    }
-    return file_points;
+  std::ifstream file(filename.c_str());
+  if (!file) {
+      throw std::runtime_error("Can't open file\n");
+  }
+  if (file.peek() == std::ifstream::traits_type::eof()) {
+      throw std::runtime_error("File is empty\n");
+  }
+  std::vector<Vector2> file_points;
+  std::string line;
+  std::ostringstream error;
+  size_t line_number = 0;
+  while (std::getline(file, line)) {
+      line_number++;
+      line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
+      if (line.empty()) continue;
+      size_t comma = line.find(',');
+      if (comma == std::string::npos || comma == 0 || comma == line.length() - 1) {
+          error << "Invalid format at line " << line_number << "\n";
+          throw std::runtime_error(error.str());
+      }
+      std::istringstream left(line.substr(0, comma));
+      std::istringstream right(line.substr(comma + 1));
+      float x, y;
+      if (!(left >> x) || !(right >> y)) {
+          error << "Invalid number format at line " << line_number << "\n";
+          throw std::runtime_error(error.str());
+      }
+      std::string leftovers;
+      if (left >> leftovers || right >> leftovers) {
+          error << "Invalid number format at line " << line_number << "\n";
+          throw std::runtime_error(error.str());
+      }
+      try {
+        add_point(Vector2(x, y), true, file_points);
+      }
+      catch(const std::exception& e) {
+        std::ostringstream err;
+        err << "Error in file: " << filename << " at line " << line_number << "\n\t"
+        << e.what() << "\n";
+        std::cerr << err.str();
+      }
+  }
+  return file_points;
 }

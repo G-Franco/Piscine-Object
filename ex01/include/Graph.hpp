@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:44:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/11/26 14:41:24 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/11/28 11:32:54 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <string>
 #include <algorithm>
 #include <sstream>
+#include <limits>
 
 #define FORMATTING std::string("Error: Bad formatting\nUse \"x,y\" to define points\n")
 #define FILE_DIR std::string("files/")
@@ -51,12 +52,12 @@ class Graph {
     std::vector<Vector2> _points;
     std::vector<std::string> _graph;
     void build_graph();
-    void validate_input(int ac, char **av);
+    void validate_input(std::vector<std::string> &args);
     void add_point(Vector2 point, bool from_file, std::vector<Vector2> &target);
 
   public:
     Graph();
-    Graph(float width, float height, int ac, char **av);
+    Graph(float width, float height, std::vector<std::string> &args);
     Graph(const Graph &copy);
     Graph &operator=(const Graph &copy);
     ~Graph();
