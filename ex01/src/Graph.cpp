@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:47:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/03 11:26:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:44:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,9 @@ void Graph::add_point(float x, float y) {
 }
 
 void Graph::add_point(Vector2 point, bool from_file, std::vector<Vector2> &target) {
+  if (!std::isfinite(point.getX()) || !std::isfinite(point.getY())) {
+    throw std::runtime_error("Infinite numbers or NaN are not allowed\n");
+  }
   if (point.getX() < 0 || point.getX() >= _size.getX() ||
       point.getY() < 0 || point.getY() >= _size.getY()) {
     throw std::runtime_error("Point coordinates out of bounds\n");

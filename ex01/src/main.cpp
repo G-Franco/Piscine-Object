@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:20:53 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/03 11:29:52 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:48:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int ac, char **av) {
   std::vector<std::pair<float, float> > test_points;
 
   std::cout << "Testing error cases:\n";
-  std::cout << "\nTesting wrong dimensions:\n";
+  std::cout << "\nTesting weird dimensions:\n";
   test_graph(0, 1, args, test_points);
   std::cout << "-------------\n";
   test_graph(1, 0, args, test_points);
@@ -88,9 +88,14 @@ int main(int ac, char **av) {
   args.push_back("test_ok2");
   test_graph(10, 10, args, test_points);
   std::cout << "-------------\n";
+  args.clear();
+  args.push_back("test_scientific");
+  test_graph(10, 10, args, test_points);
+  std::cout << "-------------\n";
 
-  std::cout << "\nTesting with 2 ok files:\n";
+  std::cout << "\nTesting with all ok files:\n";
   args.push_back("test_ok");
+  args.push_back("test_ok2");
   test_graph(10, 10, args, test_points);
   args.clear();
   std::cout << "-------------\n";
@@ -122,6 +127,26 @@ int main(int ac, char **av) {
   test_graph(10, 10, args, test_points);
   test_points.clear();
   std::cout << "-------------\n";
+  std::cout << "\nTesting positive and negative infinity and NaN cases:\n";
+  test_points.push_back(std::make_pair(std::numeric_limits<float>::infinity(), 0));
+  test_graph(10, 10, args, test_points);
+  test_points.clear();
+  test_points.push_back(std::make_pair(0, std::numeric_limits<float>::infinity()));
+  test_graph(10, 10, args, test_points);
+  test_points.clear();
+  test_points.push_back(std::make_pair(-std::numeric_limits<float>::infinity(), 0));
+  test_graph(10, 10, args, test_points);
+  test_points.clear();
+  test_points.push_back(std::make_pair(0, -std::numeric_limits<float>::infinity()));
+  test_graph(10, 10, args, test_points);
+  test_points.clear();
+  test_points.push_back(std::make_pair(std::numeric_limits<float>::quiet_NaN(), 0));
+  test_graph(10, 10, args, test_points);
+  test_points.clear();
+  test_points.push_back(std::make_pair(0, std::numeric_limits<float>::quiet_NaN()));
+  test_graph(10, 10, args, test_points);
+  test_points.clear();
+  std::cout << "-------------\n";
   std::cout << "\nTesting ok cases:\n";
   test_points.push_back(std::make_pair(0, 0));
   test_points.push_back(std::make_pair(1, 1));
@@ -134,5 +159,26 @@ int main(int ac, char **av) {
   test_points.push_back(std::make_pair(8.9, 4));
   test_graph(10, 10, args, test_points);
   std::cout << "-------------\n";
+  std::cout << "\nTesting ok scientific notation cases:\n";
+  test_points.clear();
+  test_points.push_back(std::make_pair(1e0, 0.256e1));
+  test_points.push_back(std::make_pair(0.5e1,2.5e-1));
+  test_points.push_back(std::make_pair(.5e1,.025E2));
+  test_points.push_back(std::make_pair(1., .5));
+  test_graph(10, 10, args, test_points);
   return 0;  
 }
+
+// For tinkering during evaluation
+// int main(int ac, char **av) {
+//   try {
+//     std::vector<std::string> args = av_to_vector(ac, av);
+//     Graph graph(10, 10, args);
+//     graph.add_point(1,1);
+//     graph.display_points();
+//     graph.print_graph();
+//   }
+//   catch(const std::exception& e) {
+//     std::cerr << e.what() << '\n';
+//   }
+// }
