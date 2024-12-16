@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Shovel.hpp                                         :+:      :+:    :+:   */
+/*   Hammer.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 11:09:21 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/16 11:09:06 by gacorrei         ###   ########.fr       */
+/*   Created: 2024/12/16 11:40:09 by gacorrei          #+#    #+#             */
+/*   Updated: 2024/12/16 11:40:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include "../include/Tool.hpp"
 
-class Shovel : public Tool {
+class Hammer : public Tool {
   public:
-    Shovel();
-    Shovel(int uses);
-    Shovel(const Shovel &copy);
-    Shovel &operator=(const Shovel &copy);
-    ~Shovel();
+    Hammer();
+    Hammer(int uses);
+    Hammer(const Hammer &copy);
+    Hammer &operator=(const Hammer &copy);
+    ~Hammer();
     void use();
     std::string get_type() const;
 };
