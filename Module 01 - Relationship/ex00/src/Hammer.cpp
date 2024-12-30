@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:40:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/16 11:42:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/12/30 11:30:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ Hammer::Hammer(int uses)
   }
 }
 
-Hammer::Hammer(const Hammer &copy) {
+Hammer::Hammer(const Hammer &copy)
+  : Tool(copy) {
   std::cout << "Hammer copy constructor called\n";
 }
 
 Hammer &Hammer::operator=(const Hammer &hammer) {
+  (void)hammer;
   std::cout << "Hammer copy assignment operator called\n";
   return *this;
 }

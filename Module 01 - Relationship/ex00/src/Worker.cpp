@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:55:03 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/16 11:29:21 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:05:35 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,29 @@ void Worker::remove_tool(std::string type) {
     }
   }
   std::cout << "The " << type << " has been removed from the worker\n";
+}
+
+void Worker::sign_up_workshop(Workshop *workshop) {
+  if (!workshop) {
+    std::cout << "Workshop is NULL\n";
+    return;
+  }
+  workshop->add_worker(this);
+  std::cout << "Worker has signed up for the workshop\n";
+}
+
+void Worker::leave_workshop(Workshop *workshop) {
+  if (!workshop) {
+    std::cout << "Workshop is NULL\n";
+    return;
+  }
+  workshop->remove_worker(this);
+  std::cout << "Worker has left the workshop\n";
+}
+
+void Worker::work() {
+  std::cout << "Worker is working\n";
+  for (std::vector<Tool *>::iterator it = _tools.begin(); it != _tools.end(); ++it) {
+    (*it)->use();
+  }
 }

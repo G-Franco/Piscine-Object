@@ -1,6 +1,7 @@
-NAME = 
-DEBUG = _debug
-SRC = src/main.cpp
+NAME = relationship
+DEBUG = relationship_debug
+SRC = src/main.cpp src/Worker.cpp src/Tool.cpp src/Shovel.cpp src/Hammer.cpp \
+			src/Workshop.cpp
 CC = @c++
 CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98
 CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98 -g -fsanitize=address,undefined

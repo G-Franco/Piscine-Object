@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:10:17 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/16 11:31:08 by gacorrei         ###   ########.fr       */
+/*   Updated: 2024/12/30 11:29:45 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ Shovel::Shovel(int uses)
   }
 }
 
-Shovel::Shovel(const Shovel &copy) {
+Shovel::Shovel(const Shovel &copy)
+  : Tool(copy) {
   std::cout << "Shovel copy constructor called\n";
 }
 
 Shovel &Shovel::operator=(const Shovel &shovel) {
+  (void)shovel;
   std::cout << "Shovel copy assignment operator called\n";
   return *this;
 }
