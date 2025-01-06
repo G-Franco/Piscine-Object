@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:41:56 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/30 12:04:26 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/06 10:36:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ struct Statistic {
 };
 
 class Tool;
+class Workshop;
 
 // Worker class has Position and Statistic attributes as composition.
 // Composition is a "has-a" relationship.
@@ -46,13 +47,14 @@ class Worker {
     Position _coordinate;
     Statistic _stat;
     std::vector<Tool *> _tools;
+    std::vector<Workshop *> _workshops;
   public:
     Worker();
     Worker(Position pos, Statistic stats);
     Worker(const Worker &copy);
     Worker &operator=(const Worker &copy);
     ~Worker();
-    bool check_tools(std::string type) const;
+    Tool *GetTool(std::string ToolType) const;
     bool give_tool(Tool *tool);
     void remove_tool(std::string type);
     void sign_up_workshop(Workshop *workshop);

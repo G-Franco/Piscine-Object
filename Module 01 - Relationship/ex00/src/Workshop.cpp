@@ -6,14 +6,20 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 11:09:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/30 12:05:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/06 10:31:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Workshop.hpp"
 
-Workshop::Workshop() {
+Workshop::Workshop()
+  : _tool_type("Shovel") {
   std::cout << "Workshop default constructor called\n";
+}
+
+Workshop::Workshop(std::string tool_type)
+  : _tool_type(tool_type) {
+  std::cout << "Workshop parameter constructor called\n";
 }
 
 Workshop::Workshop(const Workshop &copy) {
@@ -33,9 +39,17 @@ Workshop::~Workshop() {
   std::cout << "Workshop destructor called\n";
 }
 
+std::string Workshop::get_tool_type() const {
+  return _tool_type;
+}
+
 void Workshop::add_worker(Worker *worker) {
   if (!worker) {
     std::cout << "Worker is NULL\n";
+    return;
+  }
+  if (!worker->GetTool(_tool_type)) {
+    std::cout << "Worker does not have the required tool\n";
     return;
   }
   _workers.push_back(worker);

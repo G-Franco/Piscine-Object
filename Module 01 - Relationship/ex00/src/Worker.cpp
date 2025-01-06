@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:55:03 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/30 12:05:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/06 10:36:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ Worker::~Worker() {
   }
 }
 
-bool Worker::check_tools(std::string type) const {
+Tool *Worker::GetTool(std::string ToolType) const {
   for (std::vector<Tool *>::const_iterator it = _tools.begin(); it != _tools.end(); ++it) {
-    if ((*it)->get_type() == type) {
-      return true;
+    if ((*it)->get_type() == ToolType) {
+      return *it;
     }
   }
-  return false;
+  return NULL;
 }
 
 bool Worker::give_tool(Tool *tool) {
@@ -59,7 +59,7 @@ bool Worker::give_tool(Tool *tool) {
     return false;
   }
   std::string type = tool->get_type();
-  if (check_tools(type)) {
+  if (GetTool(type)) {
     std::cout << "Worker already has a " << type << "\n";
     return false;
   }
@@ -69,17 +69,22 @@ bool Worker::give_tool(Tool *tool) {
 }
 
 void Worker::remove_tool(std::string type) {
-  if (!check_tools(type)) {
+  if (!GetTool(type)) {
     std::cout << "Worker does not have a " << type << "\n";
     return;
   }
   for (std::vector<Tool *>::iterator it = _tools.begin(); it != _tools.end(); ++it) {
     if ((*it)->get_type() == type) {
       _tools.erase(it);
+      for (std::vector<Workshop *>::iterator it2 = _workshops.begin(); it2 != _workshops.end(); ++it2) {
+        if ((*it2)->get_tool_type() == type) {
+          leave_workshop(*it2);
+        }
       break;
     }
   }
   std::cout << "The " << type << " has been removed from the worker\n";
+  }
 }
 
 void Worker::sign_up_workshop(Workshop *workshop) {
@@ -87,7 +92,12 @@ void Worker::sign_up_workshop(Workshop *workshop) {
     std::cout << "Workshop is NULL\n";
     return;
   }
+  if (!GetTool(workshop->get_tool_type())) {
+    std::cout << "Worker does not have the required tool\n";
+    return;
+  }
   workshop->add_worker(this);
+  _workshops.push_back(workshop);
   std::cout << "Worker has signed up for the workshop\n";
 }
 
@@ -97,6 +107,10 @@ void Worker::leave_workshop(Workshop *workshop) {
     return;
   }
   workshop->remove_worker(this);
+  std::vector<Workshop *>::iterator it = std::find(_workshops.begin(), _workshops.end(), workshop);
+  if (it != _workshops.end()) {
+    _workshops.erase(it);
+  }
   std::cout << "Worker has left the workshop\n";
 }
 
