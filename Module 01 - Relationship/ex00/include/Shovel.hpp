@@ -6,12 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:09:21 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/16 11:09:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:45:54 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include "../include/Tool.hpp"
+#include "Tool.hpp"
 
 class Shovel : public Tool {
   public:

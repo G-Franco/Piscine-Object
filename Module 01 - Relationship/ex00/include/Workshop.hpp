@@ -6,12 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 10:51:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/01/06 10:36:28 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:46:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include "../include/Worker.hpp"
+#include "Worker.hpp"
 
 class Worker;
 

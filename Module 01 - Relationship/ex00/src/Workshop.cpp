@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 11:09:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/01/06 10:31:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:19:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ void Workshop::remove_worker(Worker *worker) {
 }
 
 void Workshop::executeWorkDay() {
-  for (std::vector<Worker *>::iterator it = _workers.begin(); it != _workers.end(); ++it) {
-    (*it)->work();
+  std::cout << "Workshop executing workday\n";
+  for (size_t i = 0; i < _workers.size(); ++i) {
+    if (_workers[i]->work(_tool_type) == false) {
+      remove_worker(_workers[i]);
+      i--;
+    }
   }
 }

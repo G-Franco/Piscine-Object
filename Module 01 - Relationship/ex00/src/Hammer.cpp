@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:40:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/30 11:30:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:07:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ Hammer &Hammer::operator=(const Hammer &hammer) {
 
 Hammer::~Hammer() {
   std::cout << "Hammer destructor called\n";
-  _worker->remove_tool(get_type());
+  if (_worker) {
+    _worker->remove_tool(get_type());
+  }
 }
 
 void Hammer::use() {

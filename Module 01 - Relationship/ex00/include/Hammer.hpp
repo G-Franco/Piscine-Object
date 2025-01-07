@@ -6,12 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:40:09 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/16 11:40:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:45:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include "../include/Tool.hpp"
+#include "Tool.hpp"
 
 class Hammer : public Tool {
   public:

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:55:03 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/01/06 10:36:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:09:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,12 @@ bool Worker::give_tool(Tool *tool) {
     std::cout << "Worker already has a " << type << "\n";
     return false;
   }
+  Worker *previous_worker = tool->get_worker();
+  if (previous_worker) {
+    previous_worker->remove_tool(type);
+  }
   _tools.push_back(tool);
+  tool->assign_worker(this);
   std::cout << "Worker has been given a " << type << "\n";
   return true;
 }
@@ -75,16 +80,19 @@ void Worker::remove_tool(std::string type) {
   }
   for (std::vector<Tool *>::iterator it = _tools.begin(); it != _tools.end(); ++it) {
     if ((*it)->get_type() == type) {
+      (*it)->assign_worker(NULL);
       _tools.erase(it);
-      for (std::vector<Workshop *>::iterator it2 = _workshops.begin(); it2 != _workshops.end(); ++it2) {
-        if ((*it2)->get_tool_type() == type) {
-          leave_workshop(*it2);
-        }
       break;
     }
   }
-  std::cout << "The " << type << " has been removed from the worker\n";
+  for (size_t i = 0; i < _workshops.size(); i++) {
+      if (_workshops[i]->get_tool_type() == type)
+      {
+        leave_workshop(_workshops[i]);
+        i--;
+      }
   }
+  std::cout << "The " << type << " has been removed from the worker\n";
 }
 
 void Worker::sign_up_workshop(Workshop *workshop) {
@@ -114,9 +122,17 @@ void Worker::leave_workshop(Workshop *workshop) {
   std::cout << "Worker has left the workshop\n";
 }
 
-void Worker::work() {
+bool Worker::work(std::string tool_type) {
   std::cout << "Worker is working\n";
   for (std::vector<Tool *>::iterator it = _tools.begin(); it != _tools.end(); ++it) {
-    (*it)->use();
+    if ((*it)->get_type() == tool_type) {
+      (*it)->use();
+      if ((*it)->get_number_of_uses() == 0) {
+        std::cout << "Worker has broken the " << tool_type << "\n";
+        remove_tool(tool_type);
+        return false;
+      }
+    }
   }
+  return true;
 }

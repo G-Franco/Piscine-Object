@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:10:17 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/30 11:29:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:08:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ Shovel &Shovel::operator=(const Shovel &shovel) {
 
 Shovel::~Shovel() {
   std::cout << "Shovel destructor called\n";
-  _worker->remove_tool(get_type());
+  if (_worker) {
+    _worker->remove_tool(get_type());
+  }
 }
 
 void Shovel::use() {

@@ -6,14 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:11:28 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/16 11:09:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:04:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include <iostream>
 #include <sstream>
-#include "../include/Worker.hpp"
+#include "Worker.hpp"
 
 class Worker;
 
@@ -31,6 +31,8 @@ class Tool {
     Tool(const Tool &copy);
     Tool &operator=(const Tool &copy);
     virtual ~Tool();
+    int get_number_of_uses() const;
+    Worker *get_worker() const;
     void assign_worker(Worker *worker);
     virtual void use() = 0;
     virtual std::string get_type() const = 0;

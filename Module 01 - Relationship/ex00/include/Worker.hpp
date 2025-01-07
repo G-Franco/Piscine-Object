@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:41:56 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/01/06 10:36:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:48:18 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "../include/Tool.hpp"
-#include "../include/Workshop.hpp"
+#include "Workshop.hpp"
+#include "Tool.hpp"
 
 struct Position {
   int _x;
@@ -59,5 +59,5 @@ class Worker {
     void remove_tool(std::string type);
     void sign_up_workshop(Workshop *workshop);
     void leave_workshop(Workshop *workshop);
-    void work();
+    bool work(std::string tool_type);
 };

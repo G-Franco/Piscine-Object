@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:13:24 by gacorrei          #+#    #+#             */
-/*   Updated: 2024/12/16 11:30:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:24:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,19 @@ Tool::~Tool() {
    std::cout << "Tool destructor called\n";    
 }
 
+int Tool::get_number_of_uses() const {
+   return _numberOfUses;
+}
+
+Worker *Tool::get_worker() const {
+   return _worker;
+}
+
 // Assigns a worker to the tool.
 // Can be used to clear the worker from the tool by passing NULL.
 void Tool::assign_worker(Worker *worker) {
-  if (_worker) {
-    _worker->remove_tool(get_type());
+  _worker = worker;
+  if (!_worker) {
+    std::cout << get_type() << " currently has no worker\n";
   }
-  if (worker && worker->give_tool(this)) {
-    _worker = worker;
-    return;
-  }
-  _worker = NULL;
-  std::cout << get_type() << " currently has no worker\n";
 }
