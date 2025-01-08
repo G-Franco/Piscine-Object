@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 11:09:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/01/07 15:19:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:01:45 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,21 @@ std::string Workshop::get_tool_type() const {
   return _tool_type;
 }
 
-void Workshop::add_worker(Worker *worker) {
+bool Workshop::add_worker(Worker *worker) {
   if (!worker) {
     std::cout << "Worker is NULL\n";
-    return;
+    return false;
   }
   if (!worker->GetTool(_tool_type)) {
     std::cout << "Worker does not have the required tool\n";
-    return;
+    return false;
+  }
+  if (std::find(_workers.begin(), _workers.end(), worker) != _workers.end()) {
+    std::cout << "Worker is already in the workshop\n";
+    return false;
   }
   _workers.push_back(worker);
+  return true;
 }
 
 void Workshop::remove_worker(Worker *worker) {

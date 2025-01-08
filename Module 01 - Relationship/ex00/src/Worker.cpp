@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:55:03 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/01/07 15:09:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:02:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ void Worker::sign_up_workshop(Workshop *workshop) {
     std::cout << "Worker does not have the required tool\n";
     return;
   }
-  workshop->add_worker(this);
+  if (!workshop->add_worker(this)) {
+    std::cout << "Worker could not sign up for the workshop\n";
+    return;
+  }
   _workshops.push_back(workshop);
   std::cout << "Worker has signed up for the workshop\n";
 }

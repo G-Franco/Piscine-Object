@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 10:29:39 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/01/07 14:30:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:59:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,22 @@
 
 // TODO - Test failure cases at the beginning
 
+int tool_tester(int tool_type, int uses) {
+  try {
+    if (tool_type == 0) {
+      Shovel shovel(uses);
+    }
+    else if (tool_type == 1) {
+      Hammer hammer(uses);
+    }
+  }
+  catch (const std::exception &error) {
+    std::cerr << error.what() << '\n';
+    return 1;
+  }
+  return 0;
+}
+
 int main() {
   {
     std::cout << "Basic tests (Workers, Tools and Workshops are created)\n";
@@ -23,6 +39,38 @@ int main() {
     Workshop workshop1;
     Shovel shovel1;
     Hammer hammer1;
+  }
+  {
+    std::cout << "\nTool creation test cases\n";
+    tool_tester(0, -1);
+    tool_tester(1, -1);
+    tool_tester(0, 101);
+    tool_tester(1, 151);
+    tool_tester(0, 100);
+    tool_tester(1, 150);
+  }
+  {
+    std::cout << "\nTrying to use workshop with NULL worker\n";
+    Workshop workshop1;
+    workshop1.add_worker(NULL);
+    workshop1.remove_worker(NULL);
+  }
+  {
+    std::cout << "\nWorker interactions with tools and workshops\n";
+    Worker worker1;
+    Workshop workshop1;
+    Shovel shovel1;
+    Shovel shovel2;
+    Hammer hammer1;
+    worker1.give_tool(NULL);
+    worker1.give_tool(&shovel1);
+    worker1.give_tool(&shovel1);
+    worker1.give_tool(&shovel2);
+    worker1.remove_tool("Hammer");
+    worker1.sign_up_workshop(NULL);
+    worker1.leave_workshop(NULL);
+    worker1.sign_up_workshop(&workshop1);
+    worker1.sign_up_workshop(&workshop1);
   }
   {
     std::cout << "\nWhen worker is deleted the tool can't be deleted\n"

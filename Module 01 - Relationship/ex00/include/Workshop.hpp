@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 10:51:51 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/01/07 11:46:05 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:01:20 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Workshop {
     Workshop(std::string tool_type);
     ~Workshop();
     std::string get_tool_type() const;
-    void add_worker(Worker *worker);
+    bool add_worker(Worker *worker);
     void remove_worker(Worker *worker);
     void executeWorkDay();
 };
