@@ -1,0 +1,135 @@
+@startuml test
+
+abstract class LinkablePart {
+  + {abstract} execute(p_pression: float): void
+}
+
+class Wheel {
+  + executeRotation(p_force: float): void
+}
+
+class Gear {
+  - demultiplier: int
+}
+
+class GearLever {
+  - gears: Gear[]
+  - level: int
+  + change(): void
+  + activeGear(): Gear*
+}
+
+class Transmission {
+  - wheels: vector<Wheel*>
+  + activate(p_force: float): void
+}
+
+class Crankshaft {
+  - transmission: Transmission*
+  + receiveForce(p_volume: float): void
+}
+
+class ExplosionChamber {
+  - crankshaft: Crankshaft*
+  + fill(p_volume: float): void
+}
+
+class Injector {
+  - chamber: ExplosionChamber*
+  + execute(p_pression: float): void
+}
+
+class Motor {
+  - injector: Injector
+  - chamber: ExplosionChamber
+  - crankshaft: Crankshaft
+  + connectToTransmission(p_transmission: Transmission*): void
+}
+
+class Pedal {
+  - target: LinkablePart*
+  + setTarget(p_part: LinkablePart*): void
+  + use(p_pression: float): void
+}
+
+class Direction {
+  - wheels: Wheel[]
+  + turn(p_angle: float): void
+}
+
+class DAE {
+  - direction: Direction*
+  - force: float
+  + use(p_angle: float): void
+}
+
+class SteerWheel {
+  - dae: DAE*
+  + turn(p_angle: float): void
+}
+
+class Brake {
+  - wheel: Wheel*
+  + execute(p_force: float): void
+  + attackWheel(p_wheel: Wheel*): void
+}
+
+class BrakeController {
+  - brakes: Brake[]
+  + execute(p_pression: float): void
+}
+
+class Cockpit {
+  - pedal: Pedal
+  - steerWheel: SteerWheel
+  - gearLever: GearLever
+  + ManagePedal(): void
+  + ManageSteerWheel(): void
+  + ManageLever(): void
+}
+
+class Electronics {
+  - dae: DAE
+}
+
+class Car {
+  - brakeController: BrakeController
+  - direction: Direction
+  - transmission: Transmission
+  - motor: Motor
+  - electronics: Electronics
+  - cockpit: Cockpit
+}
+
+' Classes' relationships
+Injector ..|> LinkablePart
+BrakeController ..|> LinkablePart
+GearLever --|> "Singleton<GearLever>"
+
+' Composition/Association relationships
+Car *--> BrakeController
+Car *--> Direction
+Car *--> Transmission
+Car *--> Motor
+Car *--> Electronics
+Car *--> Cockpit
+Motor *--> Injector
+Motor *--> ExplosionChamber
+Motor *--> Crankshaft
+Transmission o--> Wheel
+Direction *--> Wheel
+Cockpit *--> Pedal
+Cockpit *--> SteerWheel
+Cockpit *--> GearLever
+Electronics *--> DAE
+BrakeController *--> Brake
+GearLever *--> Gear
+DAE o--> Direction
+SteerWheel o--> DAE
+Brake o--> Wheel
+Pedal o--> LinkablePart
+Crankshaft o--> Transmission
+ExplosionChamber o--> Crankshaft
+Injector o--> ExplosionChamber
+
+@enduml
