@@ -12,6 +12,12 @@ class Gear {
   - demultiplier: int
 }
 
+class Singleton<GearLever> {
+    # {static} instance: GearLever
+    # Singleton()
+    + {static} getInstance(): GearLever*
+}
+
 class GearLever {
   - gears: Gear[]
   - level: int
@@ -104,7 +110,7 @@ class Car {
 ' Classes' relationships
 Injector ..|> LinkablePart
 BrakeController ..|> LinkablePart
-GearLever --|> "Singleton<GearLever>"
+GearLever --|> Singleton
 
 ' Composition/Association relationships
 Car *--> BrakeController
