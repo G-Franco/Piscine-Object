@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:33:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/02 11:54:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:36:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,10 @@
 #include "Gearbox.hpp"
 #include "Steering.hpp"
 
-enum gear_speed {
-  NEUTRAL = 0,
-  FIRST = 30,
-  SECOND = 60,
-  THIRD = 100,
-  FOURTH = 150,
-  FIFTH = 200,
-  REVERSE = 20
-};
+// Max speed for each gear
+// [0] - Neutral
+// [6] - Reverse
+const int gear_speed[] = {0, 30, 60, 100, 150, 200, 20};
 
 class Car {
   private:

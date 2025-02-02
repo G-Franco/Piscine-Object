@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 11:43:20 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/02 11:59:22 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:52:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,19 @@ void Pedals::accelerate(int speed) {
   if (speed < 0) {
     speed = 0;
   }
-  _speed += speed;
+  _speed = speed;
   std::cout << "Speed is now: " << _speed << "\n";
 }
 
 void Pedals::brake(int force) {
-  if (force < 0) {
-    force = 0;
+  if (force <= 0) {
+    std::cout << "Force applied: 0\n";
+    return;
   }
   std::cout << "Force applied: "
             << (force > MAX_BRAKE_FORCE ? MAX_BRAKE_FORCE : force) << "\n";
   _speed /= force;
-  std::cout << "Speed is now: " << _speed << "\n";
+  std::cout << "Speed after braking is: " << _speed << "\n";
 }
 
 int Pedals::get_speed() const {

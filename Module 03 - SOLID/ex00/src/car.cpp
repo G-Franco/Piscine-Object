@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:43:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/02 12:05:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:51:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@ void Car::start() {
     std::cout << "Gear is not in neutral\n";
     return;
   }
-    _engine.start();
+  _engine.start();
+  std::cout << "Engine is now on\n";
 }
 
 void Car::stop() {
   _engine.stop();
   _pedals.brake(MAX_BRAKE_FORCE);
   _pedals.accelerate(0);
+  std::cout << "Engine is now off\n";
 }
 
 void Car::accelerate(int speed) {
@@ -52,7 +54,7 @@ void Car::accelerate(int speed) {
     std::cout << "Engine is off\n";
     return;
   }
-  const int gear_max_speed = gear_speed(_gearbox.get_gear());
+  const int gear_max_speed = gear_speed[_gearbox.get_gear()];
   const int test_speed = _pedals.get_speed() + speed;
   if (gear_max_speed < test_speed) {
     std::cout << "Speed is too high for current gear ("
@@ -70,7 +72,7 @@ void Car::shift_gears_up() {
 
 void Car::shift_gears_down() {
   _gearbox.gear_down();
-  _pedals.accelerate(_pedals.get_speed());
+  accelerate(_pedals.get_speed());
 }
 
 void Car::reverse() {
