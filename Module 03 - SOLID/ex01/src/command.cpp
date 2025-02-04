@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:17:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/03 15:53:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:53:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ Command::Command() {
   prepare_articles();
 }
 
-Command::Command(std::string date, int client, std::vector<std::pair<std::string, float> > articles) {
+Command::Command(std::string date, std::string client, std::vector<std::pair<std::string, float> > articles) {
   _id = Command::_id++;
   _date = validate_date(date);
   _client = client;
@@ -72,7 +72,7 @@ void Command::set_date(std::string date) {
   _date = validate_date(date);
 }
 
-void Command::set_client(int client) {
+void Command::set_client(std::string client) {
   _client = client;
 }
 
@@ -89,14 +89,16 @@ float Command::get_total_price() {
   return total;
 }
 
-// Date format: YYYYMMDD
+// Date format: WDY_YYYYMMDD
+// WDY: Weekday
 std::string Command::validate_date(std::string date) {
-  if (date.length() != 8) {
+  if (date.length() != 12 || date[3] != '_') {
     throw std::runtime_error(DATE_FORMAT_ERR);
   }
-  std::istringstream year_ss(date.substr(0, 4));
-  std::istringstream month_ss(date.substr(4, 2));
-  std::istringstream day_ss(date.substr(6, 2));
+  std::string weekday_ss = date.substr(0, 3);
+  std::istringstream year_ss(date.substr(4, 4));
+  std::istringstream month_ss(date.substr(8, 2));
+  std::istringstream day_ss(date.substr(10, 2));
   int year;
   int month;
   int day;
@@ -108,7 +110,16 @@ std::string Command::validate_date(std::string date) {
   if (month < 1 || month > 12) {
     throw std::runtime_error(DATE_FORMAT_ERR);
   }
-
+  std::string weekdays[7] = {"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
+  for (int i = 0; i < 7; i++)
+  {
+    if (weekday_ss == weekdays[i]) {
+      break;
+    }
+    if (i == 6) {
+      throw std::runtime_error(DATE_FORMAT_ERR);
+    }
+  }
   // Index 0 is not used
   int max_days[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
   if (leap_year(year)) {
