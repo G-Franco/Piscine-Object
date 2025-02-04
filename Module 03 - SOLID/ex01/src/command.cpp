@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:17:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/04 11:53:52 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:41:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 int Command::_id = 0;
 
 Command::Command() {
-  _id = Command::_id++;
-  prepare_articles();
+  _id = Command::_id;
+  Command::_id++;
 }
 
-Command::Command(std::string date, std::string client, std::vector<std::pair<std::string, float> > articles) {
-  _id = Command::_id++;
+Command::Command(
+  std::string date,
+  std::string client,
+  std::vector<std::pair<std::string, float> > articles,
+  std::map<std::string, float> article_prices) {
+  _id = Command::_id;
+  Command::_id++;
   _date = validate_date(date);
   _client = client;
   _articles = articles;
-  prepare_articles();
+  _article_prices = article_prices;
   validate_articles();
 }
 
@@ -33,7 +38,6 @@ Command::Command(const Command &copy)
     _client(copy._client),
     _articles(copy._articles) {
   _id = copy._id;
-  prepare_articles();
 }
 
 Command &Command::operator=(const Command &copy) {
@@ -46,23 +50,10 @@ Command &Command::operator=(const Command &copy) {
 
 Command::~Command() {}
 
-void Command::prepare_articles() {
-  article_prices.insert(std::make_pair("apple", 0.5));
-  article_prices.insert(std::make_pair("banana", 0.3));
-  article_prices.insert(std::make_pair("orange", 0.4));
-  article_prices.insert(std::make_pair("kiwi", 0.7));
-  article_prices.insert(std::make_pair("grape", 0.6));
-  article_prices.insert(std::make_pair("strawberry", 0.1));
-  article_prices.insert(std::make_pair("blueberry", 0.2));
-  article_prices.insert(std::make_pair("raspberry", 0.15));
-  article_prices.insert(std::make_pair("blackberry", 0.25));
-  article_prices.insert(std::make_pair("watermelon", 1.5));
-}
-
 void Command::validate_articles() {
   int len = _articles.size();
   for (int i = 0; i < len; i++) {
-    if (article_prices.find(_articles[i].first) == article_prices.end()) {
+    if (_article_prices.find(_articles[i].first) == _article_prices.end()) {
       throw std::runtime_error("Invalid article: " + _articles[i].first + "\n");
     }
   }
@@ -84,7 +75,7 @@ float Command::get_total_price() {
   float total = 0;
   int len = _articles.size();
   for (int i = 0; i < len; i++) {
-    total += article_prices[_articles[i].first] * _articles[i].second;
+    total += _article_prices[_articles[i].first] * _articles[i].second;
   }
   return total;
 }

@@ -2,8 +2,8 @@ NAME = solid2
 DEBUG = solid2_debug
 SRC = src/main.cpp \
 			src/command.cpp \
-			thuesdayDiscount.cpp \
-			packageReductionDiscount.cpp
+			src/thuesdayDiscount.cpp \
+			src/packageReductionDiscount.cpp
 CC = @c++
 CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98
 CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98 -g -fsanitize=address,undefined
