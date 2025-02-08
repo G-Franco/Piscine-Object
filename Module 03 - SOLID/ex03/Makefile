@@ -5,8 +5,6 @@ SRC = src/main.cpp \
 			src/employee.cpp \
 			src/hourlyEmployee.cpp \
 			src/salariedEmployee.cpp \
-			src/TempWorker.cpp \
-			src/ContractEmployee.cpp \
 			src/Apprentice.cpp
 CC = @c++
 CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98
