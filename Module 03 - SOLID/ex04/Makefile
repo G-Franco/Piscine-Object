@@ -1,6 +1,10 @@
 NAME = solid5
 DEBUG = solid5_debug
 SRC = src/main.cpp \
+			src/to_file_logger.cpp \
+			src/to_ostream_logger.cpp \
+			src/header_text_logger.cpp \
+			src/header_date_logger.cpp
 CC = @c++
 CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98
 CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98 -g -fsanitize=address,undefined

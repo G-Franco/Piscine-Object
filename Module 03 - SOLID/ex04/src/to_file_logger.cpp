@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:52:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/08 17:03:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:18:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ to_file_logger::to_file_logger(const std::string &file_name)
   if (!_file.is_open()) {
     throw std::runtime_error("Could not open file");
   }
-}
-
-to_file_logger::to_file_logger(const to_file_logger &copy)
-  : ILogger(copy) {
-  *this = copy;
-}
-
-to_file_logger &to_file_logger::operator=(const to_file_logger &copy) {
-  _file = copy._file;
-  return *this;
 }
 
 to_file_logger::~to_file_logger() {

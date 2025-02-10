@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:05:45 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/08 17:06:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:13:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ class to_ostream_logger : public ILogger {
 
   public:
     to_ostream_logger(std::ostream &os);
-    ~to_ostream_logger() {}
+    ~to_ostream_logger();
     void write(const std::string &message);
 };
