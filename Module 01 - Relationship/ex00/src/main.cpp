@@ -6,15 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 10:29:39 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/01/08 09:59:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:41:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Worker.hpp"
 #include "../include/Shovel.hpp"
 #include "../include/Hammer.hpp"
-
-// TODO - Test failure cases at the beginning
 
 int tool_tester(int tool_type, int uses) {
   try {
