@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:26:10 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/10 15:42:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:27:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,14 @@ class Course {
   	int _numberOfClassToGraduate;
   	int _maximumNumberOfStudent;
 
+    Course();
+    Course(const Course &copy);
+    Course &operator=(const Course &copy);
+
   public:
   	Course(std::string p_name);
+    ~Course();
   	void assign(Professor* p_professor);
   	void subscribe(Student* p_student);
+    std::string get_name() const;
 };

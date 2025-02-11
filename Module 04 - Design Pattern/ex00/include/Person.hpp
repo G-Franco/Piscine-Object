@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:32:52 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/10 15:33:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:18:03 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,17 @@
 #include "Room.hpp"
 
 class Person {
-  private:
+  protected:
   	std::string _name;
-  	Room* _currentRoom;
+  	Room *_currentRoom;
+
+    Person();
+
   public:
   	Person(std::string p_name);
-  	Room* room() {return (_currentRoom);}
+    Person(const Person &copy);
+    Person &operator=(const Person &copy);
+    ~Person();
+    Room *room();
+    std::string get_name() const;
 };

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:31:10 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/10 15:34:01 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:03:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,8 @@ class SecretarialOffice: public Room {
   	std::vector<Form*> _archivedForms;
   
   public:
-  
+    SecretarialOffice();
+    SecretarialOffice(const SecretarialOffice &copy);
+    SecretarialOffice &operator=(const SecretarialOffice &copy);
+    ~SecretarialOffice();
 };
