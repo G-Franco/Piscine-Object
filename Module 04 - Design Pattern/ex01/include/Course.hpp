@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:26:10 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 16:27:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:58:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "Professor.hpp"
 
 // TODO: DON'T FORGET TO CHECK WHERE RINGBELL GOES
-// TODO: ARE THESE NECESSARY?
 class Student;
 class Professor;
 
@@ -31,11 +30,12 @@ class Course {
   	int _maximumNumberOfStudent;
 
     Course();
+    
+    public:
+  	Course(std::string p_name);
     Course(const Course &copy);
     Course &operator=(const Course &copy);
-
-  public:
-  	Course(std::string p_name);
+    bool operator==(const Course &other);
     ~Course();
   	void assign(Professor* p_professor);
   	void subscribe(Student* p_student);

@@ -1,5 +1,5 @@
-NAME = slog
-DEBUG = slog_debug
+NAME = singleton
+DEBUG = singleton_debug
 SRC = src/main.cpp \
 			src/Classroom.cpp \
 			src/Course.cpp \

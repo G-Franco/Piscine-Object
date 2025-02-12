@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:37:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 16:13:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:54:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 #include "Person.hpp"
 #include "Course.hpp"
 #include "Classroom.hpp"
+
+class Course;
+class Classroom;
 
 class Student : public Person {
   private:
@@ -26,6 +29,7 @@ class Student : public Person {
     Student(std::string name);
     Student(const Student &copy);
     Student &operator=(const Student &copy);
+    bool operator==(const Student &other) const;
     ~Student();
   	void attendClass(Classroom* p_classroom);
   	void exitClass();

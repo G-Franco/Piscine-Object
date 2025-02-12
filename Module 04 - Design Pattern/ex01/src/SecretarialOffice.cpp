@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:02:31 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 15:03:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:34:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,13 @@ SecretarialOffice::SecretarialOffice(const SecretarialOffice &copy)
     _archivedForms(copy._archivedForms) {}
 
 SecretarialOffice &SecretarialOffice::operator=(const SecretarialOffice &copy) {
+  _id = copy._id;
   _archivedForms = copy._archivedForms;
   return *this;
+}
+
+bool SecretarialOffice::operator==(const SecretarialOffice &other) const {
+  return _id == other._id;
 }
 
 SecretarialOffice::~SecretarialOffice() {}

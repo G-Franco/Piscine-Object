@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:27:14 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 16:22:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:58:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Room {
   	Room();
     Room(const Room &copy);
     Room &operator=(const Room &copy);
+    bool operator==(const Room &other) const;
     ~Room();
   	bool canEnter(Person*);
   	bool enter(Person*);

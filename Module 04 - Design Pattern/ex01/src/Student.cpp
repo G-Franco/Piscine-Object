@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 16:28:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:54:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ Student::Student(const Student &copy)
 Student &Student::operator=(const Student &copy) {
   _subscribedCourse = copy._subscribedCourse;
   return *this;
+}
+
+bool Student::operator==(const Student &other) const {
+  return _name == other._name;
 }
 
 Student::~Student() {}

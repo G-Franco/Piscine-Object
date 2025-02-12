@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:56:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 16:20:47 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:34:03 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@ Classroom::Classroom(const Classroom &copy)
     _course(copy._course) {}
 
 Classroom &Classroom::operator=(const Classroom &copy) {
+  _id = copy._id;
   _course = copy._course;
   return *this;
+}
+
+bool Classroom::operator==(const Classroom &other) const {
+  return _id == other._id;
 }
 
 Classroom::~Classroom() {}

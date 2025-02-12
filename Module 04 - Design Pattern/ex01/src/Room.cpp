@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:40:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 16:23:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:37:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,17 @@ Room::Room()
   : _id(_ID++) {}
 
 Room::Room(const Room &copy)
-  : _id(_ID++),
+  : _id(copy._id),
     _occupants(copy._occupants) {}
 
 Room &Room::operator=(const Room &copy) {
-  _id = _ID++;
+  _id = copy._id;
   _occupants = copy._occupants;
   return *this;
+}
+
+bool Room::operator==(const Room &other) const {
+  return _id == other._id;
 }
 
 Room::~Room() {}

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:39:22 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 16:34:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:32:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include "Staff.hpp"
 #include "Course.hpp"
+
+class Course;
 
 class Professor : public Staff {
   private:
