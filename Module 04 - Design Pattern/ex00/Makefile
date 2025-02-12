@@ -1,10 +1,28 @@
-NAME = 
-DEBUG = 
+NAME = slog
+DEBUG = slog_debug
 SRC = src/main.cpp \
-			
+			src/Classroom.cpp \
+			src/Course.cpp \
+			src/CourseFinishedForm.cpp \
+			src/Courtyard.cpp \
+			src/Form.cpp \
+			src/Headmaster.cpp \
+			src/HeadmasterOffice.cpp \
+			src/NeedCourseCreationForm.cpp \
+			src/NeedMoreClassRoomForm.cpp \
+			src/Person.cpp \
+			src/Professor.cpp \
+			src/Room.cpp \
+			src/SecretarialOffice.cpp \
+			src/Secretary.cpp \
+			src/Staff.cpp \
+			src/StaffRestRoom.cpp \
+			src/Student.cpp \
+			src/SubscriptionToCourseForm.cpp
+
 CC = @c++
-CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98
-CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++98 -g -fsanitize=address,undefined
+CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++11
+CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++11 -g -fsanitize=address,undefined
 
 all:			$(NAME)
 

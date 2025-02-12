@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 16:27:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/12 10:30:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void Course::assign(Professor* p_professor) {
 }
 
 void Course::subscribe(Student* p_student) {
-  if (_students.size() >= _maximumNumberOfStudent) {
+  if (_students.size() >= (size_t)_maximumNumberOfStudent) {
     std::cout << "Course " + _name + " is full" << std::endl;
     return;
   }
