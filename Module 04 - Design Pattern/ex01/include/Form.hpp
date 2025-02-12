@@ -1,0 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Form.hpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 15:34:38 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/02/11 16:18:20 by gacorrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#pragma once
+
+#include <iostream>
+
+enum class FormType {
+	CourseFinished,
+	NeedMoreClassRoom,
+	NeedCourseCreation,
+	SubscriptionToCourse,
+};
+
+class Form {
+  protected:
+  	FormType _formType;
+
+    Form();
+
+  public:
+    Form(FormType p_formType);
+    Form(const Form &copy);
+    Form &operator=(const Form &copy);
+    ~Form();
+    virtual void execute() = 0;
+};
