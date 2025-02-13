@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   Courtyard.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:34:38 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 13:11:52 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/02/11 15:06:43 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/02/12 15:33:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "../include/Courtyard.hpp"
 
-#include <iostream>
+Courtyard::Courtyard() 
+  : Room() {}
 
-enum class FormType {
-	CourseFinished,
-	NeedMoreClassRoom,
-	NeedCourseCreation,
-	SubscriptionToCourse,
-};
+Courtyard::Courtyard(const Courtyard &copy)
+  : Room(copy) {}
 
-class Form {
-  protected:
-  	FormType _formType;
+Courtyard &Courtyard::operator=(const Courtyard &copy) {
+  _id = copy._id;
+  return *this;
+}
 
-  public:
-    Form(FormType p_formType);
-    Form(const Form &copy);
-    Form &operator=(const Form &copy);
-    virtual ~Form();
-    virtual void execute() = 0;
-};
+bool Courtyard::operator==(const Courtyard &other) const {
+  return _id == other._id;
+}
+
+Courtyard::~Courtyard() {}

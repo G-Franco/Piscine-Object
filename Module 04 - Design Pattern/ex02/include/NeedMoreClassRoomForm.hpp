@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   NeedMoreClassRoomForm.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:34:38 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 13:11:52 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/02/10 15:36:16 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/02/13 17:21:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <iostream>
+#include "Form.hpp"
 
-enum class FormType {
-	CourseFinished,
-	NeedMoreClassRoom,
-	NeedCourseCreation,
-	SubscriptionToCourse,
-};
-
-class Form {
-  protected:
-  	FormType _formType;
+class NeedMoreClassRoomForm : public Form {
+  private:
+    int _classrooms_needed;
 
   public:
-    Form(FormType p_formType);
-    Form(const Form &copy);
-    Form &operator=(const Form &copy);
-    virtual ~Form();
-    virtual void execute() = 0;
+    NeedMoreClassRoomForm();
+    NeedMoreClassRoomForm(const NeedMoreClassRoomForm &copy);
+    NeedMoreClassRoomForm &operator=(const NeedMoreClassRoomForm &copy);
+    ~NeedMoreClassRoomForm();
+    void set_classrooms_needed(int p_classrooms_needed);
+    void sign();
+  	void execute();
 };

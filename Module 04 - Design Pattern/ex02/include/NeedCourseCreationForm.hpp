@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   NeedCourseCreationForm.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:34:38 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 13:11:52 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/02/10 15:36:38 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/02/13 17:21:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <iostream>
+#include "Form.hpp"
 
-enum class FormType {
-	CourseFinished,
-	NeedMoreClassRoom,
-	NeedCourseCreation,
-	SubscriptionToCourse,
-};
-
-class Form {
-  protected:
-  	FormType _formType;
-
+class NeedCourseCreationForm : public Form {
+  private:
+    std::string _course_name;
+  
   public:
-    Form(FormType p_formType);
-    Form(const Form &copy);
-    Form &operator=(const Form &copy);
-    virtual ~Form();
-    virtual void execute() = 0;
+    NeedCourseCreationForm();
+    NeedCourseCreationForm(const NeedCourseCreationForm &copy);
+    NeedCourseCreationForm &operator=(const NeedCourseCreationForm &copy);
+    ~NeedCourseCreationForm();
+    void set_course_name(std::string course_name);
+    void sign();
+  	void execute();
 };

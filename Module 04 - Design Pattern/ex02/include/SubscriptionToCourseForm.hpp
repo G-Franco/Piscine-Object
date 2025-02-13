@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   SubscriptionToCourseForm.hpp                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:34:38 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 13:11:52 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/02/10 15:36:57 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/02/13 17:21:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <iostream>
+#include "Form.hpp"
+#include "Course.hpp"
 
-enum class FormType {
-	CourseFinished,
-	NeedMoreClassRoom,
-	NeedCourseCreation,
-	SubscriptionToCourse,
-};
-
-class Form {
-  protected:
-  	FormType _formType;
-
+class SubscriptionToCourseForm : public Form {
+  private:
+    Course *_course;
+  
   public:
-    Form(FormType p_formType);
-    Form(const Form &copy);
-    Form &operator=(const Form &copy);
-    virtual ~Form();
-    virtual void execute() = 0;
+    SubscriptionToCourseForm();
+    SubscriptionToCourseForm(const SubscriptionToCourseForm &copy);
+    SubscriptionToCourseForm &operator=(const SubscriptionToCourseForm &copy);
+    ~SubscriptionToCourseForm();
+    void set_course(Course *course);
+    void sign();
+  	void execute();
 };

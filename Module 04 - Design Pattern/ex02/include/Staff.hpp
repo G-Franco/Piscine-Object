@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   Staff.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:34:38 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 13:11:52 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/02/10 15:34:17 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/02/13 15:34:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <iostream>
+#include <memory>
+#include "Person.hpp"
+#include "Form.hpp"
 
-enum class FormType {
-	CourseFinished,
-	NeedMoreClassRoom,
-	NeedCourseCreation,
-	SubscriptionToCourse,
-};
-
-class Form {
-  protected:
-  	FormType _formType;
+class Staff : public Person {
+  private:
+    Staff();
 
   public:
-    Form(FormType p_formType);
-    Form(const Form &copy);
-    Form &operator=(const Form &copy);
-    virtual ~Form();
-    virtual void execute() = 0;
+    Staff(std::string p_name);
+    Staff(const Staff &copy);
+    Staff &operator=(const Staff &copy);
+    bool operator==(const Staff &other) const;
+    ~Staff();
+  	virtual void sign(std::shared_ptr<Form> p_form);
 };

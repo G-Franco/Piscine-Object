@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   HeadmasterOffice.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:34:38 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 13:11:52 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/02/10 15:31:52 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/02/12 15:08:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <iostream>
+#include "Room.hpp"
 
-enum class FormType {
-	CourseFinished,
-	NeedMoreClassRoom,
-	NeedCourseCreation,
-	SubscriptionToCourse,
-};
-
-class Form {
-  protected:
-  	FormType _formType;
-
+class HeadmasterOffice : public Room {
+  private:
+  
   public:
-    Form(FormType p_formType);
-    Form(const Form &copy);
-    Form &operator=(const Form &copy);
-    virtual ~Form();
-    virtual void execute() = 0;
+    HeadmasterOffice();
+    HeadmasterOffice(const HeadmasterOffice &copy);
+    HeadmasterOffice &operator=(const HeadmasterOffice &copy);
+    bool operator==(const HeadmasterOffice &other) const;
+    ~HeadmasterOffice();
 };

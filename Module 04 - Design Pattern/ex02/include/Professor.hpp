@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   Professor.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:34:38 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 13:11:52 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/02/10 15:39:22 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/02/12 14:32:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <iostream>
+#include "Staff.hpp"
+#include "Course.hpp"
 
-enum class FormType {
-	CourseFinished,
-	NeedMoreClassRoom,
-	NeedCourseCreation,
-	SubscriptionToCourse,
-};
+class Course;
 
-class Form {
-  protected:
-  	FormType _formType;
+class Professor : public Staff {
+  private:
+  	Course* _currentCourse;
 
+    Professor();
+  
   public:
-    Form(FormType p_formType);
-    Form(const Form &copy);
-    Form &operator=(const Form &copy);
-    virtual ~Form();
-    virtual void execute() = 0;
+    Professor(std::string p_name);
+    Professor(const Professor &copy);
+    Professor &operator=(const Professor &copy);
+    ~Professor();
+  	void assignCourse(Course* p_course);
+  	void doClass();
+  	void closeCourse();
 };

@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   StaffRestRoom.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:34:38 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 13:11:52 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/02/11 15:04:55 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/02/12 15:35:03 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "../include/StaffRestRoom.hpp"
 
-#include <iostream>
+StaffRestRoom::StaffRestRoom()
+  : Room() {}
 
-enum class FormType {
-	CourseFinished,
-	NeedMoreClassRoom,
-	NeedCourseCreation,
-	SubscriptionToCourse,
-};
+StaffRestRoom::StaffRestRoom(const StaffRestRoom &copy)
+  : Room(copy) {}
 
-class Form {
-  protected:
-  	FormType _formType;
+StaffRestRoom &StaffRestRoom::operator=(const StaffRestRoom &copy) {
+  _id = copy._id;
+  return *this;
+}
 
-  public:
-    Form(FormType p_formType);
-    Form(const Form &copy);
-    Form &operator=(const Form &copy);
-    virtual ~Form();
-    virtual void execute() = 0;
-};
+bool StaffRestRoom::operator==(const StaffRestRoom &other) const {
+  return _id == other._id;
+}
+
+StaffRestRoom::~StaffRestRoom() {}
