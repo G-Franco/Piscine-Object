@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:34:17 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 14:57:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:19:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ class Staff : public Person {
     Staff(const Staff &copy);
     Staff &operator=(const Staff &copy);
     bool operator==(const Staff &other) const;
-    ~Staff();
+    virtual ~Staff();
   	void sign(Form* p_form);
 };

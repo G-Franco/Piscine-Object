@@ -6,18 +6,20 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 16:32:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:24:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Headmaster.hpp"
 
 Headmaster::Headmaster(std::string p_name)
-  : Staff(p_name) {}
+  : Staff(p_name),
+    _secretary("Mary") {}
 
 Headmaster::Headmaster(const Headmaster &copy)
   : Staff(copy),
-    _formToValidate(copy._formToValidate) {}
+    _formToValidate(copy._formToValidate),
+    _secretary(copy._secretary) {}
 
 Headmaster &Headmaster::operator=(const Headmaster &copy) {
   _formToValidate = copy._formToValidate;
@@ -25,6 +27,53 @@ Headmaster &Headmaster::operator=(const Headmaster &copy) {
 }
 
 Headmaster::~Headmaster() {}
+
+// TODO: If this one gets too large, split it into smaller functions
+void Headmaster::request(Person &person, FormType form_type, std::string info) {
+  if (info.empty()) {
+    std::cout << "[REQUEST] Info is empty\n";
+    return;
+  }
+  switch (form_type) {
+    case FormType::NeedCourseCreation:
+      if (Professor *professor = dynamic_cast<Professor *>(&person)) {
+        auto form = _secretary.createForm(form_type);
+        receiveForm(form);
+        auto course_form = std::dynamic_pointer_cast<NeedCourseCreationForm>(form);
+        course_form->set_course_name(info);
+        sign_form(form);
+        execute_form(form);
+        auto course = std::make_shared<Course>(info);
+        professor->assignCourse(course);
+        course.get()->assign(professor);
+        std::cout << "Headmaster created course: " << info
+                  << "and assigned it to professor: "
+                  << professor->get_name() << "\n";
+      }
+      else {
+        std::cout << "[REQUEST] Requester is not a professor\n";
+      }
+      break;
+    case FormType::CourseFinished:
+      if (Professor *professor = dynamic_cast<Professor *>(&person)) {
+        auto form = _secretary.createForm(form_type);
+        receiveForm(form);
+        auto course_form = std::dynamic_pointer_cast<CourseFinishedForm>(form);
+        course_form->set_course(professor->get_current_course().get());
+        sign_form(form);
+        execute_form(form);
+        std::cout << "Headmaster gave student: " << info
+                  << "a diploma for finishing course: "
+                  << professor->get_current_course()->get_name() << "\n";
+      }
+      else {
+        std::cout << "[REQUEST] Requester is not a professor\n";
+      }
+      break;
+    default:
+      return;
+  }
+}
 
 void Headmaster::receiveForm(std::shared_ptr<Form> p_form) {
   if (!p_form) {

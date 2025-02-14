@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:38:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 15:55:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:34:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 class Headmaster : public Staff {
   private:
   	std::vector<std::shared_ptr<Form> > _formToValidate;
+    Secretary _secretary;
 
     Headmaster();
 
@@ -26,6 +27,7 @@ class Headmaster : public Staff {
     Headmaster(const Headmaster &copy);
     Headmaster &operator=(const Headmaster &copy);
     ~Headmaster();
+    void request(Person &person, FormType form_type, std::string info);
   	void receiveForm(std::shared_ptr<Form> p_form);
     void sign_form(std::shared_ptr<Form> form);
     void execute_form(std::shared_ptr<Form> form);

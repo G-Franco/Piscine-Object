@@ -21,8 +21,8 @@ SRC = src/main.cpp \
 			src/SubscriptionToCourseForm.cpp
 
 CC = @c++
-CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++14
-CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++14 -g -fsanitize=address,undefined
+CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++11
+CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++11 -g -fsanitize=address,undefined
 
 all:			$(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 14:58:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:51:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ bool Course::operator==(const Course &other) {
 Course::~Course() {}
 
 void Course::assign(Professor* p_professor) {
+  if (!p_professor) {
+    std::cout << "Professor is null" << std::endl;
+    return;
+  }
   _responsible = p_professor;
 }
 

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:34:17 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 15:18:03 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:19:27 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ class Staff : public Person {
     Staff(std::string p_name);
     Staff(const Staff &copy);
     Staff &operator=(const Staff &copy);
-    ~Staff();
+    virtual ~Staff();
   	void sign(Form* p_form);
 };
