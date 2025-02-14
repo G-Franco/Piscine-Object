@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 17:25:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:17:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,15 @@ int main() {
   std::cout << "\nTest form execution without signing\n";
   headmaster.execute_form(form1);
 
-  std::cout << "\nTest form signing and execution\n";
+  std::cout << "\nTest form signing and execution (Command pattern)\n";
   headmaster.sign_form(form1);
   headmaster.sign_form(form2);
   headmaster.sign_form(form3);
   headmaster.sign_form(form4);
+  headmaster.execute_form(form1);
+  headmaster.execute_form(form2);
+  headmaster.execute_form(form3);
+  headmaster.execute_form(form4);
 
   std::cout << "\nTest form signing and execution after being signed\n";
   headmaster.sign_form(form3);

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:10:35 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 17:22:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:12:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ NeedCourseCreationForm::NeedCourseCreationForm()
   : Form(FormType::NeedCourseCreation) {}
 
 NeedCourseCreationForm::NeedCourseCreationForm(const NeedCourseCreationForm &copy)
-  : Form(copy) {}
+  : Form(copy),
+    _course_name(copy._course_name) {}
 
 NeedCourseCreationForm &NeedCourseCreationForm::operator=(const NeedCourseCreationForm &copy) {
-  (void)copy;
+  _course_name = copy._course_name;
   return *this;
 }
 

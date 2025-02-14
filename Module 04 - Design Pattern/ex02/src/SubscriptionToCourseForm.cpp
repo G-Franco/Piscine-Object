@@ -6,20 +6,22 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:16 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 17:22:51 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:13:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/SubscriptionToCourseForm.hpp"
 
 SubscriptionToCourseForm::SubscriptionToCourseForm()
-  : Form(FormType::SubscriptionToCourse) {}
+  : Form(FormType::SubscriptionToCourse),
+    _course(nullptr) {}
 
 SubscriptionToCourseForm::SubscriptionToCourseForm(const SubscriptionToCourseForm &copy)
-  : Form(copy) {}
+  : Form(copy),
+    _course(copy._course) {}
 
 SubscriptionToCourseForm &SubscriptionToCourseForm::operator=(const SubscriptionToCourseForm &copy) {
-  (void)copy;
+  _course = copy._course;
   return *this;
 }
 

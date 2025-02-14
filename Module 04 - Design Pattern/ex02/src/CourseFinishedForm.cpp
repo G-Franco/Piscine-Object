@@ -6,20 +6,21 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:01:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 17:23:16 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:16:45 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/CourseFinishedForm.hpp"
 
 CourseFinishedForm::CourseFinishedForm()
-  : Form(FormType::CourseFinished) {}
+  : Form(FormType::CourseFinished),
+    course(nullptr) {}
 
 CourseFinishedForm::CourseFinishedForm(const CourseFinishedForm &copy)
   : Form(copy) {}
   
 CourseFinishedForm &CourseFinishedForm::operator=(const CourseFinishedForm &copy) {
-  (void)copy;
+  course = copy.course;
   return *this;
 }
 
@@ -47,7 +48,7 @@ void CourseFinishedForm::sign() {
     return;
   }
   _signed = true;
-  std::cout << "Course form for: " << course->get_name() << " signed\n";
+  std::cout << "Course finished form for: " << course->get_name() << " signed\n";
 }
 
 void CourseFinishedForm::execute() {
@@ -60,5 +61,5 @@ void CourseFinishedForm::execute() {
     return;
   }
   _executed = true;
-  std::cout << "Course form for: " << course->get_name() << " executed\n";
+  std::cout << "Course finished form for: " << course->get_name() << " executed\n";
 }
