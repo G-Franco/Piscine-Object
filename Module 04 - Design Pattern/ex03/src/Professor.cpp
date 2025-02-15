@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/14 17:22:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/15 15:25:35 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void Professor::request_course(std::string course_name) {
 }
 
 void Professor::request_graduation(Student &student) {
-  // TODO: Check if student has graduation requirements
   _headmaster.request(*this, FormType::CourseFinished, student.get_name());
+  _currentCourse->remove_student(&student);
 }
 
 void Professor::assignCourse(std::shared_ptr<Course> p_course) {

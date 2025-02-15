@@ -6,14 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:26:10 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 14:58:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/15 16:02:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
-#include <vector>
+#include <map>
 #include "Student.hpp"
 #include "Professor.hpp"
 
@@ -25,19 +25,25 @@ class Course {
   private:
   	std::string _name;
   	Professor* _responsible;
-  	std::vector<Student*> _students;
+  	std::map<Student *, int> _students;
   	int _numberOfClassToGraduate;
   	int _maximumNumberOfStudent;
 
     Course();
-    
+
     public:
   	Course(std::string p_name);
     Course(const Course &copy);
     Course &operator=(const Course &copy);
     bool operator==(const Course &other);
     ~Course();
+    void set_number_of_classes_to_graduate(int number);
+    void set_maximum_number_of_students(int number);
   	void assign(Professor* p_professor);
-  	void subscribe(Student* p_student);
+    bool course_checks();
+  	bool subscribe(Student *p_student);
+    void remove_student(Student *p_student);
+    void class_attendance(Student* student);
     std::string get_name() const;
+    bool check_student(Student* student);
 };

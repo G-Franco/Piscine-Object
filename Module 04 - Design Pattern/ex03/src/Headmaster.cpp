@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/14 17:24:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/15 16:05:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ Headmaster::Headmaster(std::string p_name)
 Headmaster::Headmaster(const Headmaster &copy)
   : Staff(copy),
     _formToValidate(copy._formToValidate),
+    _courses(copy._courses),
     _secretary(copy._secretary) {}
 
 Headmaster &Headmaster::operator=(const Headmaster &copy) {
   _formToValidate = copy._formToValidate;
+  _courses = copy._courses;
+  _secretary = copy._secretary;
   return *this;
 }
 
@@ -44,10 +47,11 @@ void Headmaster::request(Person &person, FormType form_type, std::string info) {
         sign_form(form);
         execute_form(form);
         auto course = std::make_shared<Course>(info);
+        add_course(course);
         professor->assignCourse(course);
         course.get()->assign(professor);
         std::cout << "Headmaster created course: " << info
-                  << "and assigned it to professor: "
+                  << " and assigned it to professor: "
                   << professor->get_name() << "\n";
       }
       else {
@@ -68,6 +72,32 @@ void Headmaster::request(Person &person, FormType form_type, std::string info) {
       }
       else {
         std::cout << "[REQUEST] Requester is not a professor\n";
+      }
+      break;
+    case FormType::SubscriptionToCourse:
+      if (Student *student = dynamic_cast<Student *>(&person)) {
+        auto courses_it = std::find(_courses.begin(), _courses.end(), info);
+        if (courses_it == _courses.end()) {
+          std::cout << "[REQUEST] Course: " << info << " does not exist\n";
+          return;
+        }
+        if (!(*courses_it).get()->subscribe(student)) {
+          std::cout << "[REQUEST] Student: " << student->get_name()
+                    << " cannot subscribe to course: " << info << "\n";
+          return;
+        }
+        auto form = _secretary.createForm(form_type);
+        receiveForm(form);
+        auto course_form = std::dynamic_pointer_cast<SubscriptionToCourseForm>(form);
+        course_form->set_course((*courses_it).get());
+        sign_form(form);
+        execute_form(form);
+        student->subscribe((*courses_it).get());
+        std::cout << "Headmaster subscribed student: " << student->get_name()
+                  << " to course: " << info << "\n";
+      }
+      else {
+        std::cout << "[REQUEST] Requester is not a student\n";
       }
       break;
     default:
@@ -141,4 +171,16 @@ void Headmaster::clean_forms(Secretary &secretary) {
         return false;
       }),
     _formToValidate.end());
+}
+
+void Headmaster::add_course(std::shared_ptr<Course> course) {
+  if (!course) {
+    std::cout << "[ADD COURSE] Course is null\n";
+    return;
+  }
+  if (std::find(_courses.begin(), _courses.end(), course) != _courses.end()) {
+    std::cout << "[ADD COURSE] Course already exists\n";
+    return;
+  }
+  _courses.push_back(course);
 }
