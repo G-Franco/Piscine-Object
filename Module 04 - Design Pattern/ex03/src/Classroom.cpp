@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:56:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 15:34:03 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:00:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ bool Classroom::operator==(const Classroom &other) const {
 
 Classroom::~Classroom() {}
 
+// Allows null assignment to remove course
 void Classroom::assignCourse(Course* p_course) {
-  // Allows null assignment to remove course
   _course = p_course;
 }
 

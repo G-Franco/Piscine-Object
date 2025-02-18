@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:55:11 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 14:49:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:43:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ class Singleton {
     }
 
     void add(const T &element) {
+      if (std::find(_group.begin(), _group.end(), element) != _group.end()) {
+        std::cout << "Element already exists\n";
+        return;
+      }
       _group.push_back(element);
     }
 

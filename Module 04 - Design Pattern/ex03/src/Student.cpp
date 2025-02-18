@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/15 15:59:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:19:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ bool Student::operator==(const Student &other) const {
   return _name == other._name;
 }
 
+bool Student::operator==(const std::string name) const {
+  return _name == name;
+}
+
 Student::~Student() {}
 
 void Student::choose_class(std::string course_name) {
@@ -41,21 +45,22 @@ void Student::choose_class(std::string course_name) {
   _headmaster.request(*this, FormType::SubscriptionToCourse, course_name);
 }
 
-void Student::subscribe(Course* course) {
+bool Student::subscribe(Course* course) {
   if (!course) {
     std::cout << "[SUBSCRIBE] Course is null\n";
-    return;
+    return false;
   }
   if (std::find(_subscribedCourses.begin(), _subscribedCourses.end(), course) != _subscribedCourses.end()) {
     std::cout << _name << " is already subscribed to " << course->get_name() << "\n";
-    return;
+    return false;
   }
   if (!course->check_student(this)) {
     std::cout << _name << " cannot subscribe to " << course->get_name() << "\n";
-    return;
+    return false;
   }
   _subscribedCourses.push_back(course);
   std::cout << _name << " subscribed to " << course->get_name() << "\n";
+  return true;
 }
 
 void Student::attendClass(Classroom* p_classroom) {

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/15 15:25:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:35:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ Professor &Professor::operator=(const Professor &copy) {
   return *this;
 }
 
+bool Professor::operator==(const Professor &other) const {
+  return get_name() == other.get_name();
+}
+
+bool Professor::operator==(const std::string name) const {
+  return get_name() == name;
+}
+
 Professor::~Professor() {}
 
 void Professor::request_course(std::string course_name) {
@@ -43,10 +51,9 @@ void Professor::request_graduation(Student &student) {
   _currentCourse->remove_student(&student);
 }
 
-void Professor::assignCourse(std::shared_ptr<Course> p_course) {
-  if (!p_course) {
-    std::cout << "[ASSIGN COURSE] Course is null\n";
-    return;
+void Professor::assignCourse(Course *p_course) {
+  if (p_course) {
+    p_course->assign(nullptr);
   }
   _currentCourse = p_course;
 }
@@ -67,6 +74,6 @@ void Professor::closeCourse() {
   std::cout << "Professor closed course: " << _currentCourse->get_name() << "\n";
 }
 
-std::shared_ptr<Course> Professor::get_current_course() const {
+Course *Professor::get_current_course() const {
   return _currentCourse;
 }

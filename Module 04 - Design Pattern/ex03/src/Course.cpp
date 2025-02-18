@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/15 16:02:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:59:02 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ bool Course::operator==(const Course &other) {
   return _name == other._name;
 }
 
+bool Course::operator==(const std::string name) const {
+  return _name == name;
+}
+
 Course::~Course() {}
 
 void Course::set_number_of_classes_to_graduate(int number) {
@@ -56,11 +60,8 @@ void Course::set_maximum_number_of_students(int number) {
   _maximumNumberOfStudent = number;
 }
 
+// No nullptr check because it can be used to remove the professor
 void Course::assign(Professor* p_professor) {
-  if (!p_professor) {
-    std::cout << "Professor is null\n";
-    return;
-  }
   _responsible = p_professor;
 }
 
@@ -142,4 +143,35 @@ bool Course::check_student(Student* student) {
     return false;
   }
   return true;
+}
+
+void Course::add_classroom(Classroom *classroom) {
+  if (!classroom) {
+    std::cout << "Classroom is null\n";
+    return;
+  }
+  if (classroom->getCourse()) {
+    std::cout << "Classroom already has a course\n";
+    return;
+  }
+  if (std::find(_classrooms.begin(), _classrooms.end(), classroom) != _classrooms.end()) {
+    std::cout << "Classroom already assigned\n";
+    return;
+  }
+  _classrooms.push_back(classroom);
+  classroom->assignCourse(this);
+}
+
+void Course::remove_classroom(Classroom *classroom) {
+  if (!classroom) {
+    std::cout << "Classroom is null\n";
+    return;
+  }
+  auto it = std::find(_classrooms.begin(), _classrooms.end(), classroom);
+  if (it == _classrooms.end()) {
+    std::cout << "Classroom is not assigned\n";
+    return;
+  }
+  (*it)->assignCourse(nullptr);
+  _classrooms.erase(it);
 }

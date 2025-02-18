@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:37:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/15 15:57:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:19:15 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ class Student : public Person {
     Student(const Student &copy);
     Student &operator=(const Student &copy);
     bool operator==(const Student &other) const;
+    bool operator==(const std::string name) const;
     ~Student();
     void choose_class(std::string course_name);
-    void subscribe(Course* p_course);
+    bool subscribe(Course* p_course);
   	void attendClass(Classroom* p_classroom);
   	void exitClass();
   	void graduate(Course* course);

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:55:11 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 14:49:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:42:16 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ class Singleton {
     }
 
     void add(const T &element) {
+      if (std::find(_group.begin(), _group.end(), element) != _group.end()) {
+        std::cout << "Element already exists\n";
+        return;
+      }
       _group.push_back(element);
     }
 
@@ -56,5 +60,18 @@ class Singleton {
         throw std::runtime_error("Index out of bounds");
       }
       return _group[index];
+    }
+
+    T &find(const T &element) {
+      auto it = std::find(_group.begin(), _group.end(), element);
+      if (it == _group.end()) {
+        throw std::runtime_error("Element not found");
+      }
+      return *it;
+    }
+
+    // This requires the class to have an operator== overloaded to compare
+    T &find(const std::string info) {
+      auto it = std::find_if(_group.begin(), _group.end(), info);
     }
 };
