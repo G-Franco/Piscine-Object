@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:27:14 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 14:58:52 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:39:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <algorithm>
 #include "Person.hpp"
 
-// TODO: ARE THESE NECESSARY?
 class Person;
 
 class Room {
@@ -30,7 +29,7 @@ class Room {
     Room(const Room &copy);
     Room &operator=(const Room &copy);
     bool operator==(const Room &other) const;
-    ~Room();
+    virtual ~Room();
   	bool canEnter(Person*);
   	bool enter(Person*);
   	void exit(Person*);

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/18 15:38:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:14:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ void Headmaster::request(Person &person, FormType form_type, std::string info) {
         request_course_subscription(student, info);
       }
       break;
+    case FormType::NeedMoreClassRoom:
+      if (Professor *professor = check_professor(person)) {
+      }
     default:
       return;
   }
@@ -166,6 +169,21 @@ void Headmaster::request_course_subscription(Student *student, std::string info)
   execute_form(form);
   std::cout << "Headmaster subscribed student: " << student->get_name()
             << " to course: " << info << "\n";
+}
+
+void Headmaster::request_classroom_creation(Professor *professor, std::string info) {
+  auto form = _secretary.createForm(FormType::NeedMoreClassRoom);
+  Course *course = professor->get_current_course();
+  receiveForm(form);
+  auto classroom_form = std::dynamic_pointer_cast<NeedMoreClassRoomForm>(form);
+  classroom_form->set_course(course);
+  sign_form(form);
+  execute_form(form);
+  Classroom classroom;
+  classroom.assignCourse(course);
+  add_classroom(classroom);
+  std::cout << "Headmaster created classroom for course: "
+            << course->get_name() << "\n";
 }
 
 void Headmaster::receiveForm(std::shared_ptr<Form> p_form) {

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:37:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/18 15:19:15 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:49:24 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ class Student : public Person {
     ~Student();
     void choose_class(std::string course_name);
     bool subscribe(Course* p_course);
+    void unsubscribe(Course* p_course);
   	void attendClass(Classroom* p_classroom);
   	void exitClass();
   	void graduate(Course* course);
+    bool is_subscribed(Course* course);
 };

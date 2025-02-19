@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/18 15:59:02 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:53:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,4 +174,13 @@ void Course::remove_classroom(Classroom *classroom) {
   }
   (*it)->assignCourse(nullptr);
   _classrooms.erase(it);
+}
+
+Classroom *Course::get_empty_classroom() {
+  for (auto &classroom : _classrooms) {
+    if (classroom->is_empty()) {
+      return classroom;
+    }
+  }
+  return nullptr;
 }

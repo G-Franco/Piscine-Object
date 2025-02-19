@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:30:37 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/18 16:00:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:11:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class Classroom : public Room {
     Classroom &operator=(const Classroom &copy);
     bool operator==(const Classroom &other) const;
     ~Classroom();
+    bool canEnter(Person*);
   	void assignCourse(Course* p_course);
     Course* getCourse() const;
 };

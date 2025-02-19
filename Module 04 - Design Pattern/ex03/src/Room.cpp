@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:40:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 15:37:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:54:03 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ bool Room::operator==(const Room &other) const {
 Room::~Room() {}
 
 bool Room::canEnter(Person *p_person) {
-  // Need more info to implement
-  (void)p_person;
   return true;
 }
 
@@ -74,4 +72,8 @@ void Room::printOccupant() {
 
 long long Room::get_id() const {
   return _id;
+}
+
+bool Room::is_empty() const {
+  return _occupants.empty();
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:09:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 17:22:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:07:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 NeedMoreClassRoomForm::NeedMoreClassRoomForm()
   : Form(FormType::NeedMoreClassRoom),
-    _classrooms_needed(1) {}
+    _classrooms_needed(1),
+    _course(nullptr) {}
 
 NeedMoreClassRoomForm::NeedMoreClassRoomForm(const NeedMoreClassRoomForm &copy)
   : Form(copy),
-    _classrooms_needed(copy._classrooms_needed) {}
+    _classrooms_needed(copy._classrooms_needed),
+    _course(copy._course) {}
 
 NeedMoreClassRoomForm &NeedMoreClassRoomForm::operator=(const NeedMoreClassRoomForm &copy) {
   _classrooms_needed = copy._classrooms_needed;
+  _course = copy._course;
   return *this;
 }
 
@@ -42,14 +45,32 @@ void NeedMoreClassRoomForm::set_classrooms_needed(int p_classrooms_needed) {
   _classrooms_needed = p_classrooms_needed;
 }
 
+void NeedMoreClassRoomForm::set_course(Course *p_course) {
+  if (!p_course) {
+    std::cout << "[SET COURSE] Course is null\n";
+    return;
+  }
+  if (check_signed() || check_executed()) {
+    std::cout << "[SET COURSE] Form already processed. "
+              << "Cannot change course\n";
+    return;
+  }
+  _course = p_course;
+}
+
 void NeedMoreClassRoomForm::sign() {
   if (check_signed()) {
     std::cout << "[SIGN] Form already signed\n";
     return;
   }
+  if (!_course) {
+    std::cout << "[SIGN] Course is not set\n";
+    return;
+  }
   _signed = true;
   std::cout << "Need more classroom form signed for an extra "
-            << _classrooms_needed << " classrooms\n";
+            << _classrooms_needed << " classrooms "
+            << "for course: " << _course->get_name() << "\n";
 }
 
 void NeedMoreClassRoomForm::execute() {

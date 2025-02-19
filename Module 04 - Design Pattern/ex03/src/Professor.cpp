@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/18 15:35:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:15:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void Professor::request_course(std::string course_name) {
 void Professor::request_graduation(Student &student) {
   _headmaster.request(*this, FormType::CourseFinished, student.get_name());
   _currentCourse->remove_student(&student);
+  student.graduate(_currentCourse);
 }
 
 void Professor::assignCourse(Course *p_course) {
@@ -63,6 +64,13 @@ void Professor::doClass() {
     std::cout << "[DO CLASS] Course is null\n";
     return;
   }
+  Classroom *classroom = _currentCourse->get_empty_classroom();
+  if (!classroom) {
+    std::cout << "No classroom available for " << _currentCourse->get_name() << "\n";
+    _headmaster.request(*this, FormType::NeedMoreClassRoom, _currentCourse->get_name());
+  }
+  classroom = _currentCourse->get_empty_classroom();
+  // TODO: Should enter now or should it be made by headmaster
   std::cout << "Professor will hold class: " << _currentCourse->get_name() << "\n";
 }
 

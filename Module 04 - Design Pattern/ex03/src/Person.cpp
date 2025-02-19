@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:12:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/11 15:15:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:41:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ Person::~Person() {}
 
 Room *Person::room() {
   return _currentRoom;
+}
+
+void Person::set_room(Room *p_room) {
+  _currentRoom = p_room;
 }
 
 std::string Person::get_name() const {

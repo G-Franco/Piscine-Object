@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:38:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/18 15:37:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:58:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class Headmaster : public Staff {
     void request_course_creation(Professor *professor, std::string info);
     void request_course_finished(Professor *professor, std::string info);
     void request_course_subscription(Student *student, std::string info);
+    void request_classroom_creation(Professor *professor, std::string info);
   	void receiveForm(std::shared_ptr<Form> p_form);
     void sign_form(std::shared_ptr<Form> form);
     void execute_form(std::shared_ptr<Form> form);

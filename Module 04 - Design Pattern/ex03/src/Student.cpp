@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/18 15:19:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:50:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,20 @@ bool Student::subscribe(Course* course) {
   return true;
 }
 
+void Student::unsubscribe(Course* course) {
+  if (!course) {
+    std::cout << "[UNSUBSCRIBE] Course is null\n";
+    return;
+  }
+  auto it = std::find(_subscribedCourses.begin(), _subscribedCourses.end(), course);
+  if (it == _subscribedCourses.end()) {
+    std::cout << _name << " is not subscribed to " << course->get_name() << "\n";
+    return;
+  }
+  _subscribedCourses.erase(it);
+  std::cout << _name << " unsubscribed from " << course->get_name() << "\n";
+}
+
 void Student::attendClass(Classroom* p_classroom) {
   if (!p_classroom) {
     std::cout << "[ATTEND CLASS] Classroom is null\n";
@@ -98,5 +112,17 @@ void Student::graduate(Course* p_course) {
     std::cout << "[GRADUATE] Course is null\n";
     return;
   }
-  // Implement when there is info
+  unsubscribe(p_course);
+  std::cout << _name << ": I graduated from " << p_course->get_name() << "!\n";
+}
+
+bool Student::is_subscribed(Course* course) {
+  if (!course) {
+    std::cout << "[IS SUBSCRIBED] Course is null\n";
+    return false;
+  }
+  if (std::find(_subscribedCourses.begin(), _subscribedCourses.end(), course) != _subscribedCourses.end()) {
+    return true;
+  }
+  return false;
 }

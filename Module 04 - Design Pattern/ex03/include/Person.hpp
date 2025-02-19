@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:32:52 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/14 16:17:26 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:41:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ class Person {
     Person &operator=(const Person &copy);
     virtual ~Person();
     Room *room();
+    void set_room(Room *p_room);
     std::string get_name() const;
 };
