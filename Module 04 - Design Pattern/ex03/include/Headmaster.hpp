@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:38:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 12:39:41 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:16:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,16 @@
 
 #include "Staff.hpp"
 #include "Secretary.hpp"
+#include "Professor.hpp"
+#include "Student.hpp"
+#include "Classroom.hpp"
+#include "Course.hpp"
 #include "singetons.hpp"
+
+class Professor;
+class Student;
+class Classroom;
+class Course;
 
 class Headmaster : public Staff {
   private:

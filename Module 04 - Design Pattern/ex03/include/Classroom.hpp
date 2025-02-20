@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:30:37 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 16:11:28 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:45:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 #include "Room.hpp"
 #include "Course.hpp"
+#include "Professor.hpp"
+#include "Student.hpp"
 
 class Course;
+class Professor;
+class Student;
 
 class Classroom : public Room {
   private:

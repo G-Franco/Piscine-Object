@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:26:10 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 12:28:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:39:51 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include <map>
 #include "Student.hpp"
 #include "Professor.hpp"
+#include "Classroom.hpp"
 
-// TODO: DON'T FORGET TO CHECK WHERE RINGBELL GOES
 class Student;
 class Professor;
+class Classroom;
 
 class Course {
   private:

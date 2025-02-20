@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:30:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 10:31:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:28:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ Secretary &Secretary::operator=(const Secretary &copy) {
 Secretary::~Secretary() {}
 
 Form* Secretary::createForm(FormType p_formType) {
-  // TODO: Implement when there is info
   (void)p_formType;
   return NULL;
 }
 
 void Secretary::archiveForm() {
-  // TODO: Implement when there is info
 }

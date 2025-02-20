@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:36:16 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 17:05:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:29:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include "Form.hpp"
 #include "Course.hpp"
+
+class Course;
 
 class NeedMoreClassRoomForm : public Form {
   private:

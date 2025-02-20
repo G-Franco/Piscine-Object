@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:37:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 12:26:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:11:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 #include "Person.hpp"
 #include "Course.hpp"
 #include "Classroom.hpp"
+#include "Headmaster.hpp"
 
 class Course;
 class Classroom;
+class Headmaster;
 
 class Student : public Person {
   private:
@@ -40,4 +42,5 @@ class Student : public Person {
   	void exitClass();
   	void graduate(Course* course);
     bool is_subscribed(Course* course);
+    std::vector<Course*> get_subscribed_courses() const;
 };

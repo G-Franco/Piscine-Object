@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/14 10:17:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:59:16 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,101 +26,41 @@
 #include "../include/singetons.hpp"
 
 int main() {
-  Headmaster headmaster("John");
-  Secretary secretary("Jane");
-  Course course("C++");
+  Headmaster headmaster("Gus");
+  Professor professor("Walter", headmaster);
+  Student student("Jesse", headmaster);
+  headmaster.add_professor(professor);
+  headmaster.add_student(student);
 
-  std::cout << "Test form creation (Factory pattern)\n";
-  auto form1 = secretary.createForm(FormType::CourseFinished);
-  auto form2 = secretary.createForm(FormType::NeedMoreClassRoom);
-  auto form3 = secretary.createForm(FormType::NeedCourseCreation);
-  auto form4 = secretary.createForm(FormType::SubscriptionToCourse);
+  std::cout << "Testing course creation request\n";
+  std::cout << "Professor has no course assigned: \n"
+            << professor.get_current_course() << "\n";
+  professor.doClass();
+  professor.request_course("Chemistry");
+  Course *course = professor.get_current_course(); 
+  std::cout << "After the request, professor has a course assigned: \n"
+            << course->get_name() << "\n";
+  // Only 1 class to graduate doesn't make sense but it's just for testing
+  course->set_number_of_classes_to_graduate(1);
+  course->set_maximum_number_of_students(10);
 
-  std::cout << "\nCheck that all forms are unsigned and not executed\n";
-  std::cout << "Form 1: signed: " << form1->check_signed() 
-            << " executed: " << form1->check_executed() << "\n";
-  std::cout << "Form 2: signed: " << form2->check_signed() 
-            << " executed: " << form2->check_executed() << "\n";
-  std::cout << "Form 3: signed: " << form3->check_signed() 
-            << " executed: " << form3->check_executed() << "\n";
-  std::cout << "Form 4: signed: " << form4->check_signed()
-            << " executed: " << form4->check_executed() << "\n";
-
-  std::cout << "\nTest form signing and execution before being accepted\n";
-  headmaster.sign_form(form1);
-  headmaster.execute_form(form2);
-
-  std::cout << "\nFill out some forms\n";
-  // Need to downcast to the correct form type to access non virtual functions
-  auto courseFinishedForm = std::dynamic_pointer_cast<CourseFinishedForm>(form1);
-  courseFinishedForm->set_course(&course);
-  auto needMoreClassRoomForm = std::dynamic_pointer_cast<NeedMoreClassRoomForm>(form2);
-  std::cout << "Testing invalid number of classrooms\n";
-  needMoreClassRoomForm->set_classrooms_needed(10);
-  needMoreClassRoomForm->set_classrooms_needed(-1);
-  needMoreClassRoomForm->set_classrooms_needed(3);
-
-  std::cout << "\nTest form reception\n";
-  headmaster.receiveForm(form1);
-  headmaster.receiveForm(form2);
-  headmaster.receiveForm(form3);
-  headmaster.receiveForm(form4);
+  std::cout << "\nTesting course enrollment request\n";
+  std::cout << "Student is not subscribed to any course: \n"
+            << "Number of courses: " 
+            << student.get_subscribed_courses().size() << "\n";
+  std::cout << "\nChoosing non-existing course: \n";
+  student.choose_class("Economics");
+  std::cout << "Choosing existing course: \n";
+  student.choose_class("Chemistry");
+  std::cout << "Student is now subscribed to course: \n"
+            << "Number of courses: " 
+            << student.get_subscribed_courses().size() << "\n";
   
-  std::cout << "\nTest form signing when form has not been filled\n";
-  headmaster.sign_form(form3);
-  headmaster.sign_form(form4);
+  std::cout << "\nTesting room creation request\n";
+  std::cout << "Graduation request is triggered automatically for this test case\n";
+  std::cout << "When professor tries to start class without classroom: \n";
+  headmaster.start_class(professor);
+  headmaster.attend_class(*course);
   
-  std::cout << "\nFill out remaining forms\n";
-  auto needCourseCreationForm = std::dynamic_pointer_cast<NeedCourseCreationForm>(form3);
-  needCourseCreationForm->set_course_name("Python");
-  auto subscriptionToCourseForm = std::dynamic_pointer_cast<SubscriptionToCourseForm>(form4);
-  subscriptionToCourseForm->set_course(&course);
-
-  std::cout << "\nTest form execution without signing\n";
-  headmaster.execute_form(form1);
-
-  std::cout << "\nTest form signing and execution (Command pattern)\n";
-  headmaster.sign_form(form1);
-  headmaster.sign_form(form2);
-  headmaster.sign_form(form3);
-  headmaster.sign_form(form4);
-  headmaster.execute_form(form1);
-  headmaster.execute_form(form2);
-  headmaster.execute_form(form3);
-  headmaster.execute_form(form4);
-
-  std::cout << "\nTest form signing and execution after being signed\n";
-  headmaster.sign_form(form3);
-  headmaster.execute_form(form4);
-
-  std::cout << "\nTest cleaning forms\n";
-  headmaster.clean_forms(secretary);
-
-  std::cout << "\nTest final archive size\n";
-  std::cout << "Archive size: " << secretary.get_archive_size() << "\n";
-
-  std::cout << "\nTest form cleaning when not all forms are executed\n";
-  auto form5 = secretary.createForm(FormType::CourseFinished);
-  auto form6 = secretary.createForm(FormType::NeedMoreClassRoom);
-  auto test1 = std::dynamic_pointer_cast<CourseFinishedForm>(form5);
-  test1->set_course(&course);
-  auto test2 = std::dynamic_pointer_cast<NeedMoreClassRoomForm>(form6);
-  test2->set_classrooms_needed(2);
-  headmaster.receiveForm(form5);
-  headmaster.receiveForm(form6);
-  headmaster.sign_form(form5);
-  headmaster.sign_form(form6);
-  headmaster.execute_form(form5);
-  headmaster.clean_forms(secretary);
-  std::cout << "Archive size: " << secretary.get_archive_size() << "\n";
-  headmaster.execute_form(form6);
-  headmaster.clean_forms(secretary);
-  std::cout << "Archive size: " << secretary.get_archive_size() << "\n";
-  
-  std::cout << "\nTest nullptr cases\n";
-  headmaster.receiveForm(nullptr);
-  headmaster.sign_form(nullptr);
-  headmaster.execute_form(nullptr);
-  secretary.archiveForm(nullptr);
   return 0;
 }

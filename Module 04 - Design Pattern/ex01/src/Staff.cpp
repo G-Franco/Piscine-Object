@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:18:06 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 14:57:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:28:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ void Staff::sign(Form* p_form) {
     std::cout << "[SIGN] Form is null\n";
     return;
   }
-  // TODO: Implement when there is info
   std::cout << "Form signed\n";
 }

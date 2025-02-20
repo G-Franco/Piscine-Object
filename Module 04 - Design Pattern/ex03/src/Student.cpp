@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 12:47:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:43:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,8 @@ bool Student::is_subscribed(Course* course) {
     return true;
   }
   return false;
+}
+
+std::vector<Course*> Student::get_subscribed_courses() const {
+  return _subscribedCourses;
 }
