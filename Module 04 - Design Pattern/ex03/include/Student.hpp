@@ -6,19 +6,16 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:37:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 15:11:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:16:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <vector>
 #include "Person.hpp"
-#include "Course.hpp"
-#include "Classroom.hpp"
-#include "Headmaster.hpp"
 
 class Course;
-class Classroom;
 class Headmaster;
 
 class Student : public Person {

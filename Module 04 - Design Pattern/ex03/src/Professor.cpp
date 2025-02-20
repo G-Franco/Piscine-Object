@@ -6,11 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 12:53:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:22:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Professor.hpp"
+#include "../include/Headmaster.hpp"
+#include "../include/Course.hpp"
 
 Professor::Professor(std::string p_name, Headmaster &headmaster)
   : Staff(p_name),
@@ -67,7 +69,7 @@ void Professor::doClass() {
   Classroom *classroom = _currentCourse->get_empty_classroom();
   if (!classroom) {
     std::cout << "No classroom available for " << _currentCourse->get_name() << "\n";
-    _headmaster.request(*this, FormType::NeedMoreClassRoom, _currentCourse->get_name());
+    _headmaster.request(*this, FormType::NeedMoreClassRoom, "");
   }
   classroom = _currentCourse->get_empty_classroom();
   if (classroom->enter(this)) {

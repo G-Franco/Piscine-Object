@@ -6,14 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:36:16 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 15:29:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:50:22 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "Form.hpp"
-#include "Course.hpp"
 
 class Course;
 

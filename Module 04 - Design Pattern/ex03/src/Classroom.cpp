@@ -6,11 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:56:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 17:12:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:55:03 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Classroom.hpp"
+#include "../include/Professor.hpp"
+#include "../include/Student.hpp"
 
 Classroom::Classroom()
   : Room(),

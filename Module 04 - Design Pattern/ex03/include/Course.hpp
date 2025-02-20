@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:26:10 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 15:39:51 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:15:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 #include "Student.hpp"
 #include "Professor.hpp"
 #include "Classroom.hpp"

@@ -6,13 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:55:11 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/18 12:42:16 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:30:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <vector>
+#include <algorithm>
 #include <stdexcept>
 
 template <typename T>
@@ -71,7 +72,16 @@ class Singleton {
     }
 
     // This requires the class to have an operator== overloaded to compare
+    // find_if requires a function that returns a boolean,
+    // so we use a lambda function to compare the elements
     T &find(const std::string info) {
-      auto it = std::find_if(_group.begin(), _group.end(), info);
+      auto it = std::find_if(_group.begin(), _group.end(),
+        [&info](const T &element) {
+          return element == info;
+        });
+      if (it == _group.end()) {
+        throw std::runtime_error("Element not found");
+      }
+      return *it;
     }
 };

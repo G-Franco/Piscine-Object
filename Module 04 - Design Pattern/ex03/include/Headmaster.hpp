@@ -6,22 +6,20 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:38:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 15:16:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:20:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "Staff.hpp"
+#include "Form.hpp"
 #include "Secretary.hpp"
-#include "Professor.hpp"
-#include "Student.hpp"
-#include "Classroom.hpp"
-#include "Course.hpp"
 #include "singetons.hpp"
 
 class Professor;
 class Student;
+class Secretary;
 class Classroom;
 class Course;
 
@@ -53,7 +51,7 @@ class Headmaster : public Staff {
     void request_course_creation(Professor *professor, std::string info);
     void request_course_finished(Professor *professor, std::string info);
     void request_course_subscription(Student *student, std::string info);
-    void request_classroom_creation(Professor *professor, std::string info);
+    void request_classroom_creation(Professor *professor);
 
   	void receiveForm(std::shared_ptr<Form> p_form);
     void sign_form(std::shared_ptr<Form> form);

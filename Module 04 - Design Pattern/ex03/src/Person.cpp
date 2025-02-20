@@ -6,11 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:12:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 17:41:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:58:26 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Person.hpp"
+#include "../include/Room.hpp"
 
 Person::Person()
   : _name(""),

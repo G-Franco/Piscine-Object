@@ -6,11 +6,15 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:30:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 17:14:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:04:10 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Secretary.hpp"
+#include "../include/CourseFinishedForm.hpp"
+#include "../include/NeedMoreClassRoomForm.hpp"
+#include "../include/NeedCourseCreationForm.hpp"
+#include "../include/SubscriptionToCourseForm.hpp"
 
 Secretary::Secretary(std::string p_name)
   : Staff(p_name) {}

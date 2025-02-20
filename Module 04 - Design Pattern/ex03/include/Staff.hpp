@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:34:17 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/14 16:17:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:58:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 #include <memory>
 #include "Person.hpp"
-#include "Form.hpp"
+
+class Form;
 
 class Staff : public Person {
   private:

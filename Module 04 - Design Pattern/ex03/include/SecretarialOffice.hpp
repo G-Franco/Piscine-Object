@@ -6,14 +6,15 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:31:10 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 15:09:54 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:56:47 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "Room.hpp"
-#include "Form.hpp"
+
+class Form;
 
 class SecretarialOffice: public Room {
   private:

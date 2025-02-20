@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:27:14 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 16:53:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:54:02 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 #include <vector>
 #include <algorithm>
-#include "Professor.hpp"
-#include "Student.hpp"
 
 class Person;
 

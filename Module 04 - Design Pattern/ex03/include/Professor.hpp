@@ -6,18 +6,17 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:39:22 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/18 15:09:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:15:23 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "Staff.hpp"
-#include "Course.hpp"
-#include "Headmaster.hpp"
 
 class Course;
 class Headmaster;
+class Student;
 
 class Professor : public Staff {
   private:

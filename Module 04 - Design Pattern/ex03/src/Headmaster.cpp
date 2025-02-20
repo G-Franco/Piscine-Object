@@ -6,11 +6,18 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 12:42:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:21:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Headmaster.hpp"
+#include "../include/Professor.hpp"
+#include "../include/Student.hpp"
+#include "../include/Course.hpp"
+#include "../include/CourseFinishedForm.hpp"
+#include "../include/NeedCourseCreationForm.hpp"
+#include "../include/SubscriptionToCourseForm.hpp"
+#include "../include/NeedMoreClassRoomForm.hpp"
 
 Headmaster::Headmaster(std::string p_name)
   : Staff(p_name),
@@ -107,6 +114,7 @@ void Headmaster::request(Person &person, FormType form_type, std::string info) {
       break;
     case FormType::NeedMoreClassRoom:
       if (Professor *professor = check_professor(person)) {
+        request_classroom_creation(professor);
       }
     default:
       return;
@@ -171,7 +179,7 @@ void Headmaster::request_course_subscription(Student *student, std::string info)
             << " to course: " << info << "\n";
 }
 
-void Headmaster::request_classroom_creation(Professor *professor, std::string info) {
+void Headmaster::request_classroom_creation(Professor *professor) {
   auto form = _secretary.createForm(FormType::NeedMoreClassRoom);
   Course *course = professor->get_current_course();
   receiveForm(form);

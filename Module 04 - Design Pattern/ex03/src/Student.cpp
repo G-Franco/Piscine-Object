@@ -6,11 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 14:43:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:07:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Student.hpp"
+#include "../include/Headmaster.hpp"
+#include "../include/Course.hpp"
+#include "../include/Form.hpp"
 
 Student::Student(std::string name, Headmaster &headmaster)
   : Person(name),

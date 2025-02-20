@@ -6,17 +6,17 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:38:38 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/13 17:14:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:26:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <vector>
 #include "Staff.hpp"
-#include "CourseFinishedForm.hpp"
-#include "NeedMoreClassRoomForm.hpp"
-#include "NeedCourseCreationForm.hpp"
-#include "SubscriptionToCourseForm.hpp"
+
+class Form;
+enum class FormType;
 
 class Secretary : public Staff {
   private:

@@ -6,11 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:40:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 12:03:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:25:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Room.hpp"
+#include "../include/Person.hpp"
 
 long long Room::_ID = 0;
 
@@ -34,6 +35,10 @@ bool Room::operator==(const Room &other) const {
 Room::~Room() {}
 
 bool Room::canEnter(Person *p_person) {
+  if (!p_person) {
+    std::cout << "[CAN ENTER] Person is null\n";
+    return false;
+  }
   return true;
 }
 

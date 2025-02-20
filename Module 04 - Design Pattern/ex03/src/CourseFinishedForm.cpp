@@ -6,11 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:01:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/14 10:16:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:51:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/CourseFinishedForm.hpp"
+#include "../include/Course.hpp"
 
 CourseFinishedForm::CourseFinishedForm()
   : Form(FormType::CourseFinished),

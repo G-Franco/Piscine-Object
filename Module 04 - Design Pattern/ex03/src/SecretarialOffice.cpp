@@ -6,11 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:02:31 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/12 15:34:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:56:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/SecretarialOffice.hpp"
+#include "../include/Form.hpp"
 
 SecretarialOffice::SecretarialOffice()
   : Room() {}

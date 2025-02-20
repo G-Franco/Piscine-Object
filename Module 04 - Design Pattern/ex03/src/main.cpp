@@ -6,24 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 14:59:16 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:08:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Headmaster.hpp"
 #include "../include/Professor.hpp"
-#include "../include/Staff.hpp"
 #include "../include/Student.hpp"
-#include "../include/Classroom.hpp"
-#include "../include/Courtyard.hpp"
-#include "../include/HeadmasterOffice.hpp"
-#include "../include/SecretarialOffice.hpp"
-#include "../include/StaffRestRoom.hpp"
-#include "../include/CourseFinishedForm.hpp"
-#include "../include/NeedMoreClassRoomForm.hpp"
-#include "../include/NeedCourseCreationForm.hpp"
-#include "../include/SubscriptionToCourseForm.hpp"
-#include "../include/singetons.hpp"
+#include "../include/Course.hpp"
 
 int main() {
   Headmaster headmaster("Gus");
