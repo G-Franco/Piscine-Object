@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:40:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 16:54:03 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:03:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ bool Room::enter(Person *p_person) {
   }
   if (canEnter(p_person)) {
     _occupants.push_back(p_person);
+    p_person->set_room(this);
     return true;
   }
   return false;
@@ -57,6 +58,7 @@ void Room::exit(Person *p_person) {
   std::vector<Person *>::iterator it = std::find(_occupants.begin(), _occupants.end(), p_person);
   if (it != _occupants.end()) {
     _occupants.erase(it);
+    p_person->set_room(nullptr);
   }
   else {
     std::cout << "[EXIT] Person not found\n";

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 17:14:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:42:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,4 +252,56 @@ void Headmaster::clean_forms(Secretary &secretary) {
         return false;
       }),
     _formToValidate.end());
+}
+
+void Headmaster::start_class() {
+  for (auto professor :_professors.get_group()) {
+    professor.doClass();
+  }
+}
+
+void Headmaster::start_class(Professor &professor) {
+  try {
+    _professors.find(professor);
+  }
+  catch (const std::exception &e) {
+    std::cout << "[START CLASS] Professor: " << professor.get_name()
+              << " does not belong to this school\n";
+    return;
+  }
+  professor.doClass();
+}
+
+void Headmaster::attend_class(Course &course) {
+  try {
+    _courses.find(course);
+  }
+  catch (const std::exception &e) {
+    std::cout << "[ATTEND CLASS] Course: " << course.get_name()
+              << " does not exist in this school\n";
+    return;
+  }
+  for (auto student : _students.get_group()) {
+    student.attendClass(&course);
+  }
+}
+
+void Headmaster::attend_class(Student &student, Course &course) {
+  try {
+    _courses.find(course);
+  }
+  catch (const std::exception &e) {
+    std::cout << "[ATTEND CLASS] Course: " << course.get_name()
+              << " does not exist in this school\n";
+    return;
+  }
+  try {
+    _students.find(student);
+  }
+  catch (const std::exception &e) {
+    std::cout << "[ATTEND CLASS] Student: " << student.get_name()
+              << " does not belong to this school\n";
+    return;
+  }
+  student.attendClass(&course);
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 16:50:01 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:47:27 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,25 +77,25 @@ void Student::unsubscribe(Course* course) {
   std::cout << _name << " unsubscribed from " << course->get_name() << "\n";
 }
 
-void Student::attendClass(Classroom* p_classroom) {
-  if (!p_classroom) {
-    std::cout << "[ATTEND CLASS] Classroom is null\n";
+void Student::attendClass(Course* course) {
+  if (!course) {
+    std::cout << "[ATTEND CLASS] Course is null\n";
     return;
   }
-  if (std::find(_subscribedCourses.begin(), _subscribedCourses.end(), p_classroom->getCourse()) == _subscribedCourses.end()) {
-    std::cout << _name << " is not subscribed to " << p_classroom->getCourse()->get_name() << "\n";
+  if (std::find(_subscribedCourses.begin(), _subscribedCourses.end(), course) == _subscribedCourses.end()) {
+    std::cout << _name << " is not subscribed to " << course->get_name() << "\n";
     return;
   }
-  if (p_classroom->enter(this)) {
-    std::cout << _name << " is attending class in "
-              << p_classroom->getCourse()->get_name() << "\n";
-    p_classroom->getCourse()->class_attendance(this);
+  for (auto classroom : course->get_classrooms()) {
+    if (classroom->enter(this)) {
+      std::cout << _name << " is attending class in "
+                << course->get_name() << "\n";
+      course->class_attendance(this);
+      return;
+    }
   }
-  else {
-    std::cout << _name << " cannot attend class in "
-              << p_classroom->getCourse()->get_name() 
-              << ", there is no room\n";
-  }
+  std::cout << _name << " cannot attend class for "
+            << course->get_name() << "\n";
 }
 
 void Student::exitClass() {

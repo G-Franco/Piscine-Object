@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 17:15:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:53:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ void Professor::doClass() {
     _headmaster.request(*this, FormType::NeedMoreClassRoom, _currentCourse->get_name());
   }
   classroom = _currentCourse->get_empty_classroom();
-  // TODO: Should enter now or should it be made by headmaster
-  std::cout << "Professor will hold class: " << _currentCourse->get_name() << "\n";
+  if (classroom->enter(this)) {
+    std::cout << "Professor will hold class: " << _currentCourse->get_name() << "\n";
+  }
 }
 
 void Professor::closeCourse() {

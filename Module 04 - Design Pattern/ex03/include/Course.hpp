@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:26:10 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 16:51:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:28:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ class Course {
     bool check_student(Student* student);
     void add_classroom(Classroom *classroom);
     void remove_classroom(Classroom *classroom);
+    std::vector<Classroom *> get_classrooms() const;
     Classroom *get_empty_classroom();
 };

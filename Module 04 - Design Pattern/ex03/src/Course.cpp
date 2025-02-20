@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/19 16:53:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:28:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,10 @@ void Course::remove_classroom(Classroom *classroom) {
   }
   (*it)->assignCourse(nullptr);
   _classrooms.erase(it);
+}
+
+std::vector<Classroom *> Course::get_classrooms() const {
+  return _classrooms;
 }
 
 Classroom *Course::get_empty_classroom() {
