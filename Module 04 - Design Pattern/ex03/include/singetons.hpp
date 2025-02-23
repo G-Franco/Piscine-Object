@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:55:11 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 18:30:46 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 16:53:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
+#include <memory>
 
 template <typename T>
 class Singleton {
   private:
-    std::vector<T> _group;
+    std::vector<std::shared_ptr<T> > _group;
 
     // Constructors are hidden so they can't be called
     Singleton() {}
@@ -36,11 +37,11 @@ class Singleton {
       return instance;
     }
 
-    const std::vector<T> &get_group() const {
+    const std::vector<std::shared_ptr<T> > &get_group() const {
       return _group;
     }
 
-    void add(const T &element) {
+    void add(std::shared_ptr<T> &element) {
       if (std::find(_group.begin(), _group.end(), element) != _group.end()) {
         std::cout << "Element already exists\n";
         return;
@@ -48,7 +49,7 @@ class Singleton {
       _group.push_back(element);
     }
 
-    void remove(const T &element) {
+    void remove(const std::shared_ptr<T> &element) {
       auto it = std::find(_group.begin(), _group.end(), element);
       if (it == _group.end()) {
         throw std::runtime_error("Element not found");
@@ -56,32 +57,27 @@ class Singleton {
       _group.erase(it);
     }
 
-    const T &get_element(size_t index) {
+    std::shared_ptr<T> get_element(size_t index) {
       if (index >= _group.size()) {
         throw std::runtime_error("Index out of bounds");
       }
       return _group[index];
     }
 
-    T &find(const T &element) {
-      auto it = std::find(_group.begin(), _group.end(), element);
-      if (it == _group.end()) {
-        throw std::runtime_error("Element not found");
+    std::shared_ptr<T> find(const std::shared_ptr<T> &element) {
+      if (std::find(_group.begin(), _group.end(), element) != _group.end()) {
+        return element;
       }
-      return *it;
+      return nullptr;
     }
 
     // This requires the class to have an operator== overloaded to compare
-    // find_if requires a function that returns a boolean,
-    // so we use a lambda function to compare the elements
-    T &find(const std::string info) {
-      auto it = std::find_if(_group.begin(), _group.end(),
-        [&info](const T &element) {
-          return element == info;
-        });
-      if (it == _group.end()) {
-        throw std::runtime_error("Element not found");
+    std::shared_ptr<T> find(const std::string info) {
+      for (auto element : _group) {
+        if (*element == info) {
+          return element;
+        }
       }
-      return *it;
+      return nullptr;
     }
 };

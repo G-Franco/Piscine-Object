@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 12:28:28 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 16:52:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ Course::Course(std::string p_name)
     _maximumNumberOfStudent(0) {}
 
 Course::Course(const Course &copy) 
-  : _name(copy._name),
+  : std::enable_shared_from_this<Course>(),
+    _name(copy._name),
     _responsible(copy._responsible),
     _students(copy._students),
     _numberOfClassToGraduate(copy._numberOfClassToGraduate),
@@ -34,7 +35,7 @@ Course &Course::operator=(const Course &copy) {
   return *this;
 }
 
-bool Course::operator==(const Course &other) {
+bool Course::operator==(const Course &other) const {
   return _name == other._name;
 }
 
@@ -61,7 +62,7 @@ void Course::set_maximum_number_of_students(int number) {
 }
 
 // No nullptr check because it can be used to remove the professor
-void Course::assign(Professor* p_professor) {
+void Course::assign(std::shared_ptr<Professor> p_professor) {
   _responsible = p_professor;
 }
 
@@ -81,7 +82,7 @@ bool Course::course_checks() {
   return true;
 }
 
-bool Course::subscribe(Student *p_student) {
+bool Course::subscribe(std::shared_ptr<Student> &p_student) {
   if (!course_checks()) {
     return false;
   }
@@ -97,7 +98,7 @@ bool Course::subscribe(Student *p_student) {
   return true;
 }
 
-void Course::remove_student(Student *p_student) {
+void Course::remove_student(std::shared_ptr<Student> &p_student) {
   if (!course_checks()) {
     return;
   }
@@ -116,7 +117,7 @@ std::string Course::get_name() const {
   return _name;
 }
 
-void Course::class_attendance(Student* student) {
+void Course::class_attendance(std::shared_ptr<Student> &student) {
   if (!course_checks()) {
     return;
   }
@@ -129,11 +130,11 @@ void Course::class_attendance(Student* student) {
     return;
   }
   if (++_students[student] == _numberOfClassToGraduate) {
-    _responsible->request_graduation(*student);
+    _responsible->request_graduation(student);
   }
 }
 
-bool Course::check_student(Student* student) {
+bool Course::check_student(std::shared_ptr<Student> &student) {
   if (!student) {
     std::cout << "Student is null\n";
     return false;
@@ -145,7 +146,7 @@ bool Course::check_student(Student* student) {
   return true;
 }
 
-void Course::add_classroom(Classroom *classroom) {
+void Course::add_classroom(std::shared_ptr<Classroom> &classroom) {
   if (!classroom) {
     std::cout << "Classroom is null\n";
     return;
@@ -159,10 +160,11 @@ void Course::add_classroom(Classroom *classroom) {
     return;
   }
   _classrooms.push_back(classroom);
-  classroom->assignCourse(this);
+  auto self = shared_from_this();
+  classroom->assignCourse(self);
 }
 
-void Course::remove_classroom(Classroom *classroom) {
+void Course::remove_classroom(std::shared_ptr<Classroom> &classroom) {
   if (!classroom) {
     std::cout << "Classroom is null\n";
     return;
@@ -176,11 +178,11 @@ void Course::remove_classroom(Classroom *classroom) {
   _classrooms.erase(it);
 }
 
-std::vector<Classroom *> Course::get_classrooms() const {
+std::vector<std::shared_ptr<Classroom> > Course::get_classrooms() const {
   return _classrooms;
 }
 
-Classroom *Course::get_empty_classroom() {
+std::shared_ptr<Classroom> Course::get_empty_classroom() {
   for (auto &classroom : _classrooms) {
     if (classroom->is_empty()) {
       return classroom;

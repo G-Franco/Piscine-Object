@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:16 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 17:51:14 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:03:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ SubscriptionToCourseForm &SubscriptionToCourseForm::operator=(const Subscription
 
 SubscriptionToCourseForm::~SubscriptionToCourseForm() {}
 
-void SubscriptionToCourseForm::set_course(Course *course) {
+void SubscriptionToCourseForm::set_course(std::shared_ptr<Course> &course) {
   if (!course) {
     std::cout << "[SET COURSE] Course is null\n";
     return;

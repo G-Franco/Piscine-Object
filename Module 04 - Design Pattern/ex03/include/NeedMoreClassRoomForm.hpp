@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:36:16 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 17:50:22 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:02:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class Course;
 class NeedMoreClassRoomForm : public Form {
   private:
     int _classrooms_needed;
-    Course *_course;
+    std::shared_ptr<Course> _course;
 
   public:
     NeedMoreClassRoomForm();
@@ -27,7 +27,7 @@ class NeedMoreClassRoomForm : public Form {
     NeedMoreClassRoomForm &operator=(const NeedMoreClassRoomForm &copy);
     ~NeedMoreClassRoomForm();
     void set_classrooms_needed(int p_classrooms_needed);
-    void set_course(Course *p_course);
+    void set_course(std::shared_ptr<Course> &p_course);
     void sign();
   	void execute();
 };

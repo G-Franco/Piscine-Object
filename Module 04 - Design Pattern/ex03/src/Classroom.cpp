@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:56:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 17:55:03 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:57:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ Classroom::~Classroom() {}
 // must be the one responsible for the course
 // There can be multiple (enrolled) students in a classroom but they can only
 // enter after the professor has entered
-bool Classroom::canEnter(Person* p_person) {
-  if (Professor *professor = dynamic_cast<Professor *>(p_person)) {
+bool Classroom::canEnter(std::shared_ptr<Person> person) {
+  if (auto professor = std::dynamic_pointer_cast<Professor>(person)) {
     if (!_occupants.empty() ||
         professor->get_current_course() != _course) {
       return false;
     }
     return true;
   }
-  if (Student *student = dynamic_cast<Student *>(p_person)) {
+  if (auto student = std::dynamic_pointer_cast<Student>(person)) {
     if (_occupants.empty() ||
         !student->is_subscribed(_course)) {
       return false;
@@ -57,10 +57,10 @@ bool Classroom::canEnter(Person* p_person) {
 }
 
 // Allows null assignment to remove course
-void Classroom::assignCourse(Course* p_course) {
-  _course = p_course;
+void Classroom::assignCourse(std::shared_ptr<Course> course) {
+  _course = course;
 }
 
-Course* Classroom::getCourse() const {
+std::shared_ptr<Course> Classroom::getCourse() const {
   return _course;
 }

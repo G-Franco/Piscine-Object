@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 18:07:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:47:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,15 @@
 #include "../include/Course.hpp"
 #include "../include/Form.hpp"
 
-Student::Student(std::string name, Headmaster &headmaster)
-  : Person(name),
-    _headmaster(headmaster) {}
+Student::Student(std::string name)
+  : Person(name) {}
 
 Student::Student(const Student &copy)
   : Person(copy),
-    _subscribedCourses(copy._subscribedCourses),
-    _headmaster(copy._headmaster) {}
+    _subscribedCourses(copy._subscribedCourses) {}
 
 Student &Student::operator=(const Student &copy) {
   _subscribedCourses = copy._subscribedCourses;
-  _headmaster = copy._headmaster;
   return *this;
 }
 
@@ -45,10 +42,11 @@ void Student::choose_class(std::string course_name) {
     std::cout << "[CHOOSE CLASS] Choose a valid course name\n";
     return;
   }
-  _headmaster.request(*this, FormType::SubscriptionToCourse, course_name);
+  std::shared_ptr<Person> self = shared_from_this();
+  _headmaster->request(self, FormType::SubscriptionToCourse, course_name);
 }
 
-bool Student::subscribe(Course* course) {
+bool Student::subscribe(std::shared_ptr<Course> &course) {
   if (!course) {
     std::cout << "[SUBSCRIBE] Course is null\n";
     return false;
@@ -57,7 +55,9 @@ bool Student::subscribe(Course* course) {
     std::cout << _name << " is already subscribed to " << course->get_name() << "\n";
     return false;
   }
-  if (!course->check_student(this)) {
+  auto self = std::dynamic_pointer_cast<Student>(shared_from_this());
+  if (!course->check_student(self))
+  {
     std::cout << _name << " cannot subscribe to " << course->get_name() << "\n";
     return false;
   }
@@ -66,7 +66,7 @@ bool Student::subscribe(Course* course) {
   return true;
 }
 
-void Student::unsubscribe(Course* course) {
+void Student::unsubscribe(std::shared_ptr<Course> &course) {
   if (!course) {
     std::cout << "[UNSUBSCRIBE] Course is null\n";
     return;
@@ -80,7 +80,7 @@ void Student::unsubscribe(Course* course) {
   std::cout << _name << " unsubscribed from " << course->get_name() << "\n";
 }
 
-void Student::attendClass(Course* course) {
+void Student::attendClass(std::shared_ptr<Course> &course) {
   if (!course) {
     std::cout << "[ATTEND CLASS] Course is null\n";
     return;
@@ -89,11 +89,14 @@ void Student::attendClass(Course* course) {
     std::cout << _name << " is not subscribed to " << course->get_name() << "\n";
     return;
   }
-  for (auto classroom : course->get_classrooms()) {
-    if (classroom->enter(this)) {
+  auto self_person = shared_from_this();
+  auto self_student = std::dynamic_pointer_cast<Student>(self_person);
+  for (auto classroom : course->get_classrooms())
+  {
+    if (classroom->enter(self_person)) {
       std::cout << _name << " is attending class in "
                 << course->get_name() << "\n";
-      course->class_attendance(this);
+      course->class_attendance(self_student);
       return;
     }
   }
@@ -106,11 +109,12 @@ void Student::exitClass() {
     std::cout << "[EXIT CLASS] Student is not in a classroom\n";
     return;
   }
-  _currentRoom->exit(this);
+  auto self = shared_from_this();
+  _currentRoom->exit(self);
   std::cout << _name << " exited class\n";
 }
 
-void Student::graduate(Course* p_course) {
+void Student::graduate(std::shared_ptr<Course> &p_course) {
   if (!p_course) {
     std::cout << "[GRADUATE] Course is null\n";
     return;
@@ -119,7 +123,7 @@ void Student::graduate(Course* p_course) {
   std::cout << _name << ": I graduated from " << p_course->get_name() << "!\n";
 }
 
-bool Student::is_subscribed(Course* course) {
+bool Student::is_subscribed(std::shared_ptr<Course> &course) {
   if (!course) {
     std::cout << "[IS SUBSCRIBED] Course is null\n";
     return false;
@@ -130,6 +134,6 @@ bool Student::is_subscribed(Course* course) {
   return false;
 }
 
-std::vector<Course*> Student::get_subscribed_courses() const {
+std::vector<std::shared_ptr<Course>> Student::get_subscribed_courses() const {
   return _subscribedCourses;
 }

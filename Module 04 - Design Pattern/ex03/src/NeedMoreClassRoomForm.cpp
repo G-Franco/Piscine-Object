@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:09:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 17:51:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:03:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void NeedMoreClassRoomForm::set_classrooms_needed(int p_classrooms_needed) {
   _classrooms_needed = p_classrooms_needed;
 }
 
-void NeedMoreClassRoomForm::set_course(Course *p_course) {
+void NeedMoreClassRoomForm::set_course(std::shared_ptr<Course> &p_course) {
   if (!p_course) {
     std::cout << "[SET COURSE] Course is null\n";
     return;
