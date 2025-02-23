@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:56:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 11:57:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:13:32 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ bool Classroom::operator==(const Classroom &other) const {
   return _id == other._id;
 }
 
-Classroom::~Classroom() {}
+Classroom::~Classroom() {
+  _course = NULL;
+}
 
 // There can only be 1 professor in a classroom and that professor
 // must be the one responsible for the course

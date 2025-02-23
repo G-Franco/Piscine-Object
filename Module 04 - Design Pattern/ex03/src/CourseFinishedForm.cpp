@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:01:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 12:11:34 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:13:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ CourseFinishedForm &CourseFinishedForm::operator=(const CourseFinishedForm &copy
   return *this;
 }
 
-CourseFinishedForm::~CourseFinishedForm() {}
+CourseFinishedForm::~CourseFinishedForm() {
+  course = nullptr;
+}
 
 void CourseFinishedForm::set_course(std::shared_ptr<Course> p_course) {
   if (!p_course) {

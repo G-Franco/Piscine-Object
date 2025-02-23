@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 16:09:02 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:12:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ bool Professor::operator==(const std::string name) const {
   return get_name() == name;
 }
 
-Professor::~Professor() {}
+Professor::~Professor() {
+  _currentCourse = nullptr;
+}
 
 void Professor::request_course(std::string course_name) {
   if (course_name.empty()) {

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 16:52:31 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:13:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ bool Course::operator==(const std::string name) const {
   return _name == name;
 }
 
-Course::~Course() {}
+Course::~Course() {
+  _responsible = nullptr;
+  _students.clear();
+  _classrooms.clear();
+}
 
 void Course::set_number_of_classes_to_graduate(int number) {
   if (number < 1 || number > 10) {

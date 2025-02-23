@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:55:11 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 16:53:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:12:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,9 @@ class Singleton {
         }
       }
       return nullptr;
+    }
+
+    void clear() {
+      _group.clear();
     }
 };

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 16:14:22 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:00:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int main() {
   headmaster->add_student(student);
 
   std::cout << "Testing course creation request\n";
-  std::cout << "Professor has no course assigned: \n"
-            << professor->get_current_course() << "\n";
+  std::cout << "Professor has no course assigned: \n";
   professor->doClass();
   professor->request_course("Chemistry");
   std::shared_ptr<Course> course = professor->get_current_course(); 
@@ -51,6 +50,5 @@ int main() {
   std::cout << "When professor tries to start class without classroom: \n";
   headmaster->start_class(professor);
   headmaster->attend_class(course);
-  
   return 0;
 }

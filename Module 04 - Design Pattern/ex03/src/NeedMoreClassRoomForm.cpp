@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:09:57 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 12:03:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:14:27 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ NeedMoreClassRoomForm &NeedMoreClassRoomForm::operator=(const NeedMoreClassRoomF
   return *this;
 }
 
-NeedMoreClassRoomForm::~NeedMoreClassRoomForm() {}
+NeedMoreClassRoomForm::~NeedMoreClassRoomForm() {
+  _course = nullptr;
+}
 
 void NeedMoreClassRoomForm::set_classrooms_needed(int p_classrooms_needed) {
   if (p_classrooms_needed < 1 ||

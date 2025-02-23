@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:30:49 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 18:04:10 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:14:54 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ Secretary &Secretary::operator=(const Secretary &copy) {
   return *this;
 }
 
-Secretary::~Secretary() {}
+Secretary::~Secretary() {
+  _form_archive.clear();
+}
 
 std::shared_ptr<Form> Secretary::createForm(FormType p_formType) {
   switch (p_formType) {

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 11:47:36 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:15:41 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ bool Student::operator==(const std::string name) const {
   return _name == name;
 }
 
-Student::~Student() {}
+Student::~Student() {
+  _subscribedCourses.clear();
+}
 
 void Student::choose_class(std::string course_name) {
   if (course_name.empty()) {

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:16 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 12:03:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:15:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ SubscriptionToCourseForm &SubscriptionToCourseForm::operator=(const Subscription
   return *this;
 }
 
-SubscriptionToCourseForm::~SubscriptionToCourseForm() {}
+SubscriptionToCourseForm::~SubscriptionToCourseForm() {
+  _course = nullptr;
+}
 
 void SubscriptionToCourseForm::set_course(std::shared_ptr<Course> &course) {
   if (!course) {

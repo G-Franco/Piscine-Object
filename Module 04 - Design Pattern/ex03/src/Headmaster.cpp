@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 16:38:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:11:33 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,13 @@ Headmaster &Headmaster::operator=(const Headmaster &copy) {
   return *this;
 }
 
-Headmaster::~Headmaster() {}
+Headmaster::~Headmaster() {
+  _formToValidate.clear();
+  _professors.clear();
+  _students.clear();
+  _courses.clear();
+  _classrooms.clear();
+}
 
 void Headmaster::add_professor(std::shared_ptr<Professor> &professor) {
   if (!professor) {
@@ -136,7 +142,7 @@ std::shared_ptr<Student> Headmaster::check_student(std::shared_ptr<Person> &pers
 }
 
 void Headmaster::request(std::shared_ptr<Person> &person, FormType form_type, std::string info) {
-  if (info.empty()) {
+  if (info.empty() && form_type != FormType::NeedMoreClassRoom) {
     std::cout << "[REQUEST] Info is empty\n";
     return;
   }
@@ -211,6 +217,7 @@ void Headmaster::request_classroom_creation(std::shared_ptr<Professor> &professo
   sign_form(form);
   execute_form(form);
   std::shared_ptr<Classroom> classroom = std::make_shared<Classroom>();
+  course->add_classroom(classroom);
   classroom->assignCourse(course);
   add_classroom(classroom);
   std::cout << "Headmaster created classroom for course: "
