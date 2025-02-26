@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:40:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 11:54:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:46:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,36 +34,46 @@ bool Room::operator==(const Room &other) const {
 
 Room::~Room() {}
 
-bool Room::canEnter(std::shared_ptr<Person> person) {
-  if (!person) {
+void Room::set_self(std::weak_ptr<Room> self) {
+  if (self.expired()) {
+    std::cout << "[SET SELF] Self pointer is empty\n";
+    return;
+  }
+  this->self = self;
+}
+
+bool Room::canEnter(std::weak_ptr<Person> person) {
+  if (person.expired()) {
     std::cout << "[CAN ENTER] Person is null\n";
     return false;
   }
   return true;
 }
 
-bool Room::enter(std::shared_ptr<Person> person) {
-  if (!person) {
+bool Room::enter(std::weak_ptr<Person> person) {
+  if (person.expired()) {
     std::cout << "[ENTER] Person is null\n";
     return false;
   }
+  auto person_ptr = person.lock();
   if (canEnter(person)) {
     _occupants.push_back(person);
-    person->set_room(this);
+    person_ptr->set_room(self);
     return true;
   }
   return false;
 }
 
-void Room::exit(std::shared_ptr<Person> person) {
-  if (!person) {
+void Room::exit(std::weak_ptr<Person> person) {
+  if (person.expired()) {
     std::cout << "[EXIT] Person is null\n";
     return;
   }
-  std::vector<std::shared_ptr<Person> >::iterator it = std::find(_occupants.begin(), _occupants.end(), person);
+  auto person_ptr = person.lock();
+  auto it = std::find(_occupants.begin(), _occupants.end(), person);
   if (it != _occupants.end()) {
     _occupants.erase(it);
-    person->set_room(nullptr);
+    person_ptr->set_room(std::weak_ptr<Room>());
   }
   else {
     std::cout << "[EXIT] Person not found\n";
@@ -72,8 +82,12 @@ void Room::exit(std::shared_ptr<Person> person) {
 
 void Room::printOccupant() {
   std::cout << "Room " << _id << " occupants:\n";
-  for (std::vector<std::shared_ptr<Person> >::iterator it = _occupants.begin(); it != _occupants.end(); it++) {
-    std::cout << (*it)->get_name() << "\n";
+  for (auto occupant : _occupants) {
+    if (occupant.expired()) {
+      continue;
+    }
+    auto occupant_ptr = occupant.lock();
+    std::cout << occupant_ptr->get_name() << "\n";
   }
 }
 

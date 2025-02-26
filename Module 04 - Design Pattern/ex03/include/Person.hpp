@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:32:52 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 16:18:21 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:44:34 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 class Room;
 class Headmaster;
 
-class Person : public std::enable_shared_from_this<Person> {
+class Person {
   protected:
   	std::string _name;
-  	Room *_currentRoom;
+  	std::weak_ptr<Room> _currentRoom;
     Headmaster *_headmaster;
 
     Person();
@@ -31,8 +31,8 @@ class Person : public std::enable_shared_from_this<Person> {
     Person(const Person &copy);
     Person &operator=(const Person &copy);
     virtual ~Person();
-    Room *room();
-    void set_room(Room *p_room);
+    std::weak_ptr<Room> &room();
+    void set_room(std::weak_ptr<Room> room);
     void set_headmaster(Headmaster *headmaster);
     std::string get_name() const;
 };

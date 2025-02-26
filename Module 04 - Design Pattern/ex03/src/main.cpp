@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 19:00:05 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:19:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,17 @@ int main() {
   std::cout << "When professor tries to start class without classroom: \n";
   headmaster->start_class(professor);
   headmaster->attend_class(course);
+
+  professor->closeCourse();
+  course->assign(nullptr);
+  student->get_subscribed_courses().clear();
+  Singleton<Professor>::get_instance().clear();
+  Singleton<Student>::get_instance().clear();
+  Singleton<Course>::get_instance().clear();
+  Singleton<Classroom>::get_instance().clear();
+  headmaster = nullptr;
+  professor = nullptr;
+  student = nullptr;
+  course = nullptr;
   return 0;
 }

@@ -6,21 +6,20 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 19:13:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:51:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Course.hpp"
 
-Course::Course(std::string p_name)
-  : _name(p_name),
-    _responsible(nullptr),
+Course::Course(std::string name)
+  : _name(name),
+    _responsible(std::weak_ptr<Professor>()),
     _numberOfClassToGraduate(0),
     _maximumNumberOfStudent(0) {}
 
-Course::Course(const Course &copy) 
-  : std::enable_shared_from_this<Course>(),
-    _name(copy._name),
+Course::Course(const Course &copy)
+  : _name(copy._name),
     _responsible(copy._responsible),
     _students(copy._students),
     _numberOfClassToGraduate(copy._numberOfClassToGraduate),
@@ -44,9 +43,17 @@ bool Course::operator==(const std::string name) const {
 }
 
 Course::~Course() {
-  _responsible = nullptr;
+  _responsible = std::weak_ptr<Professor>();
   _students.clear();
   _classrooms.clear();
+}
+
+void Course::set_self(std::weak_ptr<Course> self) {
+  if (self.expired()) {
+    std::cout << "Self pointer is empty\n";
+    return;
+  }
+  _self = self;
 }
 
 void Course::set_number_of_classes_to_graduate(int number) {
@@ -66,12 +73,12 @@ void Course::set_maximum_number_of_students(int number) {
 }
 
 // No nullptr check because it can be used to remove the professor
-void Course::assign(std::shared_ptr<Professor> p_professor) {
-  _responsible = p_professor;
+void Course::assign(std::weak_ptr<Professor> professor) {
+  _responsible = professor;
 }
 
 bool Course::course_checks() {
-  if (!_responsible) {
+  if (_responsible.expired()) {
     std::cout << "Course: " + _name + " has no assigned teacher\n";
     return false;
   }
@@ -86,11 +93,11 @@ bool Course::course_checks() {
   return true;
 }
 
-bool Course::subscribe(std::shared_ptr<Student> &p_student) {
+bool Course::subscribe(std::weak_ptr<Student> &student) {
   if (!course_checks()) {
     return false;
   }
-  if (!p_student) {
+  if (student.expired()) {
     std::cout << "Student is null\n";
     return false;
   }
@@ -98,34 +105,34 @@ bool Course::subscribe(std::shared_ptr<Student> &p_student) {
     std::cout << "Course: " + _name + " is full\n";
     return false;
   }
-  _students.emplace(p_student, 0);
+  _students.emplace(student, 0);
   return true;
 }
 
-void Course::remove_student(std::shared_ptr<Student> &p_student) {
+void Course::remove_student(std::weak_ptr<Student> &student) {
   if (!course_checks()) {
     return;
   }
-  if (!p_student) {
+  if (student.expired()) {
     std::cout << "Student is null\n";
     return;
   }
-  if (_students.find(p_student) == _students.end()) {
+  if (_students.find(student) == _students.end()) {
     std::cout << "Student is not subscribed to course: " + _name + "\n";
     return;
   }
-  _students.erase(p_student);
+  _students.erase(student);
 }
 
 std::string Course::get_name() const {
   return _name;
 }
 
-void Course::class_attendance(std::shared_ptr<Student> &student) {
+void Course::class_attendance(std::weak_ptr<Student> &student) {
   if (!course_checks()) {
     return;
   }
-  if (!student) {
+  if (student.expired()) {
     std::cout << "Student is null\n";
     return;
   }
@@ -134,12 +141,13 @@ void Course::class_attendance(std::shared_ptr<Student> &student) {
     return;
   }
   if (++_students[student] == _numberOfClassToGraduate) {
-    _responsible->request_graduation(student);
+    auto responsible = _responsible.lock();
+    responsible->request_graduation(student);
   }
 }
 
-bool Course::check_student(std::shared_ptr<Student> &student) {
-  if (!student) {
+bool Course::check_student(std::weak_ptr<Student> &student) {
+  if (student.expired()) {
     std::cout << "Student is null\n";
     return false;
   }
@@ -150,12 +158,17 @@ bool Course::check_student(std::shared_ptr<Student> &student) {
   return true;
 }
 
-void Course::add_classroom(std::shared_ptr<Classroom> &classroom) {
-  if (!classroom) {
+void Course::add_classroom(std::weak_ptr<Classroom> &classroom) {
+  if (_self.expired()) {
+    std::cout << "Course must have a self pointer\n";
+    return;
+  }
+  if (classroom.expired()) {
     std::cout << "Classroom is null\n";
     return;
   }
-  if (classroom->getCourse()) {
+  auto room = classroom.lock();
+  if (!room->getCourse().expired()) {
     std::cout << "Classroom already has a course\n";
     return;
   }
@@ -164,33 +177,37 @@ void Course::add_classroom(std::shared_ptr<Classroom> &classroom) {
     return;
   }
   _classrooms.push_back(classroom);
-  auto self = shared_from_this();
-  classroom->assignCourse(self);
+  room->assignCourse(_self);
 }
 
-void Course::remove_classroom(std::shared_ptr<Classroom> &classroom) {
-  if (!classroom) {
+void Course::remove_classroom(std::weak_ptr<Classroom> &classroom) {
+  if (classroom.expired()) {
     std::cout << "Classroom is null\n";
     return;
   }
   auto it = std::find(_classrooms.begin(), _classrooms.end(), classroom);
   if (it == _classrooms.end()) {
-    std::cout << "Classroom is not assigned\n";
+    std::cout << "Classroom is not on the list\n";
     return;
   }
-  (*it)->assignCourse(nullptr);
+  auto room = classroom.lock();
+  room->assignCourse(std::weak_ptr<Course>());
   _classrooms.erase(it);
 }
 
-std::vector<std::shared_ptr<Classroom> > Course::get_classrooms() const {
+std::vector<std::weak_ptr<Classroom> > Course::get_classrooms() const {
   return _classrooms;
 }
 
-std::shared_ptr<Classroom> Course::get_empty_classroom() {
+std::weak_ptr<Classroom> Course::get_empty_classroom() {
   for (auto &classroom : _classrooms) {
-    if (classroom->is_empty()) {
+    if (classroom.expired()) {
+      continue;
+    }
+    auto room = classroom.lock();
+    if (room->is_empty()) {
       return classroom;
     }
   }
-  return nullptr;
+  return std::weak_ptr<Classroom>();
 }

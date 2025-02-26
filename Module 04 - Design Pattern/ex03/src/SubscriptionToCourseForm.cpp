@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:16 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 19:15:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:03:15 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 SubscriptionToCourseForm::SubscriptionToCourseForm()
   : Form(FormType::SubscriptionToCourse),
-    _course(nullptr) {}
+    _course(std::weak_ptr<Course>()) {}
 
 SubscriptionToCourseForm::SubscriptionToCourseForm(const SubscriptionToCourseForm &copy)
   : Form(copy),
@@ -26,12 +26,10 @@ SubscriptionToCourseForm &SubscriptionToCourseForm::operator=(const Subscription
   return *this;
 }
 
-SubscriptionToCourseForm::~SubscriptionToCourseForm() {
-  _course = nullptr;
-}
+SubscriptionToCourseForm::~SubscriptionToCourseForm() {}
 
-void SubscriptionToCourseForm::set_course(std::shared_ptr<Course> &course) {
-  if (!course) {
+void SubscriptionToCourseForm::set_course(std::weak_ptr<Course> &course) {
+  if (course.expired()) {
     std::cout << "[SET COURSE] Course is null\n";
     return;
   }
@@ -43,7 +41,7 @@ void SubscriptionToCourseForm::set_course(std::shared_ptr<Course> &course) {
 }
 
 void SubscriptionToCourseForm::sign() {
-  if (!_course) {
+  if (_course.expired()) {
     std::cout << "[SIGN] Course information missing\n";
     return;
   }
@@ -53,10 +51,14 @@ void SubscriptionToCourseForm::sign() {
   }
   _signed = true;
   std::cout << "Subscription to course form for: "
-            << _course->get_name() << " signed\n";
+            << _course.lock()->get_name() << " signed\n";
 }
 
 void SubscriptionToCourseForm::execute() {
+  if (_course.expired()) {
+    std::cout << "[EXECUTE] Course information missing\n";
+    return;
+  }
   if (!check_signed()) {
     std::cout << "[EXECUTE] Form not signed\n";
     return;
@@ -67,5 +69,5 @@ void SubscriptionToCourseForm::execute() {
   }
   _executed = true;
   std::cout << "Subscription to course form for: "
-            << _course->get_name() << " executed\n";
+            << _course.lock()->get_name() << " executed\n";
 }

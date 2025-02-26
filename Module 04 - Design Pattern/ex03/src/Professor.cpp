@@ -6,17 +6,18 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 19:12:28 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:52:45 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Professor.hpp"
 #include "../include/Headmaster.hpp"
 #include "../include/Course.hpp"
+#include "../include/Form.hpp"
 
-Professor::Professor(std::string p_name)
-  : Staff(p_name),
-    _currentCourse(nullptr) {}
+Professor::Professor(std::string name)
+  : Staff(name),
+    _currentCourse(std::weak_ptr<Course>()) {}
 
 Professor::Professor(const Professor &copy)
   : Staff(copy),
@@ -35,8 +36,14 @@ bool Professor::operator==(const std::string name) const {
   return get_name() == name;
 }
 
-Professor::~Professor() {
-  _currentCourse = nullptr;
+Professor::~Professor() {}
+
+void Professor::set_self(std::weak_ptr<Professor> self) {
+  if (self.expired()) {
+    std::cout << "[SET SELF] Self pointer is empty\n";
+    return;
+  }
+  _self = self;
 }
 
 void Professor::request_course(std::string course_name) {
@@ -44,57 +51,76 @@ void Professor::request_course(std::string course_name) {
     std::cout << "[REQUEST COURSE] Course name is empty\n";
     return;
   }
-  std::shared_ptr<Person> self = shared_from_this();
-  _headmaster->request(self, FormType::NeedCourseCreation, course_name);
+  if (auto self = _self.lock()) {
+    std::weak_ptr<Person> p_self = _self;
+    _headmaster->request(p_self, FormType::NeedCourseCreation, course_name);
+  }
+  else {
+    std::cout << "[REQUEST COURSE] Professor needs to have a self pointer assigned\n";
+  }
 }
 
-void Professor::request_graduation(std::shared_ptr<Student> &student) {
-  if (!_currentCourse) {
-    std::cout << "[REQUEST GRADUATION] Course is null\n";
+void Professor::request_graduation(std::weak_ptr<Student> &student) {
+  if (_currentCourse.expired()) {
+    std::cout << "[REQUEST GRADUATION] Course not assigned\n";
     return;
   }
-  if (!student->is_subscribed(_currentCourse)) {
-    std::cout << student->get_name() << " is not subscribed to " << _currentCourse->get_name() << "\n";
+  if (student.expired()) {
+    std::cout << "[REQUEST GRADUATION] Student is empty\n";
     return;
   }
-  std::shared_ptr<Person> self = shared_from_this();
-  _headmaster->request(self, FormType::CourseFinished, student->get_name());
+  auto stud = student.lock();
+  auto course = _currentCourse.lock();
+  if (!stud->is_subscribed(_currentCourse)) {
+    std::cout << stud->get_name() << " is not subscribed to " << course->get_name() << "\n";
+    return;
+  }
+  if (auto self = _self.lock()) {
+    std::weak_ptr<Person> p_self = _self;
+    _headmaster->request(p_self, FormType::CourseFinished, stud->get_name());
+  }
+  else {
+    std::cout << "[REQUEST GRADUATION] Professor needs a self pointer assigned\n";
+  }
 }
 
-void Professor::assignCourse(std::shared_ptr<Course> &p_course) {
-  if (p_course) {
-    p_course->assign(nullptr);
-  }
-  _currentCourse = p_course;
+void Professor::assignCourse(std::weak_ptr<Course> &course) {
+  _currentCourse = course;
 }
 
 void Professor::doClass() {
-  if (!_currentCourse) {
+  if (_currentCourse.expired()) {
     std::cout << "[DO CLASS] Course is null\n";
     return;
   }
-  std::shared_ptr<Classroom> classroom = _currentCourse->get_empty_classroom();
-  if (!classroom) {
-    std::cout << "No classroom available for " << _currentCourse->get_name() << "\n";
-    std::shared_ptr<Person> self = shared_from_this();
+  if (_self.expired()) {
+    std::cout << "[DO CLASS] Professor needs a self pointer assigned\n";
+    return;
+  } 
+  std::weak_ptr<Person> self = _self;
+  auto course = _currentCourse.lock();
+  std::weak_ptr<Classroom> classroom = course->get_empty_classroom();
+  if (classroom.expired()) {
+    std::cout << "No classroom available for " << course->get_name() << "\n";
     _headmaster->request(self, FormType::NeedMoreClassRoom, "");
   }
-  classroom = _currentCourse->get_empty_classroom();
-  auto self = shared_from_this();
-  if (classroom->enter(self)) {
-    std::cout << "Professor will hold class: " << _currentCourse->get_name() << "\n";
+  classroom = course->get_empty_classroom();
+  auto c_room = classroom.lock();
+  if (c_room->enter(self)) {
+    std::cout << "Professor will hold class: " << course->get_name() << "\n";
   }
 }
 
 void Professor::closeCourse() {
-  if (!_currentCourse) {
-    std::cout << "[CLOSE COURSE] Course is null\n";
+  if (_currentCourse.expired()) {
+    std::cout << "[DO CLASS] Course is null\n";
     return;
   }
-  std::cout << "Professor closed course: " << _currentCourse->get_name() << "\n";
-  _currentCourse = nullptr;
+  auto course = _currentCourse.lock();
+  std::cout << "Professor closed course: " << course->get_name() << "\n";
+  _currentCourse = std::weak_ptr<Course>();
 }
 
-std::shared_ptr<Course> Professor::get_current_course() const {
+std::weak_ptr<Course> Professor::get_current_course() const {
   return _currentCourse;
 }

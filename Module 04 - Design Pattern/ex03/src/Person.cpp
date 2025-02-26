@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:12:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/23 16:21:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:44:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,16 @@
 
 Person::Person()
   : _name(""),
-    _currentRoom(NULL),
+    _currentRoom(std::weak_ptr<Room>()),
     _headmaster(NULL) {}
 
 Person::Person(std::string p_name)
   : _name(p_name),
-    _currentRoom(NULL),
+    _currentRoom(std::weak_ptr<Room>()),
     _headmaster(NULL) {}
 
 Person::Person(const Person &copy)
-  : std::enable_shared_from_this<Person>(),
-    _name(copy._name),
+  : _name(copy._name),
     _currentRoom(copy._currentRoom),
     _headmaster(copy._headmaster) {}
 
@@ -39,15 +38,23 @@ Person &Person::operator=(const Person &copy) {
 
 Person::~Person() {}
 
-Room *Person::room() {
+std::weak_ptr<Room> &Person::room() {
   return _currentRoom;
 }
 
-void Person::set_room(Room *p_room) {
-  _currentRoom = p_room;
+void Person::set_room(std::weak_ptr<Room> room) {
+  if (room.expired()) {
+    std::cout << "[SET ROOM] Room is empty\n";
+    return;
+  }
+  _currentRoom = room;
 }
 
 void Person::set_headmaster(Headmaster *headmaster) {
+  if (!headmaster) {
+    std::cout << "[SET HEADMASTER] Headmaster is empty\n";
+    return;
+  }
   _headmaster = headmaster;
 }
 
