@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:38:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/24 16:20:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:43:22 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ class Headmaster : public Staff {
     Headmaster &operator=(const Headmaster &copy);
     ~Headmaster();
 
-    std::weak_ptr<Professor> add_professor(std::string &name);
-    std::weak_ptr<Student> add_student(std::string &name);
-    std::weak_ptr<Course> add_course(std::string &name);
+    std::weak_ptr<Professor> add_professor(std::string name);
+    std::weak_ptr<Student> add_student(std::string name);
+    std::weak_ptr<Course> add_course(std::string name);
     std::weak_ptr<Classroom> add_classroom();
     void remove_professor(std::weak_ptr<Professor> &professor);
     void remove_student(std::weak_ptr<Student> &student);

@@ -6,11 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 11:51:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:29:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Course.hpp"
+#include "../include/helper.hpp"
 
 Course::Course(std::string name)
   : _name(name),
@@ -172,8 +173,8 @@ void Course::add_classroom(std::weak_ptr<Classroom> &classroom) {
     std::cout << "Classroom already has a course\n";
     return;
   }
-  if (std::find(_classrooms.begin(), _classrooms.end(), classroom) != _classrooms.end()) {
-    std::cout << "Classroom already assigned\n";
+  if (weak_pointer_find(_classrooms, classroom)) {
+    std::cout << "Classroom is already on the list\n";
     return;
   }
   _classrooms.push_back(classroom);
@@ -185,14 +186,13 @@ void Course::remove_classroom(std::weak_ptr<Classroom> &classroom) {
     std::cout << "Classroom is null\n";
     return;
   }
-  auto it = std::find(_classrooms.begin(), _classrooms.end(), classroom);
-  if (it == _classrooms.end()) {
+  if (!weak_pointer_find(_classrooms, classroom)) {
     std::cout << "Classroom is not on the list\n";
     return;
   }
   auto room = classroom.lock();
   room->assignCourse(std::weak_ptr<Course>());
-  _classrooms.erase(it);
+  weak_pointer_erase(_classrooms, classroom);
 }
 
 std::vector<std::weak_ptr<Classroom> > Course::get_classrooms() const {

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 12:03:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:54:55 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "../include/NeedCourseCreationForm.hpp"
 #include "../include/SubscriptionToCourseForm.hpp"
 #include "../include/NeedMoreClassRoomForm.hpp"
+#include "../include/helper.hpp"
 
 Headmaster::Headmaster(std::string p_name)
   : Staff(p_name),
@@ -44,7 +45,7 @@ Headmaster &Headmaster::operator=(const Headmaster &copy) {
 
 Headmaster::~Headmaster() {}
 
-std::weak_ptr<Professor> Headmaster::add_professor(std::string &name) {
+std::weak_ptr<Professor> Headmaster::add_professor(std::string name) {
   if (name.empty()) {
     std::cout << "[ADD PROFESSOR] Name is empty\n";
     return std::weak_ptr<Professor>();
@@ -56,7 +57,7 @@ std::weak_ptr<Professor> Headmaster::add_professor(std::string &name) {
   return professor;
 }
 
-std::weak_ptr<Student> Headmaster::add_student(std::string &name) {
+std::weak_ptr<Student> Headmaster::add_student(std::string name) {
   if (name.empty()) {
     std::cout << "[ADD STUDENT] Name is empty\n";
     return std::weak_ptr<Student>();
@@ -68,7 +69,7 @@ std::weak_ptr<Student> Headmaster::add_student(std::string &name) {
   return student;
 }
 
-std::weak_ptr<Course> Headmaster::add_course(std::string &name) {
+std::weak_ptr<Course> Headmaster::add_course(std::string name) {
   if (name.empty()) {
     std::cout << "[ADD COURSE] Name is empty\n";
     return std::weak_ptr<Course>();
@@ -168,7 +169,7 @@ std::weak_ptr<Student> Headmaster::check_student(std::weak_ptr<Person> &person) 
 bool Headmaster::request(std::weak_ptr<Person> &person, FormType form_type, std::string info) {
   if (info.empty() && form_type != FormType::NeedMoreClassRoom) {
     std::cout << "[REQUEST] Info is empty\n";
-    return;
+    return false;
   }
   switch (form_type) {
     case FormType::NeedCourseCreation: {
@@ -247,12 +248,11 @@ bool Headmaster::request_course_finished(std::weak_ptr<Professor> &professor, st
               << " has no course\n";
     return false;
   }
-  auto it = std::find(_students.begin(), _students.end(), info);
-  if (it == _students.end()) {
+  std::shared_ptr<Student> student = shared_pointer_get_by_name(_students, info);
+  if (!student) {
     std::cout << "[REQUEST] Student: " << info << " is not a part of the school\n";
     return false;
   }
-  std::weak_ptr<Student> student = *it;
   auto form = _secretary.createForm(FormType::CourseFinished);
   receiveForm(form);
   auto course_form = std::dynamic_pointer_cast<CourseFinishedForm>(form);
@@ -262,8 +262,10 @@ bool Headmaster::request_course_finished(std::weak_ptr<Professor> &professor, st
   std::cout << "Headmaster gave student: " << info
             << "a diploma for finishing course: "
             << crs->get_name() << "\n";
-  crs->remove_student(student);
-  (*it)->graduate(course);
+  std::weak_ptr<Student> student_weak = student;
+  crs->remove_student(student_weak);
+  student->graduate(course);
+  return true;
 }
 
 bool Headmaster::request_classroom_creation(std::weak_ptr<Professor> &professor) {
@@ -280,7 +282,6 @@ bool Headmaster::request_classroom_creation(std::weak_ptr<Professor> &professor)
     return false;
   }
   auto form = _secretary.createForm(FormType::NeedMoreClassRoom);
-  auto course = prof->get_current_course();
   receiveForm(form);
   auto classroom_form = std::dynamic_pointer_cast<NeedMoreClassRoomForm>(form);
   classroom_form->set_course(course);
@@ -291,6 +292,7 @@ bool Headmaster::request_classroom_creation(std::weak_ptr<Professor> &professor)
   classroom.lock()->assignCourse(course);
   std::cout << "Headmaster created classroom for course: "
             << crs->get_name() << "\n";
+  return true;
 }
 
 bool Headmaster::request_course_subscription(std::weak_ptr<Student> &student, std::string info) {
@@ -303,23 +305,22 @@ bool Headmaster::request_course_subscription(std::weak_ptr<Student> &student, st
     return false;
   }
   auto stud = student.lock();
-  auto it = std::find(_courses.begin(), _courses.end(), info);
-  if (it == _courses.end()) {
+  auto course = shared_pointer_get_by_name(_courses, info);
+  if (!course) {
     std::cout << "[REQUEST] Course: " << info << " does not exist\n";
     return false;
   }
-  auto course = *it;
   std::weak_ptr<Course> crs = course;
   if (!course->subscribe(student)) {
     std::cout << "[REQUEST] Student: " << stud->get_name()
               << " cannot subscribe to course: " << info << "\n";
-    return;
+    return false;
   }
   if (!stud->subscribe(crs)) {
     std::cout << "[REQUEST] Student: " << stud->get_name()
               << " cannot subscribe to course: " << info << "\n";
     course->remove_student(student);
-    return;
+    return false;
   }
   auto form = _secretary.createForm(FormType::SubscriptionToCourse);
   receiveForm(form);
@@ -329,6 +330,7 @@ bool Headmaster::request_course_subscription(std::weak_ptr<Student> &student, st
   execute_form(form);
   std::cout << "Headmaster subscribed student: " << stud->get_name()
             << " to course: " << info << "\n";
+  return true;
 }
 
 void Headmaster::receiveForm(std::shared_ptr<Form> &p_form) {

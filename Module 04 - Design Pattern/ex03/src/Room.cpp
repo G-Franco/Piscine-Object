@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:40:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 11:46:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:06:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Room.hpp"
 #include "../include/Person.hpp"
+#include "../include/helper.hpp"
 
 long long Room::_ID = 0;
 
@@ -39,7 +40,7 @@ void Room::set_self(std::weak_ptr<Room> self) {
     std::cout << "[SET SELF] Self pointer is empty\n";
     return;
   }
-  this->self = self;
+  this->_self = self;
 }
 
 bool Room::canEnter(std::weak_ptr<Person> person) {
@@ -58,7 +59,7 @@ bool Room::enter(std::weak_ptr<Person> person) {
   auto person_ptr = person.lock();
   if (canEnter(person)) {
     _occupants.push_back(person);
-    person_ptr->set_room(self);
+    person_ptr->set_room(_self);
     return true;
   }
   return false;
@@ -70,9 +71,7 @@ void Room::exit(std::weak_ptr<Person> person) {
     return;
   }
   auto person_ptr = person.lock();
-  auto it = std::find(_occupants.begin(), _occupants.end(), person);
-  if (it != _occupants.end()) {
-    _occupants.erase(it);
+  if (weak_pointer_erase(_occupants, person)) {
     person_ptr->set_room(std::weak_ptr<Room>());
   }
   else {

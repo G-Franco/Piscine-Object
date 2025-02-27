@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:26:10 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 10:51:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:56:52 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <functional>
 #include "Student.hpp"
 #include "Professor.hpp"
 #include "Classroom.hpp"
@@ -29,7 +30,9 @@ class Course {
   	std::weak_ptr<Course> _self;
   	std::weak_ptr<Professor> _responsible;
     std::vector<std::weak_ptr<Classroom>> _classrooms;
-  	std::map<std::weak_ptr<Student>, int> _students;
+    // Need to add owner less so the map works correctly,
+    // since it needs to compare the weak pointers based on control blocks
+  	std::map<std::weak_ptr<Student>, int, std::owner_less<std::weak_ptr<Student>>> _students;
   	int _numberOfClassToGraduate;
   	int _maximumNumberOfStudent;
 

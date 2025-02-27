@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:27:14 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 11:46:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:55:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Room {
   protected:
   	static long long _ID;
     long long _id;
-    std::weak_ptr<Room> self;
+    std::weak_ptr<Room> _self;
     std::vector<std::weak_ptr<Person> > _occupants;
 
   public:

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 11:53:33 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:11:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../include/Headmaster.hpp"
 #include "../include/Course.hpp"
 #include "../include/Form.hpp"
+#include "../include/helper.hpp"
 
 Student::Student(std::string name)
   : Person(name) {}
@@ -65,13 +66,13 @@ bool Student::subscribe(std::weak_ptr<Course> &course) {
     return false;
   }
   auto crs = course.lock();
-  if (std::find(_subscribedCourses.begin(), _subscribedCourses.end(), course) != _subscribedCourses.end()) {
+  if (weak_pointer_find(_subscribedCourses, course)) {
     std::cout << _name << " is already subscribed to " << crs->get_name() << "\n";
     return false;
   }
   if (_self.expired()) {
     std::cout << "[CHOOSE CLASS] Student needs a self pointer assigned\n";
-    return;
+    return false;
   }
   if (!crs->check_student(_self)) {
     std::cout << _name << " cannot subscribe to " << crs->get_name() << "\n";
@@ -88,13 +89,11 @@ void Student::unsubscribe(std::weak_ptr<Course> &course) {
     return;
   }
   auto crs = course.lock();
-  auto it = std::find(_subscribedCourses.begin(), _subscribedCourses.end(), course);
-  if (it == _subscribedCourses.end()) {
-    std::cout << _name << " is not subscribed to " << crs->get_name() << "\n";
+  if (weak_pointer_erase(_subscribedCourses, course)) {
+    std::cout << _name << " unsubscribed from " << crs->get_name() << "\n";
     return;
   }
-  _subscribedCourses.erase(it);
-  std::cout << _name << " unsubscribed from " << crs->get_name() << "\n";
+  std::cout << _name << " is not subscribed to " << crs->get_name() << "\n";
 }
 
 void Student::attendClass(std::weak_ptr<Course> &course) {
@@ -103,7 +102,7 @@ void Student::attendClass(std::weak_ptr<Course> &course) {
     return;
   }
   auto crs = course.lock();
-  if (std::find(_subscribedCourses.begin(), _subscribedCourses.end(), course) == _subscribedCourses.end()) {
+  if (!weak_pointer_find(_subscribedCourses, course)) {
     std::cout << _name << " is not subscribed to " << crs->get_name() << "\n";
     return;
   }
@@ -160,7 +159,7 @@ bool Student::is_subscribed(std::weak_ptr<Course> &course) {
     std::cout << "[IS SUBSCRIBED] Course is null\n";
     return false;
   }
-  if (std::find(_subscribedCourses.begin(), _subscribedCourses.end(), course) != _subscribedCourses.end()) {
+  if (weak_pointer_find(_subscribedCourses, course)) {
     return true;
   }
   return false;
