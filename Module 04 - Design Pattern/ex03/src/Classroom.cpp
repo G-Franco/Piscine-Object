@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:56:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 11:52:27 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:11:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ bool Classroom::canEnter(std::weak_ptr<Person> person) {
     return false;
   }
   auto person_ptr = person.lock();
-  bool same_course = !person_ptr->room().owner_before(_course) &&
-                      !_course.owner_before(person_ptr->room());
   if (auto professor = std::dynamic_pointer_cast<Professor>(person_ptr)) {
+    bool same_course = !professor->get_current_course().owner_before(_course) &&
+                        !_course.owner_before(professor->get_current_course());
     if (!_occupants.empty() || !same_course) {
       return false;
     }

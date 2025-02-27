@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/27 10:47:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:51:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main() {
   professor->request_course("Chemistry");
   std::weak_ptr<Course> course_ptr = professor->get_current_course();
   auto course = course_ptr.lock();
-  std::cout << "After the request, professor has a course assigned: \n"
+  std::cout << "After the request, professor has a course assigned: "
             << course->get_name() << "\n";
   // Only 1 class to graduate doesn't make sense but it's just for testing
   course->set_number_of_classes_to_graduate(1);

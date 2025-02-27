@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/27 11:54:55 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:30:58 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,7 @@ bool Headmaster::request_course_finished(std::weak_ptr<Professor> &professor, st
   sign_form(form);
   execute_form(form);
   std::cout << "Headmaster gave student: " << info
-            << "a diploma for finishing course: "
+            << " a diploma for finishing course: "
             << crs->get_name() << "\n";
   std::weak_ptr<Student> student_weak = student;
   crs->remove_student(student_weak);

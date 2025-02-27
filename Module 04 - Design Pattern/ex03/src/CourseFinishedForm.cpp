@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:01:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 12:02:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:30:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void CourseFinishedForm::set_course(std::weak_ptr<Course> course) {
     std::cout << "[SET COURSE] Form already processed. Cannot change course\n";
     return;
   }
-  course = course;
+  _course = course;
 }
 
 void CourseFinishedForm::sign() {
