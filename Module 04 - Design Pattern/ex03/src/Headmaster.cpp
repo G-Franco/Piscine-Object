@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/27 14:30:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:07:06 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,18 +236,18 @@ bool Headmaster::request_course_finished(std::weak_ptr<Professor> &professor, st
     std::cout << "[REQUEST] Course name is empty\n";
     return false;
   }
-  auto prof = professor.lock();
-  if (!prof) {
-    std::cout << "[REQUEST] Professor is empty or has no course\n";
+  if (professor.expired()) {
+    std::cout << "[REQUEST] Professor is empty\n";
     return false;
   }
+  auto prof = professor.lock();
   std::weak_ptr<Course> course = prof->get_current_course();
-  auto crs = course.lock();
-  if (!crs) {
+  if (course.expired()) {
     std::cout << "[REQUEST] Professor: " << prof->get_name()
               << " has no course\n";
     return false;
   }
+  auto crs = course.lock();
   std::shared_ptr<Student> student = shared_pointer_get_by_name(_students, info);
   if (!student) {
     std::cout << "[REQUEST] Student: " << info << " is not a part of the school\n";
@@ -269,11 +269,11 @@ bool Headmaster::request_course_finished(std::weak_ptr<Professor> &professor, st
 }
 
 bool Headmaster::request_classroom_creation(std::weak_ptr<Professor> &professor) {
-  auto prof = professor.lock();
-  if (!prof) {
-    std::cout << "[REQUEST] Professor is empty or has no course\n";
+  if (professor.expired()) {
+    std::cout << "[REQUEST] Professor is empty\n";
     return false;
   }
+  auto prof = professor.lock();
   std::weak_ptr<Course> course = prof->get_current_course();
   auto crs = course.lock();
   if (!crs) {
@@ -403,11 +403,19 @@ void Headmaster::clean_forms(Secretary &secretary) {
 
 void Headmaster::start_class() {
   for (auto professor :_professors) {
+    if (!professor ||
+        professor->get_current_course().expired()) {
+      continue;
+    }
     professor->doClass();
   }
 }
 
 void Headmaster::start_class(std::weak_ptr<Professor> &professor) {
+  if (professor.expired()) {
+    std::cout << "[START CLASS] Professor is empty\n";
+    return;
+  }
   auto prof = professor.lock();
   if (std::find(_professors.begin(), _professors.end(), prof) == _professors.end()) {
     std::cout << "[START CLASS] Professor: " << prof->get_name()
@@ -418,6 +426,10 @@ void Headmaster::start_class(std::weak_ptr<Professor> &professor) {
 }
 
 void Headmaster::attend_class(std::weak_ptr<Course> &course) {
+  if (course.expired()) {
+    std::cout << "[ATTEND CLASS] Course is empty\n";
+    return;
+  }
   auto crs = course.lock();
   if (std::find(_courses.begin(), _courses.end(), crs) == _courses.end()) {
     std::cout << "[ATTEND CLASS] Course: " << crs->get_name()
@@ -430,6 +442,14 @@ void Headmaster::attend_class(std::weak_ptr<Course> &course) {
 }
 
 void Headmaster::attend_class(std::weak_ptr<Student> &student, std::weak_ptr<Course> &course) {
+  if (course.expired()) {
+    std::cout << "[ATTEND CLASS] Course is empty\n";
+    return;
+  }
+  if (student.expired()) {
+    std::cout << "[ATTEND CLASS] Student is empty\n";
+    return;
+  }
   auto crs = course.lock();
   if (std::find(_courses.begin(), _courses.end(), crs) == _courses.end()) {
     std::cout << "[ATTEND CLASS] Course: " << crs->get_name()
