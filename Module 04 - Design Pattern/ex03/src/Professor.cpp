@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 10:52:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:47:54 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void Professor::doClass() {
   if (classroom.expired()) {
     std::cout << "No classroom available for " << course->get_name() << "\n";
     _headmaster->request(self, FormType::NeedMoreClassRoom, "");
+    classroom = course->get_empty_classroom();
   }
-  classroom = course->get_empty_classroom();
   auto c_room = classroom.lock();
   if (c_room->enter(self)) {
     std::cout << "Professor will hold class: " << course->get_name() << "\n";
