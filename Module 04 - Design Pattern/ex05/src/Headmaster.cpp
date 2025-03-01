@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/01 14:55:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:11:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,11 +403,9 @@ void Headmaster::clean_forms(Secretary &secretary) {
 
 void Headmaster::start_class() {
   for (auto professor :_professors) {
-    if (!professor ||
-        professor->get_current_course().expired()) {
-      continue;
+    if (professor) {
+      professor->doClass();
     }
-    professor->doClass();
   }
 }
 
@@ -425,19 +423,11 @@ void Headmaster::start_class(std::weak_ptr<Professor> &professor) {
   prof->doClass();
 }
 
-void Headmaster::attend_class(std::weak_ptr<Course> &course) {
-  if (course.expired()) {
-    std::cout << "[ATTEND CLASS] Course is empty\n";
-    return;
-  }
-  auto crs = course.lock();
-  if (std::find(_courses.begin(), _courses.end(), crs) == _courses.end()) {
-    std::cout << "[ATTEND CLASS] Course: " << crs->get_name()
-              << " does not exist in this school\n";
-    return;
-  }
+void Headmaster::attend_class() {
   for (auto student : _students) {
-    student->attendClass(course);
+    if (student) {
+      student->attendClass();
+    }
   }
 }
 
@@ -475,4 +465,28 @@ void Headmaster::remove_observer(std::weak_ptr<IObserver> &observer) {
 
 void Headmaster::ring_bell() {
   _bell.ring(Event::RingBell);
+}
+
+std::weak_ptr<Course> Headmaster::get_course(std::string name) {
+  return shared_pointer_get_by_name(_courses, name);
+}
+
+std::vector<std::weak_ptr<Student>> Headmaster::get_students() {
+  std::vector<std::weak_ptr<Student>> students;
+  for (auto &student : _students) {
+    students.push_back(student);
+  }
+  return students;
+}
+
+std::vector<std::weak_ptr<Professor>> Headmaster::get_professors() {
+  std::vector<std::weak_ptr<Professor>> professors;
+  for (auto &professor : _professors) {
+    professors.push_back(professor);
+  }
+  return professors;
+}
+
+Secretary Headmaster::get_secretary() {
+  return _secretary;
 }

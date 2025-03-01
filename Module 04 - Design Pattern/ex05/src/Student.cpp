@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/01 15:28:19 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:08:03 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,19 @@ void Student::unsubscribe(std::weak_ptr<Course> &course) {
     return;
   }
   std::cout << _name << " is not subscribed to " << crs->get_name() << "\n";
+}
+
+void Student::attendClass() {
+  if (_subscribedCourses.empty()) {
+    std::cout << _name << " has no class to attend\n";
+    return;
+  }
+  for (auto &course : _subscribedCourses) {
+    if (course.lock()) {
+      attendClass(course);
+      return;
+    }
+  }
 }
 
 void Student::attendClass(std::weak_ptr<Course> &course) {

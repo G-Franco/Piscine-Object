@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:37:19 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/28 16:44:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:04:41 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ class Student : public Person {
     void choose_class(std::string course_name);
     bool subscribe(std::weak_ptr<Course> &course);
     void unsubscribe(std::weak_ptr<Course> &course);
+  	void attendClass();
   	void attendClass(std::weak_ptr<Course> &course);
   	void graduate(std::weak_ptr<Course> &course);
     bool is_subscribed(std::weak_ptr<Course> &course);

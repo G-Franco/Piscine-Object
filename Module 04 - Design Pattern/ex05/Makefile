@@ -19,7 +19,8 @@ SRC = src/main.cpp \
 			src/StaffRestRoom.cpp \
 			src/Student.cpp \
 			src/SubscriptionToCourseForm.cpp \
-			src/Bell.cpp
+			src/Bell.cpp \
+			src/School.cpp
 
 CC = @c++
 CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++11

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:38:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/28 12:34:22 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/01 17:59:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,15 @@ class Headmaster : public Staff {
 
     void start_class();
     void start_class(std::weak_ptr<Professor> &professor);
-    void attend_class(std::weak_ptr<Course> &course);
+    void attend_class();
     void attend_class(std::weak_ptr<Student> &student, std::weak_ptr<Course> &course);
 
     void add_observer(std::weak_ptr<IObserver> &observer);
     void remove_observer(std::weak_ptr<IObserver> &observer);
     void ring_bell();
+
+    std::weak_ptr<Course> get_course(std::string name);
+    std::vector<std::weak_ptr<Student> > get_students();
+    std::vector<std::weak_ptr<Professor> > get_professors();
+    Secretary get_secretary();
 };
