@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/27 12:11:53 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:28:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,6 @@ bool Student::operator==(const std::string name) const {
 
 Student::~Student() {}
 
-void Student::set_self(std::weak_ptr<Student> self) {
-  if (self.expired()) {
-    std::cout << "[SET SELF] Self pointer is empty\n";
-    return;
-  }
-  _self = self;
-}
-
 void Student::choose_class(std::string course_name) {
   if (course_name.empty()) {
     std::cout << "[CHOOSE CLASS] Choose a valid course name\n";
@@ -55,9 +47,7 @@ void Student::choose_class(std::string course_name) {
     std::cout << "[CHOOSE CLASS] Student needs a self pointer assigned\n";
     return;
   }
-  std::shared_ptr<Person> self = _self.lock();
-  std::weak_ptr<Person> p_self = self;
-  _headmaster->request(p_self, FormType::SubscriptionToCourse, course_name);
+  _headmaster->request(_self, FormType::SubscriptionToCourse, course_name);
 }
 
 bool Student::subscribe(std::weak_ptr<Course> &course) {
@@ -74,7 +64,8 @@ bool Student::subscribe(std::weak_ptr<Course> &course) {
     std::cout << "[CHOOSE CLASS] Student needs a self pointer assigned\n";
     return false;
   }
-  if (!crs->check_student(_self)) {
+  std::weak_ptr<Student> p_self = std::dynamic_pointer_cast<Student>(_self.lock());
+  if (!crs->check_student(p_self)) {
     std::cout << _name << " cannot subscribe to " << crs->get_name() << "\n";
     return false;
   }
@@ -110,38 +101,21 @@ void Student::attendClass(std::weak_ptr<Course> &course) {
     std::cout << "[ATTEND CLASS] Student needs a self pointer assigned\n";
     return;
   }
-  std::shared_ptr<Person> self = _self.lock();
-  std::weak_ptr<Person> p_self = self;
   for (auto classroom : crs->get_classrooms()) {
     if (classroom.expired()) {
       continue;
     }
     auto room = classroom.lock();
-    if (room->enter(p_self)) {
+    if (room->enter(_self)) {
       std::cout << _name << " is attending class in "
                 << crs->get_name() << "\n";
-      crs->class_attendance(_self);
+      std::weak_ptr<Student> p_self = std::dynamic_pointer_cast<Student>(_self.lock());
+      crs->class_attendance(p_self);
       return;
     }
   }
   std::cout << _name << " cannot attend class for "
             << crs->get_name() << "\n";
-}
-
-void Student::exitClass() {
-  if (_currentRoom.expired()) {
-    std::cout << "[EXIT CLASS] Student is not in a classroom\n";
-    return;
-  }
-  if (_self.expired()) {
-    std::cout << "[EXIT CLASS] Student needs a self pointer assigned\n";
-    return;
-  }
-  auto room = _currentRoom.lock();
-  std::shared_ptr<Person> self = _self.lock();
-  std::weak_ptr<Person> p_self = self;
-  room->exit(p_self);
-  std::cout << _name << " exited class\n";
 }
 
 void Student::graduate(std::weak_ptr<Course> &course) {
@@ -167,4 +141,24 @@ bool Student::is_subscribed(std::weak_ptr<Course> &course) {
 
 std::vector<std::weak_ptr<Course>> Student::get_subscribed_courses() const {
   return _subscribedCourses;
+}
+
+void Student::on_ring(Event event) {
+  if (event == Event::RingBell) {
+    std::cout << "Student: " << _name << " heard the bell";
+    if (_currentRoom.lock()) {
+      std::cout << " and is now rushing to the exit\n";
+      exit_room();
+    }
+    else {
+      for (auto &course : _subscribedCourses) {
+        if (course.lock()) {
+          std::cout << " and is now heading to class\n";
+          attendClass(course);
+          return;
+        }
+      }
+      std::cout << " but has no class to attend\n";
+    }
+  }
 }

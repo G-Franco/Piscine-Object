@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:49:48 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/27 11:29:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:12:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void Course::class_attendance(std::weak_ptr<Student> &student) {
   }
   if (++_students[student] == _numberOfClassToGraduate) {
     auto responsible = _responsible.lock();
-    responsible->request_graduation(student);
+    responsible->course_graduation_request(student);
   }
 }
 

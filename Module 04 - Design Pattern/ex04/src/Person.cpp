@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:12:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 11:44:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:54:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,15 @@ std::weak_ptr<Room> &Person::room() {
   return _currentRoom;
 }
 
-void Person::set_room(std::weak_ptr<Room> room) {
-  if (room.expired()) {
-    std::cout << "[SET ROOM] Room is empty\n";
+void Person::set_self(std::weak_ptr<Person> self) {
+  if (self.expired()) {
+    std::cout << "[SET SELF] Self pointer is empty\n";
     return;
   }
+  _self = self;
+}
+
+void Person::set_room(std::weak_ptr<Room> room) {
   _currentRoom = room;
 }
 
@@ -60,4 +64,19 @@ void Person::set_headmaster(Headmaster *headmaster) {
 
 std::string Person::get_name() const {
   return _name;
+}
+
+bool Person::exit_room() {
+  if (_currentRoom.expired()) {
+    std::cout << "[EXIT ROOM] Person is not in a room\n";
+    return false;
+  }
+  auto room = _currentRoom.lock();
+  room->exit(_self);
+  set_room(std::weak_ptr<Room>());
+  return true;
+}
+
+void Person::on_ring(Event event) {
+  (void)event;
 }

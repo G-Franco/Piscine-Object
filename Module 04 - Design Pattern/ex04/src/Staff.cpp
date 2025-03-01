@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:18:06 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/20 17:59:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:43:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,8 @@ void Staff::sign(std::shared_ptr<Form> p_form) {
   }
   p_form.get()->sign();
   std::cout << "Form signed\n";
+}
+
+void Staff::on_ring(Event event) {
+  (void)event;
 }

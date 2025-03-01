@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:40:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/27 12:06:31 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:54:19 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,7 @@ void Room::exit(std::weak_ptr<Person> person) {
     return;
   }
   auto person_ptr = person.lock();
-  if (weak_pointer_erase(_occupants, person)) {
-    person_ptr->set_room(std::weak_ptr<Room>());
-  }
-  else {
-    std::cout << "[EXIT] Person not found\n";
-  }
+  weak_pointer_erase(_occupants, person);
 }
 
 void Room::printOccupant() {

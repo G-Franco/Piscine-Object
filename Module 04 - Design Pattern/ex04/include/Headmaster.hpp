@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:38:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/27 10:43:22 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:34:22 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "Staff.hpp"
 #include "Secretary.hpp"
+#include "Bell.hpp"
 
 class Form;
 class Professor;
@@ -29,6 +30,7 @@ class Headmaster : public Staff {
     std::vector<std::shared_ptr<Course> > _courses;
     std::vector<std::shared_ptr<Classroom> > _classrooms;
     Secretary _secretary;
+    Bell _bell;
 
     Headmaster();
 
@@ -66,4 +68,8 @@ class Headmaster : public Staff {
     void start_class(std::weak_ptr<Professor> &professor);
     void attend_class(std::weak_ptr<Course> &course);
     void attend_class(std::weak_ptr<Student> &student, std::weak_ptr<Course> &course);
+
+    void add_observer(std::weak_ptr<IObserver> &observer);
+    void remove_observer(std::weak_ptr<IObserver> &observer);
+    void ring_bell();
 };

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/28 10:07:06 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:55:30 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -463,4 +463,16 @@ void Headmaster::attend_class(std::weak_ptr<Student> &student, std::weak_ptr<Cou
     return;
   }
   stud->attendClass(course);
+}
+
+void Headmaster::add_observer(std::weak_ptr<IObserver> &observer) {
+  _bell.add_observer(observer);
+}
+
+void Headmaster::remove_observer(std::weak_ptr<IObserver> &observer) {
+  _bell.remove_observer(observer);
+}
+
+void Headmaster::ring_bell() {
+  _bell.ring(Event::RingBell);
 }

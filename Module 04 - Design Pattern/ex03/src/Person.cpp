@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:12:04 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/26 11:44:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:15:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,6 @@ std::weak_ptr<Room> &Person::room() {
 }
 
 void Person::set_room(std::weak_ptr<Room> room) {
-  if (room.expired()) {
-    std::cout << "[SET ROOM] Room is empty\n";
-    return;
-  }
   _currentRoom = room;
 }
 

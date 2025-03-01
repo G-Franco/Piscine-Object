@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Staff.hpp                                          :+:      :+:    :+:   */
+/*   Bell.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:34:17 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/28 16:43:51 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/02/28 11:00:18 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/03/01 11:01:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <iostream>
+#include <vector>
 #include <memory>
-#include "Person.hpp"
+#include "Event.hpp"
 
-class Form;
+class IObserver;
 
-class Staff : public Person {
+class Bell {
   private:
-    Staff();
-
+    std::vector<std::weak_ptr<IObserver>> _observers;
+  
   public:
-    Staff(std::string p_name);
-    Staff(const Staff &copy);
-    Staff &operator=(const Staff &copy);
-    bool operator==(const Staff &other) const;
-    virtual ~Staff();
-  	virtual void sign(std::shared_ptr<Form> p_form);
-    virtual void on_ring(Event event) override;
+    Bell();
+    ~Bell();
+    void ring(Event event);
+    void add_observer(std::weak_ptr<IObserver> &observer);
+    void remove_observer(std::weak_ptr<IObserver> &observer);
 };
