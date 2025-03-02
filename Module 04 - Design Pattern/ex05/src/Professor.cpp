@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/02 12:01:49 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:47:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,6 @@ void Professor::request_course(std::string course_name) {
     return;
   }
   _headmaster->request(_self, FormType::NeedCourseCreation, course_name);
-}
-
-void Professor::request_graduation(std::weak_ptr<Student> &student) {
-  if (_currentCourse.expired()) {
-    std::cout << "[REQUEST GRADUATION] Course not assigned\n";
-    return;
-  }
-  if (student.expired()) {
-    std::cout << "[REQUEST GRADUATION] Student is empty\n";
-    return;
-  }
-  auto stud = student.lock();
-  auto course = _currentCourse.lock();
-  if (!stud->is_subscribed(_currentCourse)) {
-    std::cout << stud->get_name() << " is not subscribed to " << course->get_name() << "\n";
-    return;
-  }
-  if (_self.expired()) {
-    std::cout << "[REQUEST GRADUATION] Professor needs a self pointer assigned\n";
-    return;
-  }
-  _headmaster->request(_self, FormType::CourseFinished, stud->get_name());
 }
 
 void Professor::assignCourse(std::weak_ptr<Course> &course) {

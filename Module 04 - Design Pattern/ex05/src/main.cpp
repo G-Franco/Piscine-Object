@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:31:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/01 15:37:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:35:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,74 @@
 #include "../include/Professor.hpp"
 #include "../include/Student.hpp"
 #include "../include/Course.hpp"
+#include "../include/School.hpp"
+
+void prep(School &school) {
+  std::cout << "-----------------------------------\n";
+  std::cout << "-----------------------------------\n";
+
+  auto prof1 = school.recruteProfessor("Snape");
+  auto prof2 = school.recruteProfessor("McGonagall");
+  auto prof3 = school.recruteProfessor("Flitwick");
+  auto prof4 = school.recruteProfessor("Sprout");
+  auto prof5 = school.recruteProfessor("Trelawney");
+
+  auto stud1 = school.recruteStudent("Harry");
+  auto stud2 = school.recruteStudent("Ron");
+  auto stud3 = school.recruteStudent("Hermione");
+  auto stud4 = school.recruteStudent("Neville");
+  auto stud5 = school.recruteStudent("Draco");
+  auto stud6 = school.recruteStudent("Luna");
+  auto stud7 = school.recruteStudent("Ginny");
+  auto stud8 = school.recruteStudent("Fred");
+  auto stud9 = school.recruteStudent("George");
+  auto stud10 = school.recruteStudent("Percy");
+
+  prof1.lock()->request_course("Potions");
+  prof2.lock()->request_course("Transfiguration");
+  prof3.lock()->request_course("Charms");
+  prof4.lock()->request_course("Herbology");
+  prof5.lock()->request_course("Divination");
+
+  std::vector<std::weak_ptr<Course>> courses;
+  courses.push_back(prof1.lock()->get_current_course());
+  courses.push_back(prof2.lock()->get_current_course());
+  courses.push_back(prof3.lock()->get_current_course());
+  courses.push_back(prof4.lock()->get_current_course());
+  courses.push_back(prof5.lock()->get_current_course());
+
+  for (const auto &course : courses) {
+    course.lock()->set_maximum_number_of_students(10);
+    course.lock()->set_number_of_classes_to_graduate(2);
+  }
+
+  stud1.lock()->choose_class("Potions");
+  stud2.lock()->choose_class("Potions");
+  stud3.lock()->choose_class("Potions");
+  stud4.lock()->choose_class("Transfiguration");
+  stud5.lock()->choose_class("Transfiguration");
+  stud6.lock()->choose_class("Transfiguration");
+  stud7.lock()->choose_class("Charms");
+  stud8.lock()->choose_class("Charms");
+  stud9.lock()->choose_class("Charms");
+  stud10.lock()->choose_class("Herbology");
+  stud1.lock()->choose_class("Herbology");
+  stud2.lock()->choose_class("Herbology");
+  stud3.lock()->choose_class("Divination");
+  stud4.lock()->choose_class("Divination");
+  stud5.lock()->choose_class("Divination");
+
+  std::cout << "-----------------------------------\n";
+  std::cout << "-----------------------------------\n";
+}
 
 int main() {
-  Headmaster headmaster("Gus");
-  std::weak_ptr<Professor> professor_ptr = headmaster.add_professor("Walter");
-  std::weak_ptr<Student> student_ptr = headmaster.add_student("Jesse");
-  std::weak_ptr<IObserver> prof_obs = professor_ptr;
-  std::weak_ptr<IObserver> stud_obs = student_ptr;
-  headmaster.add_observer(stud_obs);
-  headmaster.add_observer(prof_obs);
-  auto professor = professor_ptr.lock();
-  auto student = student_ptr.lock();
-
-
-  std::cout << "Testing ring bell with no possible classes\n";
-  headmaster.ring_bell();
-  
-  std::cout << "\nTesting ring bell\n";
-  professor->request_course("Chemistry");
-  std::weak_ptr<Course> course_ptr = professor->get_current_course();
-  auto course = course_ptr.lock();
-  course->set_number_of_classes_to_graduate(4);
-  course->set_maximum_number_of_students(15);
-  student->choose_class("Chemistry");
-  for (int i = 0; i < 9; i++) {
-    std::cout << "\n";
-    headmaster.ring_bell();
-  }
+  School hogwarts;
+  prep(hogwarts);
+  hogwarts.runDayRoutine();
+  hogwarts.requestRingBell();
+  hogwarts.runDayRoutine();
+  hogwarts.requestRingBell();
+  hogwarts.graduationCeremony();
   return 0;
 }

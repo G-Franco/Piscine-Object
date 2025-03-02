@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/02 12:23:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:44:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ std::weak_ptr<Professor> Headmaster::add_professor(std::string name) {
   professor->set_self(professor);
   professor->set_headmaster(this);
   _professors.push_back(professor);
+  std::weak_ptr<IObserver> professor_weak = professor;
+  _bell.add_observer(professor_weak);
   return professor;
 }
 
@@ -66,6 +68,8 @@ std::weak_ptr<Student> Headmaster::add_student(std::string name) {
   student->set_self(student);
   student->set_headmaster(this);
   _students.push_back(student);
+  std::weak_ptr<IObserver> student_weak = student;
+  _bell.add_observer(student_weak);
   return student;
 }
 
@@ -488,11 +492,14 @@ Secretary Headmaster::get_secretary() {
 }
 
 void Headmaster::graduation() {
+  _bell.ring(Event::Graduation);
   if (_graduation_list.empty()) {
     std::cout << "No students to graduate\n";
     return;
   }
-  _bell.ring(Event::Graduation);
+  std::cout << "\nThe graduation ceremony will now begin\n";
+  std::cout << "\nThere are " << _graduation_list.size()
+            << " students to graduate\n";
   for (const auto &entry : _graduation_list) {
     auto student = entry.first;
     auto course = entry.second;

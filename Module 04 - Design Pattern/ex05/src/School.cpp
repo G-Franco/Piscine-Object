@@ -6,11 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 17:25:35 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/02 11:45:21 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:25:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/School.hpp"
+#include "../include/Professor.hpp"
+#include "../include/Student.hpp"
 
 School::School()
   : _headmaster("Dumbledore") {}
@@ -53,14 +55,13 @@ void School::requestRingBell() {
   _headmaster.ring_bell();
 }
 
-void School::recruteProfessor(std::string name) {
-  _headmaster.add_professor(name);
+std::weak_ptr<Professor> School::recruteProfessor(std::string name) {
+  return _headmaster.add_professor(name);
 }
 
-void School::recruteStudent(std::string name) {
-  _headmaster.add_student(name);
+std::weak_ptr<Student> School::recruteStudent(std::string name) {
+  return _headmaster.add_student(name);
 }
-
 
 std::weak_ptr<Course> School::getCourse(std::string name) {
   return _headmaster.get_course(name);
