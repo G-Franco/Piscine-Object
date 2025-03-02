@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:29:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/01 18:11:44 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:23:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,12 +259,8 @@ bool Headmaster::request_course_finished(std::weak_ptr<Professor> &professor, st
   course_form->set_course(course);
   sign_form(form);
   execute_form(form);
-  std::cout << "Headmaster gave student: " << info
-            << " a diploma for finishing course: "
-            << crs->get_name() << "\n";
   std::weak_ptr<Student> student_weak = student;
-  crs->remove_student(student_weak);
-  student->graduate(course);
+  _graduation_list.push_back(std::make_pair(student_weak, course));
   return true;
 }
 
@@ -489,4 +485,27 @@ std::vector<std::weak_ptr<Professor>> Headmaster::get_professors() {
 
 Secretary Headmaster::get_secretary() {
   return _secretary;
+}
+
+void Headmaster::graduation() {
+  if (_graduation_list.empty()) {
+    std::cout << "No students to graduate\n";
+    return;
+  }
+  _bell.ring(Event::Graduation);
+  for (const auto &entry : _graduation_list) {
+    auto student = entry.first;
+    auto course = entry.second;
+    if (student.expired() || course.expired()) {
+      continue;
+    }
+    auto s_student = student.lock();
+    auto s_course = course.lock();
+    std::cout << "\nHeadmaster gave student: " << s_student->get_name()
+            << " a diploma for finishing course: "
+            << s_course->get_name() << "\n";
+    s_course->remove_student(student);
+    s_student->graduate(course);
+  }
+  _graduation_list.clear();
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:38:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/01 17:59:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:12:37 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Headmaster : public Staff {
     std::vector<std::shared_ptr<Student> > _students;
     std::vector<std::shared_ptr<Course> > _courses;
     std::vector<std::shared_ptr<Classroom> > _classrooms;
+    std::vector<std::pair<std::weak_ptr<Student>, std::weak_ptr<Course>>> _graduation_list;
     Secretary _secretary;
     Bell _bell;
 
@@ -77,4 +78,6 @@ class Headmaster : public Staff {
     std::vector<std::weak_ptr<Student> > get_students();
     std::vector<std::weak_ptr<Professor> > get_professors();
     Secretary get_secretary();
+
+    void graduation();
 };

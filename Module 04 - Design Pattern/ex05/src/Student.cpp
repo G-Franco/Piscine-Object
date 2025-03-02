@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:11:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/01 18:08:03 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:04:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,17 @@ void Student::on_ring(Event event) {
         }
       }
       std::cout << " but has no class to attend\n";
+    }
+  }
+  else if (event == Event::Graduation) {
+    if (_currentRoom.expired()) {
+      std::cout << "Student: " << _name
+                << " will attend the graduation ceremony\n";
+    }
+    else {
+      std::cout << "Student: " << _name
+                << " will exit the class early for the graduation ceremony\n";
+      exit_room();
     }
   }
 }

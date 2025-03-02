@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:33:46 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/01 15:42:04 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:01:49 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,19 @@ void Professor::on_ring(Event event) {
     }
     else {
       std::cout << " and will end the class\n";
-      check_graduation_requests();
       exit_room();
     }
+  }
+  else if (event == Event::Graduation) {
+    if (_currentRoom.expired()) {
+      std::cout << "Professor: " << get_name()
+                << " is ready for the graduation ceremony\n";
+    }
+    else {
+      std::cout << "Professor: " << get_name()
+                << " will end the class early for the graduation ceremony\n";
+      exit_room();
+    }
+    check_graduation_requests();
   }
 }

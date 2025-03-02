@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:07:43 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/02/28 11:07:59 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 11:49:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 enum class Event {
-  RingBell
+  RingBell,
+  Graduation
 };

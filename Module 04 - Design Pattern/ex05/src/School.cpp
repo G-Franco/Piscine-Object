@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 17:25:35 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/01 18:12:18 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/02 11:45:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,23 @@ School School::operator=(const School &copy) {
 }
 
 School::~School() {}
+
+void School::runDayRoutine() {
+  std::cout << "\nStart of school day\n";
+  launchClasses();
+  std:: cout << "\n1st break\n";
+  requestRingBell();
+  std::cout << "\nBack to classes\n";
+  launchClasses();
+  std::cout << "\nLunch break\n";
+  requestRingBell();
+  std::cout << "\nStart of afternoon classes\n";
+  launchClasses();
+  std::cout << "\n2nd break\n";
+  requestRingBell();
+  std::cout << "\nBack to classes\n";
+  launchClasses();
+}
 
 void School::launchClasses() {
   _headmaster.start_class();
@@ -63,4 +80,8 @@ Headmaster School::getHeadmaster() {
 
 Secretary School::getSecretary() {
   return _headmaster.get_secretary();
+}
+
+void School::graduationCeremony() {
+  _headmaster.graduation();
 }
