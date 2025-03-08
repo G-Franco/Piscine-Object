@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:00:35 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/06 17:36:39 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:08:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sstream>
 #include "../include/File_checker.hpp"
+#include "../include/Train.hpp"
 #include "../include/helper.hpp"
 
 File_checker::File_checker(const std::string &rail_file, const std::string &train_file)
@@ -21,7 +22,8 @@ File_checker::File_checker(const std::string &rail_file, const std::string &trai
 File_checker::~File_checker() {}
 
 bool File_checker::validate_files() {
-  if (!check_files()) {
+  if (!check_file(_rail_file, "rail") ||
+      !check_file(_train_file, "train")) {
     return false;
   }
   if (!validate_nodes() ||
@@ -33,39 +35,20 @@ bool File_checker::validate_files() {
 }
 
 // Checks for file existence, emptiness and readability
-bool File_checker::check_files() {
-  bool ret = true;
-  if (!_rail_file.is_open()) {
-    std::cout << "Error: could not open node file\n";
-    ret = false;
+bool File_checker::check_file(std::ifstream &file, const std::string &file_name) {
+  if (!file.is_open()) {
+    std::cout << "Error: could not open " << file_name << "\n";
+    return false;
   }
-  if (!_train_file.is_open()) {
-    std::cout << "Error: could not open rail file\n";
-    ret = false;
+  if (file.peek() == std::ifstream::traits_type::eof()) {
+    std::cout << "Error: " << file_name << " is empty\n";
+    return false;
   }
-
-  if (!ret) {
-    return ret;
+  if (!file.good()) {
+    std::cout << "Error: " << file_name << " is corrupted or unreadable\n";
+    return false;
   }
-  
-  if (_rail_file.peek() == std::ifstream::traits_type::eof()) {
-    std::cout << "Error: node file is empty\n";
-    ret = false;
-  }
-  if (_train_file.peek() == std::ifstream::traits_type::eof()) {
-    std::cout << "Error: rail file is empty\n";
-    ret = false;
-  }
-
-  if (!_rail_file.good()) {
-    std::cout << "Error: node file is corrupted or unreadable\n";
-    ret = false;
-  }
-  if (!_train_file.good()) {
-    std::cout << "Error: rail file is corrupted or unreadable\n";
-    ret = false;
-  }
-  return ret;
+  return true;
 }
 
 // Node line format:
@@ -156,11 +139,11 @@ bool File_checker::add_rail(const std::string &node1, const std::string &node2, 
 
 // Train line format:
 // TrainXY weight friction_coefficient max_acceleration_force max_break_force
-// departure_node arrival_node departure_time station_stop_duration
+// departure_node arrival_node departure_time _stop_duration
 bool File_checker::validate_trains() {
   std::string line;
   while (getline(_train_file, line)) {
-    std::string train;
+    std::string train_name;
     double weight;
     double friction_coefficient;
     double max_acceleration_force;
@@ -168,35 +151,30 @@ bool File_checker::validate_trains() {
     std::string departure_node;
     std::string arrival_node;
     std::string departure_time;
-    std::string station_stop_duration;
+    std::string _stop_duration;
     std::string extra;
     std::istringstream read(line);
 
-    if (!(read >> train >> weight >> friction_coefficient
+    if (!(read >> train_name >> weight >> friction_coefficient
         >> max_acceleration_force >> max_break_force 
         >> departure_node >> arrival_node >> departure_time
-        >> station_stop_duration) ||
+        >> _stop_duration) ||
         (read >> extra)) {
       std::cout << "Error: invalid Train line format: " << line << "\n";
-      return false;
-    }
-    // TODO: Check friction coefficient in later equations to make sure
-    // the train won't be immobilized if it's too high
-    // TODO: Check normal range of real world values for these parameters
-    // to avoid silly situations
-    if (weight <= MIN_WEIGHT ||
-        friction_coefficient <= 0 ||
-        max_acceleration_force <= 0 ||
-        max_break_force <= 0 ||
-        departure_time < 0 ||
-        station_stop_duration < 0) {
-      std::cout << "Error: invalid train parameters: " << line << "\n"
-                << "Weight, friction coefficient, max acceleration force, max break force, departure time and station stop duration must be positive\n";
       return false;
     }
     if (_nodes.find(departure_node) == _nodes.end() ||
         _nodes.find(arrival_node) == _nodes.end()) {
       std::cout << "Error: node not found: " << line << "\n";
+      return false;
+    }
+    try {
+      Train train(train_name, weight, friction_coefficient, max_acceleration_force, max_break_force,
+                  departure_node, arrival_node, departure_time, _stop_duration);
+    }
+    catch (std::runtime_error &e) {
+      std::cout << "Error: invalid train parameters on line: " << line << "\n" 
+                << e.what() << "\n";
       return false;
     }
   }

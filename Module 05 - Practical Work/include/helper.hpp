@@ -6,13 +6,12 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:55:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/06 13:30:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:13:57 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <string>
 #include <set>
 
 // TODO: Check if using travel time is better than distance,
@@ -27,7 +26,7 @@ struct Path {
     : _length(length),
       _speed_limit(speed_limit),
       _travel_time(length / speed_limit) {}
-  
+
     // Paths are sorted by travel time, or by shorter length for equal travel time
     bool operator<(const Path &other) const {
     return _travel_time < other._travel_time ||
