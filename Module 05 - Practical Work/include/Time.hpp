@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:34:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/08 11:36:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/09 11:27:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,13 @@ struct Time {
     }
   }
   
-  Time(std::string &str) {
-    if (str.size() != 5 ||
-        str[2] != 'h') {
-      _hours = -1;
-      _minutes = -1;
-      return;
-    }
-    try {
-      _hours = std::stoi(str.substr(0, 2));
-      _minutes = std::stoi(str.substr(3, 2));
-    } catch (std::invalid_argument &e) {
-      _hours = -1;
-      _minutes = -1;
-    }
+  Time(const std::string &str)
+    : _hours(std::stoi(str.substr(0, 2))),
+      _minutes(std::stoi(str.substr(3, 2))) {
     if (_hours < 0 || _hours > 23 ||
         _minutes < 0 || _minutes > 59) {
       _hours = -1;
       _minutes = -1;
     }
-  
   }
 };

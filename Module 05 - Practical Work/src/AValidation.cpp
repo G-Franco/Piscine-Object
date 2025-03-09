@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_file_checker.cpp                              :+:      :+:    :+:   */
+/*   AValidation.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 16:33:12 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/08 13:00:44 by gacorrei         ###   ########.fr       */
+/*   Created: 2025/03/09 12:08:40 by gacorrei          #+#    #+#             */
+/*   Updated: 2025/03/09 17:31:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/File_checker.hpp"
+#include "../include/AValidation.hpp"
 
-int main(int ac, char **av) {
-  if (ac != 3) {
-    std::cout << "Usage: ./test_file_checker node_file rail_file\n";
-    return 1;
-  }
-  File_checker fc(av[1], av[2]);
-  return fc.validate_files();
-}
+Railway_factory AValidation::_factory;
+
+AValidation::AValidation(std::vector<std::string> &nodes,
+                         std::vector<Rail> &rails,
+                         std::vector<Train> &trains)
+  : _nodes(nodes),
+    _rails(rails),
+    _trains(trains) {}

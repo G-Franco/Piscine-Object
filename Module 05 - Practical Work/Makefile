@@ -1,13 +1,17 @@
 NAME = trains
 DEBUG = trains_debug
 SRC = src/main.cpp \
-			src/File_checker.cpp
-
-T_FILE = test/test_file_checker.cpp
+			src/File_checker.cpp \
+			src/AValidation.cpp \
+			src/Node_validation.cpp \
+			src/Rail_validation.cpp \
+			src/Train_validation.cpp \
+			src/Railway_factory.cpp \
+			src/Train.cpp
 
 CC = @c++
-CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++11
-CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++11 -g -fsanitize=address,undefined
+CFLAGS = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++14
+CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -Wshadow -std=c++14 -g -fsanitize=address,undefined
 
 all:			$(NAME)
 
@@ -17,11 +21,6 @@ $(NAME):	$(SRC)
 debug:		$(DEBUG)
 
 $(DEBUG):	$(SRC)
-					$(CC) $(CFLAGS_DEBUG) $^ -o $@
-
-t_files:	$(DEBUG)
-
-$(DEBUG):	$(SRC) $(T_FILE)
 					$(CC) $(CFLAGS_DEBUG) $^ -o $@
 
 clean:

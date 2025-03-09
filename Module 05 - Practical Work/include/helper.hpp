@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:55:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/08 12:13:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:21:02 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <set>
 
 // TODO: Check if using travel time is better than distance,
-// some trains may have a lower sped limit than the path which 
+// some trains may have a lower speed limit than the path which 
 // would increase travel time
 struct Path {
   double _length;
@@ -40,20 +40,29 @@ struct Path {
 
 // Using a set instead of a vector keeps the paths sorted by length
 struct Rail {
+  std::string _name;
   std::string _node1;
   std::string _node2;
   std::set<Path> _paths;
 
   Rail(std::string node1, std::string node2)
-    : _node1(node1), _node2(node2) {}
+    : _name(node1 < node2 ? node1 + "-" + node2 : node2 + "-" + node1),
+      _node1(node1),
+      _node2(node2) {}
 
-  bool add_path(double length, double speed_limit) {
+    bool operator==(const Rail &other) const {
+      return _name == other._name;
+    }
+
+    bool operator==(const std::string &key) const {
+      return _name == key;
+    }
+
+    void add_path(double length, double speed_limit) {
     Path path(length, speed_limit);
     if (_paths.find(path) != _paths.end()) {
-      std::cout << "Error: duplicate path\n";
-      return false;
+      throw std::runtime_error("Duplicate path for rail " + _name);
     }
     _paths.insert(path);
-    return true;
   }
 };
