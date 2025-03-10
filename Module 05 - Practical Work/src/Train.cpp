@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/09 17:15:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:17:14 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ bool Train::operator==(const Train &other) const {
 Train::~Train() {}
 
 void Train::validate_values() {
-  // TODO: Maybe this should be in the -help flag instead
   std::stringstream error;
   error << "Error: invalid train parameters\n"
         << "Weight [" << MIN_WEIGHT << "-" << MAX_WEIGHT << "]\n"

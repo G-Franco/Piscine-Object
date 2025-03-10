@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:56:44 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/09 16:56:57 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:58:12 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ class Train_validation : public AValidation {
     Train_validation &operator=(const Train_validation &copy) = delete;
     ~Train_validation() = default;
     bool validate(std::ifstream &file) override;
+    bool time_format(const std::string &time);
 };

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:55:33 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/09 17:18:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:03:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ bool Train_validation::validate(std::ifstream &file) {
         >> departure_time >> stop_duration) ||
         read >> extra ||
         name.size() < 6 ||
-        name.substr(0, 5) != "Train") { 
+        name.substr(0, 5) != "Train" ||
+        !time_format(departure_time) ||
+        !time_format(stop_duration)) { 
       std::cout << "Error: invalid Train line format: " << line << "\n";
       return false;
     }
@@ -60,6 +62,21 @@ bool Train_validation::validate(std::ifstream &file) {
   }
   if (_trains.empty()) {
     std::cout << "Error: no trains found\n";
+    return false;
+  }
+  return true;
+}
+
+// Time format: HHhMM
+bool Train_validation::time_format(const std::string &time) {
+  if (time.size() != 5 ||
+      time[2] != 'h' ||
+      !isdigit(time[0]) ||
+      !isdigit(time[1]) ||
+      !isdigit(time[3]) ||
+      !isdigit(time[4]) ||
+      stoi(time.substr(0, 2)) > 23 ||
+      stoi(time.substr(3, 2)) > 59) {
     return false;
   }
   return true;

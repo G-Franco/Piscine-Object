@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 10:24:26 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/09 17:17:40 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:06:35 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,8 @@ void Railway_factory::create_train(const std::string &name,
               max_acceleration_force, max_break_force,
               departure_station, arrival_station,
               Time(departure_time), Time(stop_duration));
+  if (std::find(trains.begin(), trains.end(), train) != trains.end()) {
+    throw std::runtime_error("Train already exists");
+  }
   trains.push_back(train);
 }
