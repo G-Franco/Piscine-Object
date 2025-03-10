@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 10:24:26 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/10 10:06:35 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:19:31 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void Railway_factory::create_rail(const std::string &node1,
       std::find(nodes.begin(), nodes.end(), node2) == nodes.end()) {
     throw std::runtime_error("Node not found");
   }
-  if (length <= MIN_RAIL_LENGTH || speed_limit <= MIN_SPEED_LIMIT) {
+  if (length < MIN_RAIL_LENGTH || speed_limit < MIN_SPEED_LIMIT) {
     std::stringstream error;
     error << "Error: invalid length or speed limit: "
               << length << " " << speed_limit << "\n"

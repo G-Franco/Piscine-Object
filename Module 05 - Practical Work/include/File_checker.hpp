@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:34 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/09 19:02:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:22:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ class File_checker {
     bool validate_files();
     bool check_file(std::ifstream &file, const std::string &file_name);
     void set_validation_steps();
+    void test_print();
 };

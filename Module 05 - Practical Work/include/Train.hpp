@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:33:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/08 12:51:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:23:00 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,10 @@ class Train {
     Time _departure_time;
     Time _stop_duration;
 
-    // https://traintrackshq.com/how-much-does-a-train-weigh-in-tons/
-    static constexpr double MIN_WEIGHT = 50.0;
-    static constexpr double MAX_WEIGHT = 10000.0;
-    // https://www.sciencedirect.com/science/article/pii/S0043164814003718
-    static constexpr double MIN_FRICTION_COEFF = 0.1;
-    static constexpr double MAX_FRICTION_COEFF = 0.25;
+    static constexpr double MIN_WEIGHT = 5.0;
+    static constexpr double MAX_WEIGHT = 1000.0;
+    static constexpr double MIN_FRICTION_COEFF = 0.01;
+    static constexpr double MAX_FRICTION_COEFF = 0.5;
 
   public:
     Train() = delete;
@@ -44,4 +42,5 @@ class Train {
     bool operator==(const Train &other) const;
     ~Train();
     void validate_values();
+    std::string get_name() const;
 };
