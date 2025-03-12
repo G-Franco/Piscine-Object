@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:34 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/10 14:22:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:17:36 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <unordered_map>
 #include <memory>
 
 struct Rail;
@@ -28,7 +29,8 @@ class File_checker {
     std::vector<std::string> _nodes;
     std::vector<Rail> _rails;
     std::vector<Train> _trains;
-    std::vector<std::pair<std::unique_ptr<AValidation>, std::ifstream&>> _steps;
+    std::unordered_map<std::string, std::vector<Rail*>> _network;
+    std::vector<std::pair<std::unique_ptr<AValidation>, std::ifstream &>> _steps;
 
   public:
     File_checker(const std::string &rail_file, const std::string &train_file);
@@ -38,5 +40,7 @@ class File_checker {
     bool validate_files();
     bool check_file(std::ifstream &file, const std::string &file_name);
     void set_validation_steps();
+    void make_network();
+    bool validate_network();
     void test_print();
 };

@@ -25,7 +25,7 @@ $(TEST):	$(TEST_SRC) $(COMMON)
 					$(CC) $(CFLAGS_DEBUG) $^ -o $@
 
 fclean:
-					@rm -rf $(NAME) $(DEBUG)
+					@rm -rf $(NAME) $(DEBUG) $(TEST)
 
 re:				fclean all
 

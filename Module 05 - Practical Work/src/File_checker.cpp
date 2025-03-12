@@ -6,11 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:00:35 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/10 15:23:13 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:45:45 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sstream>
+#include <queue>
+#include <unordered_set>
 #include "../include/File_checker.hpp"
 #include "../include/Train.hpp"
 #include "../include/helper.hpp"
@@ -70,10 +72,53 @@ void File_checker::set_validation_steps() {
     std::ref(_train_file)));
 }
 
-// bool File_checker::validate_network() {
-  // TODO: Implement network validation
-  // Check if all nodes are connected (no islands)
-// }
+void File_checker::make_network() {
+  for (auto &rail : _rails) {
+    _network[rail._node1].push_back(&rail);
+    _network[rail._node2].push_back(&rail);
+  }
+}
+
+// Make sure all nodes are connected (no isolated nodes)
+// using BFS (Breadth First Search)
+// Queue for FIFO
+// Unordered set for O(1) searching
+bool File_checker::validate_network() {
+  std::queue<std::string> queue;
+  std::unordered_set<std::string> visited;
+
+  queue.push(_nodes[0]);
+  visited.insert(_nodes[0]);
+  while (!queue.empty()) {
+    std::string current = queue.front();
+    queue.pop();
+
+    // Loop every rail connecting to current node,
+    // check which node it connects to and add if not yet visited
+    for (auto &entry : _network[current]) {
+      std::string neighbour = entry->_node1 == current ? entry->_node2 : entry->_node1;
+      // Unordered set prevents duplicates but still need to check to add
+      // to queue
+      if (visited.find(neighbour) == visited.end()) {
+        queue.push(neighbour);
+        visited.insert(neighbour);
+      }
+    }
+  }
+
+  // If visited and _nodes have the different sizes there are isolated nodes
+  if (visited.size() != _nodes.size()) {
+    std::cout << "Error: there are isolated nodes in the network\n";
+    std::cout << "Isolated nodes: ";
+    for (const auto& node : _nodes) {
+      if (visited.find(node) == visited.end()) {
+        std::cout << "-" << node << "\n";
+      }
+    }
+    return false;
+  }
+  return true;
+}
 
 void File_checker::test_print() {
   std::cout << "Nodes:\n";
