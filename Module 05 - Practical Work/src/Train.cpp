@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/10 15:18:23 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:05:02 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void Train::validate_values() {
         << "Weight [" << MIN_WEIGHT << "-" << MAX_WEIGHT << "]\n"
         << "Friction coefficient [" << MIN_FRICTION_COEFF << "-" << MAX_FRICTION_COEFF << "]\n"
         << "Forces must be positive\n"
-        << "Time format: HHhMM\n";
+        << "Time format: HHhMM";
   if (_weight < MIN_WEIGHT ||
       _weight > MAX_WEIGHT ||
       _friction_coefficient < MIN_FRICTION_COEFF ||

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:55:33 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/10 10:03:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:20:59 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ Train_validation::Train_validation(std::vector<std::string> &nodes,
 // departure_node arrival_node departure_time _stop_duration
 bool Train_validation::validate(std::ifstream &file) {
   std::string line;
+  int line_number = 0;
   while (getline(file, line)) {
     std::string name;
     double weight;
@@ -36,6 +37,7 @@ bool Train_validation::validate(std::ifstream &file) {
     std::string extra;
     std::istringstream read(line);
 
+    line_number++;
     if (!(read >> name >> weight >> friction_coefficient
         >> max_acceleration_force >> max_break_force
         >> departure_station >> arrival_station
@@ -45,7 +47,8 @@ bool Train_validation::validate(std::ifstream &file) {
         name.substr(0, 5) != "Train" ||
         !time_format(departure_time) ||
         !time_format(stop_duration)) { 
-      std::cout << "Error: invalid Train line format: " << line << "\n";
+      std::cout << "Error: invalid Train format on line " << line_number << ": "
+                << line << "\n";
       return false;
     }
     try {
@@ -55,8 +58,8 @@ bool Train_validation::validate(std::ifstream &file) {
                             departure_time, stop_duration, _trains, _nodes);
     }
     catch (std::exception &e) {
-      std::cout << "Error with train info on line " << line << "\n"
-                << e.what() << "\n";
+      std::cout << "Error with train info on line " << line_number << ": "
+                << line << "\n" << e.what() << "\n";
       return false;
     }
   }

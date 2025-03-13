@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:00:35 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/12 16:45:45 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:13:01 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ bool File_checker::validate_files() {
     if (!step.first->validate(step.second)) {
       return false;
     }
+  }
+  make_network();
+  if (!validate_network()) {
+    return false;
   }
   return true;
 }
@@ -109,10 +113,10 @@ bool File_checker::validate_network() {
   // If visited and _nodes have the different sizes there are isolated nodes
   if (visited.size() != _nodes.size()) {
     std::cout << "Error: there are isolated nodes in the network\n";
-    std::cout << "Isolated nodes: ";
+    std::cout << "Isolated nodes:\n";
     for (const auto& node : _nodes) {
       if (visited.find(node) == visited.end()) {
-        std::cout << "-" << node << "\n";
+        std::cout << "- " << node << "\n";
       }
     }
     return false;

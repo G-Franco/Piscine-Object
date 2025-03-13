@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:04:06 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/09 19:02:58 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:18:21 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,19 @@ Node_validation::Node_validation(std::vector<std::string> &nodes,
 // Node node_name
 bool Node_validation::validate(std::ifstream &file) {
   std::string line;
+  int line_number = 0;
   while (getline(file, line)) {
     std::string node;
     std::string node_name;
     std::string extra;
     std::istringstream read(line);
 
+    line_number++;
     if (!(read >> node >> node_name) ||
         (read >> extra) ||
         node != "Node") {
-      std::cout << "Error: invalid Node line format: " << line << "\n";
+      std::cout << "Error: invalid Node format on line " << line_number << ": "
+                << line << "\n";
       return false;
     }
 
@@ -39,8 +42,8 @@ bool Node_validation::validate(std::ifstream &file) {
       _factory.create_node(node_name, _nodes);
     }
     catch (std::exception &e) {
-      std::cout << "Error with node info on line " << line << "\n"
-                << e.what() << "\n";
+      std::cout << "Error with node info on line " << line_number << ": "
+                << line << "\n" << e.what() << "\n";
       return false;
     }
 

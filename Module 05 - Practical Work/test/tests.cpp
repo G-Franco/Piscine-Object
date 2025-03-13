@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:16:26 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/12 14:27:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:00:29 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void test_nodes(const std::filesystem::path &path, int &errors) {
   }
   // Testing empty path
   {
+    std::cout << "\n";
     std::string path_str = "";
     File_checker fc(path_str, std::string(TRAIN_GOOD_FILE));
     test_errors_msg(path_str, !fc.validate_files(), errors);
@@ -70,7 +71,7 @@ void test_nodes(const std::filesystem::path &path, int &errors) {
 
   for (auto &entry : std::filesystem::directory_iterator(path)) {
     std::string path_str = entry.path().string();
-    std::cout << BOLD << "\nTesting file: " << path << RESET << "\n";
+    std::cout << BOLD << "\nTesting file: " << entry << RESET << "\n";
     File_checker fc(path_str, std::string(TRAIN_GOOD_FILE));
     test_errors_msg(path_str, !fc.validate_files(), errors);
   }
@@ -83,6 +84,7 @@ void test_trains(const std::filesystem::path &path, int &errors) {
   }
   // Testing empty path
   {
+    std::cout << "\n";
     std::string path_str = "";
     File_checker fc(std::string(NODE_GOOD_FILE), path_str);
     test_errors_msg(path, !fc.validate_files(), errors);
@@ -90,13 +92,14 @@ void test_trains(const std::filesystem::path &path, int &errors) {
 
   for (auto &entry : std::filesystem::directory_iterator(path)) {
     std::string path_str = entry.path().string();
-    std::cout << BOLD << "\nTesting file: " << path_str << RESET << "\n";
+    std::cout << BOLD << "\nTesting file: " << entry << RESET << "\n";
     File_checker fc(std::string(NODE_GOOD_FILE), path_str);
     test_errors_msg(path_str, !fc.validate_files(), errors);
   }
   return;
 }
 
+// TODO: Add more test files for this case
 bool file_checker_error_cases() {
   std::filesystem::path nodes(NODE_BAD_FOLDER);
   std::filesystem::path trains(TRAIN_BAD_FOLDER);

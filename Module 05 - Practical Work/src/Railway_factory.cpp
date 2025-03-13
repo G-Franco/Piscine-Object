@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 10:24:26 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/10 14:19:31 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:59:25 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void Railway_factory::create_rail(const std::string &node1,
     error << "Error: invalid length or speed limit: "
               << length << " " << speed_limit << "\n"
               << "Minimum length: " << MIN_RAIL_LENGTH << "\n"
-              << "Minimum speed limit: " << MIN_SPEED_LIMIT << "\n";
+              << "Minimum speed limit: " << MIN_SPEED_LIMIT;
     throw std::runtime_error(error.str());
   }
   std::string key = node1 > node2 ? node2 + "-" + node1 : node1 + "-" + node2;
