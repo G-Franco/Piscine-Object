@@ -6,12 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/13 15:05:02 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:02:50 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sstream>
 #include "../include/Train.hpp"
+
+int Train::_id_counter = 0;
 
 Train::Train(const std::string &name,
              double weight,
@@ -22,7 +24,8 @@ Train::Train(const std::string &name,
              const std::string &arrival_station,
              const Time &departure_time,
              const Time &stop_duration)
-  : _name(name),
+  : _id(++_id_counter),
+    _name(name),
     _weight(weight),
     _friction_coefficient(friction_coefficient),
     _max_acceleration_force(max_acceleration_force),
@@ -35,7 +38,8 @@ Train::Train(const std::string &name,
 }
 
 Train::Train(const Train &copy)
-  : _name(copy._name),
+  : _id(++_id_counter),
+    _name(copy._name),
     _weight(copy._weight),
     _friction_coefficient(copy._friction_coefficient),
     _max_acceleration_force(copy._max_acceleration_force),
@@ -76,7 +80,8 @@ void Train::validate_values() {
         << "Weight [" << MIN_WEIGHT << "-" << MAX_WEIGHT << "]\n"
         << "Friction coefficient [" << MIN_FRICTION_COEFF << "-" << MAX_FRICTION_COEFF << "]\n"
         << "Forces must be positive\n"
-        << "Time format: HHhMM";
+        << "Time format: HHhMM\n"
+        << "Stop duration must not exceed " << MAX_STOP_DURATION << " minutes";
   if (_weight < MIN_WEIGHT ||
       _weight > MAX_WEIGHT ||
       _friction_coefficient < MIN_FRICTION_COEFF ||
@@ -84,7 +89,9 @@ void Train::validate_values() {
       _max_acceleration_force <= 0 ||
       _max_break_force <= 0 ||
       _departure_time._hours == -1 ||
-      _stop_duration._hours == -1) {
+      _stop_duration._hours == -1 ||
+      _stop_duration._hours != 0 ||
+      _stop_duration._minutes > MAX_STOP_DURATION) {
     throw std::runtime_error(error.str());
   }
 }

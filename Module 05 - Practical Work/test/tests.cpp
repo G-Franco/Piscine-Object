@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:16:26 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/13 15:00:29 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:14:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ void test_errors_msg(const std::string &file_name, bool error, int &errors) {
 }
 
 void test_nodes(const std::filesystem::path &path, int &errors) {
-  if (errors != 0) {
-    return;
-  }
   // Testing empty path
   {
     std::cout << "\n";
@@ -79,9 +76,6 @@ void test_nodes(const std::filesystem::path &path, int &errors) {
 }
 
 void test_trains(const std::filesystem::path &path, int &errors) {
-  if (errors != 0) {
-    return;
-  }
   // Testing empty path
   {
     std::cout << "\n";
@@ -99,13 +93,13 @@ void test_trains(const std::filesystem::path &path, int &errors) {
   return;
 }
 
-// TODO: Add more test files for this case
 bool file_checker_error_cases() {
   std::filesystem::path nodes(NODE_BAD_FOLDER);
   std::filesystem::path trains(TRAIN_BAD_FOLDER);
-  int node_count = 0;
+  // These start at 1 to account for the non-existing file tests
+  int node_count = 1;
+  int train_count = 1;
   int node_errors = 0;
-  int train_count = 0;
   int train_errors = 0;
 
   if (!check_path(NODE_BAD_FOLDER, 1) ||
@@ -120,18 +114,19 @@ bool file_checker_error_cases() {
   test_trains(trains, train_errors);
 
   // Need to add 1 to the count to account for the non-existing file tests
-  if (node_errors == node_count + 1 &&
-      train_errors == train_count + 1) {
+  if (node_errors == node_count &&
+      train_errors == train_count) {
     std::cout << GREEN;
   }
   else {
     std::cout << RED;
   }
-  std::cout << node_count + train_count << "/"
+  std::cout << node_errors + train_errors << "/"
             << node_count + train_count << " tests passed" << RESET << "\n";
   return true;
 }
 
+// TODO: Improve test structure
 int main() {
   return file_checker_error_cases();
 }

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:33:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/10 14:23:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:00:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 class Train {
   private:
+    static int _id_counter;
+    int _id;
     std::string _name;
     double _weight;
     double _friction_coefficient;
@@ -30,6 +32,7 @@ class Train {
     static constexpr double MAX_WEIGHT = 1000.0;
     static constexpr double MIN_FRICTION_COEFF = 0.01;
     static constexpr double MAX_FRICTION_COEFF = 0.5;
+    static constexpr int MAX_STOP_DURATION = 15;
 
   public:
     Train() = delete;
