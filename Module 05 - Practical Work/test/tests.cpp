@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:16:26 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/14 10:14:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:16:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ bool file_checker_error_cases() {
   test_nodes(nodes, node_errors);
   test_trains(trains, train_errors);
 
-  // Need to add 1 to the count to account for the non-existing file tests
   if (node_errors == node_count &&
       train_errors == train_count) {
     std::cout << GREEN;

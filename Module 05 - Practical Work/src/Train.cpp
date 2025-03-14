@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/14 10:02:50 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:17:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ bool Train::operator==(const Train &other) const {
 
 Train::~Train() {}
 
-// TODO: ADD VALIDATION FOR STOP DURATION, IT SHOULD ONLY BE A FEW MINUTES
 void Train::validate_values() {
   std::stringstream error;
   error << "Error: invalid train parameters\n"
