@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/18 10:30:51 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:58:20 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ Train::Train(const std::string &name,
     _acceleration(acceleration(max_acceleration_force, _friction_force, weight)),
     _deceleration(deceleration(max_break_force, _friction_force, weight)),
     _max_speed(max_speed(max_acceleration_force - _friction_force, _aerodynamic_coefficient)),
-    _time_to_max_speed(time_to_speed(_max_speed, _acceleration)),
+    _time_to_max_speed(time_to_change_speed(0, _max_speed, _acceleration)),
     _distance_to_max_speed(distance_to_speed(_acceleration, _time_to_max_speed)),
+    _time_to_stop(time_to_change_speed(_max_speed, 0, _deceleration)),
     _distance_to_stop(distance_to_stop(_max_speed, _deceleration)),
     _acceleration_deceleration_distance(acceleration_deceleration_distance(_distance_to_max_speed, _distance_to_stop)),
     _current_speed(0) {
@@ -153,10 +154,9 @@ double Train::deceleration(double deceleration_force, double friction_force, dou
   return (deceleration_force + friction_force) / weight;
 }
 
-double Train::time_to_speed(double speed, double acceleration) {
-  // Base formula: acceleration = speed / time
-  // Time = speed / acceleration
-  return speed / acceleration;
+double Train::time_to_change_speed(double initial_speed, double target_speed, double acceleration) {
+  // Base formula: time = Δspeed / acceleration
+  return std::abs(target_speed - initial_speed) / acceleration;
 }
 
 double Train::distance_to_speed(double acceleration, double time_to_speed) {
