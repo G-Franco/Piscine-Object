@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/18 14:58:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:45:48 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ Train::Train(const std::string &name,
     _distance_to_max_speed(distance_to_speed(_acceleration, _time_to_max_speed)),
     _time_to_stop(time_to_change_speed(_max_speed, 0, _deceleration)),
     _distance_to_stop(distance_to_stop(_max_speed, _deceleration)),
-    _acceleration_deceleration_distance(acceleration_deceleration_distance(_distance_to_max_speed, _distance_to_stop)),
+    _acceleration_deceleration_distance(_distance_to_max_speed + _distance_to_stop),
     _current_speed(0) {
   validate_values();
 }
@@ -168,12 +168,6 @@ double Train::distance_to_speed(double acceleration, double time_to_speed) {
 double Train::distance_to_stop(double speed, double deceleration) {
   // Distance = speed^2 / (2 * deceleration)
   return std::pow(speed, 2) / (2 * deceleration);
-}
-
-double Train::acceleration_deceleration_distance(double distance_to_speed, double distance_to_stop) {
-  // Total distance required to reach max speed and brake to a stop,
-  // starting from a standstill
-  return distance_to_speed + distance_to_stop;
 }
 
 // Net acceleration force = max acceleration force - friction force

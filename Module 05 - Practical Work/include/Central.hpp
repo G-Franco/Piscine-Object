@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 10:36:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/15 15:14:32 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:12:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ class Central {
     ~Central();
     void calculate_paths();
     void train_path(Train &train);
-    int calculate_time_on_path(const Path &path, const Train &train);
+    double calculate_time_on_path(Path &path, Train &train);
 };

@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:33:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/18 14:55:30 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:11:22 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,9 @@ class Train {
     double aerodynamic_coefficient(double air_density, double drag_coefficient, double frontal_area);
     double acceleration(double acceleration_force, double friction_force, double weight);
     double deceleration(double deceleration_force, double friction_force, double weight);
+    double max_speed(double net_acceleration_force, double aerodynamic_coefficient);
     double time_to_change_speed(double initial_speed, double target_speed, double acceleration);
     double distance_to_speed(double acceleration, double time_to_speed);
     double distance_to_stop(double speed, double deceleration);
-    double acceleration_deceleration_distance(double distance_to_speed, double distance_to_stop);
-    double max_speed(double net_acceleration_force, double aerodynamic_coefficient);
     std::string get_name() const;
 };
