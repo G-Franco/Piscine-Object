@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 10:24:26 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/13 14:59:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:58:28 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void Railway_factory::create_rail(const std::string &node1,
     it = rails.end() - 1;
   }
   // No need to remove the rail because program will exit on fail
-  it->add_path(length, speed_limit);
+  it->add_path(length * 1000, speed_limit / 3.6);
 }
 
 void Railway_factory::create_train(const std::string &name,
@@ -69,8 +69,8 @@ void Railway_factory::create_train(const std::string &name,
       std::find(nodes.begin(), nodes.end(), arrival_station) == nodes.end()) {
     throw std::runtime_error("Departure or arrival station not found");
   }
-  Train train(name, weight, friction_coefficient,
-              max_acceleration_force, max_break_force,
+  Train train(name, weight * 1000, friction_coefficient,
+              max_acceleration_force * 1000, max_break_force * 1000,
               departure_station, arrival_station,
               Time(departure_time), Time(stop_duration));
   if (std::find(trains.begin(), trains.end(), train) != trains.end()) {

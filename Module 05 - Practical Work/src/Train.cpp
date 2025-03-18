@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/17 11:48:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:30:51 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ std::string Train::get_name() const {
 
 double Train::friction_force(double friction_coefficient, double weight) {
   // Friction force f = μN
-  return friction_coefficient * weight;
+  return friction_coefficient * weight * GRAVITY;
 }
 
 double Train::aerodynamic_coefficient(double air_density, double drag_coefficient, double frontal_area) {

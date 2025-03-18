@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:33:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/17 11:48:04 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:36:17 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,27 @@ class Train {
     static int _id_counter;
     int _id;
     std::string _name;
-    double _weight;
+    double _weight; // Kg
     double _friction_coefficient;
-    double _max_acceleration_force;
-    double _max_break_force;
+    double _max_acceleration_force; // N
+    double _max_break_force; // N
     std::string _departure_station;
     std::string _arrival_station;
     Time _departure_time;
     Time _stop_duration;
     
-    double _friction_force;
-    double _aerodynamic_coefficient;
-    double _acceleration;
-    double _deceleration;
-    double _max_speed;
-    double _time_to_max_speed;
-    double _distance_to_max_speed;
+    double _friction_force; // N
+    double _aerodynamic_coefficient; //Dimensionless
+    double _acceleration; // m/s^2
+    double _deceleration; // m/s^2
+    double _max_speed; // m/s
+    double _time_to_max_speed; // s
+    double _distance_to_max_speed; // m
     // These 2 assume train is at max speed
-    double _distance_to_stop;
+    double _distance_to_stop; // m
     // Necessary distance to get to max speed and brake to a stop
-    double _acceleration_deceleration_distance;
-    double _current_speed;
+    double _acceleration_deceleration_distance; // m
+    double _current_speed; // m/s
 
     static constexpr double MIN_WEIGHT = 5.0;
     static constexpr double MAX_WEIGHT = 1000.0;
@@ -52,6 +52,9 @@ class Train {
     static constexpr double DRAG_COEFFICIENT = 1.8;
     // https://www.thefreelibrary.com/Numerical+Analysis+of+the+Effect+of+Different+Nose+Shapes+on+Train...-a0814092594
     static constexpr double FRONTAL_AREA = 10.0;
+    static constexpr double GRAVITY = 9.81;
+    // Meters per second / Kilometers per hour conversion factor (both ways)
+    static constexpr double MPS_KMH = 3.6;
 
     friend class Central;
 

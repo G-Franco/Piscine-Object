@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:46:08 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/10 14:23:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:46:22 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ void help() {
             << "[friction_coefficient] [max_acceleration_force] "
             << "[max_break_force] [departure_station] [arrival_station] "
             << "[departure_time] [stop_duration]" << RESET << "\n"
-            << BOLD << "\nNumerical values are expected to be doubles\n";
+            << BOLD << "\nNumerical values are expected to be doubles\n"
+            << "Time format: HHhMM\n"
+            << "Weight - Tons\n"
+            << "Forces - Kilonewtons\n"
+            << "Length - Kilometers\n"
+            << "Speed limit - Km/h" << RESET << "\n";
 }
 
 int main(int ac, char**av) {

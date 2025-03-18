@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:55:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/15 15:28:05 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:48:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <vector>
 
 struct Path {
-  double _length;
-  double _speed_limit;
+  double _length; // m
+  double _speed_limit; // m/s
 
   Path(double length, double speed_limit)
     : _length(length),
