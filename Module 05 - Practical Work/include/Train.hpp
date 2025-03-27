@@ -6,13 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:33:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/18 17:11:22 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:07:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "Time.hpp"
+#include "Timetable.hpp"
 
 class Train {
   private:
@@ -42,6 +43,9 @@ class Train {
     double _acceleration_deceleration_distance; // m
     double _current_speed; // m/s
 
+    // TODO: Add functions to manage timetable's timing updates
+    Timetable _timetable;
+
     static constexpr double MIN_WEIGHT = 5.0;
     static constexpr double MAX_WEIGHT = 1000.0;
     static constexpr double MIN_FRICTION_COEFF = 0.01;
@@ -58,6 +62,7 @@ class Train {
     static constexpr double MPS_KMH = 3.6;
 
     friend class Central;
+    friend class Mapper;
 
   public:
     Train() = delete;
@@ -79,4 +84,6 @@ class Train {
     double distance_to_speed(double acceleration, double time_to_speed);
     double distance_to_stop(double speed, double deceleration);
     std::string get_name() const;
+    std::string get_start() const;
+    std::string get_end() const;
 };

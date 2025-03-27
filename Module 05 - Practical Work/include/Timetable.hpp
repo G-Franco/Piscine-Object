@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 10:36:07 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/15 11:20:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:15:44 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@
 #include <string>
 
 struct Section;
+struct Time;
 
 class Timetable {
   private:
     std::vector<Section> _route;
-    int _stop_duration;
+    bool _reversed;
 
   public:
-    Timetable() = delete;
-    Timetable(int stop_duration);
-    Timetable(const Timetable &copy) = delete;
-    Timetable &operator=(const Timetable &copy) = delete;
+    Timetable();
+    Timetable(const Timetable &copy);
+    Timetable &operator=(const Timetable &copy);
     ~Timetable();
+    void add_section(const Section &section);
+    void set_times(const Time &start, double wait_time);
+    void reverse();
 };

@@ -6,16 +6,15 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:34:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/09 11:27:25 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:26:53 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <stdexcept>
-
 // TODO: This will probably need more functions
 struct Time {
+  // TODO: doubles instead of ints to make everything line up?
   int _hours;
   int _minutes;
 

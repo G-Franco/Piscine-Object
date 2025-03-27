@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/18 15:45:48 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:32:20 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,4 +182,12 @@ double Train::max_speed(double net_acceleration_force, double aerodynamic_coeffi
   // speed^2 = (drive force - friction force) / aerodynamic coefficient
   // speed = sqrt((drive force - friction force) / aerodynamic coefficient)
   return std::sqrt(net_acceleration_force / aerodynamic_coefficient);
+}
+
+std::string Train::get_start() const {
+  return _departure_station;
+}
+
+std::string Train::get_end() const {
+  return _arrival_station;
 }

@@ -6,13 +6,14 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:55:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/17 17:48:09 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:02:05 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <vector>
+#include <algorithm>
 
 struct Path {
   double _length; // m
@@ -31,6 +32,8 @@ struct Rail {
   std::string _name;
   std::string _node1;
   std::string _node2;
+  // TODO: Should multiple paths per rail be removed to simplify process?
+  // If so, the file processing MUST be changed to account for it
   std::vector<Path> _paths;
 
   Rail(std::string node1, std::string node2)
@@ -56,35 +59,38 @@ struct Rail {
 };
 
 struct Section {
+  Rail* _rail;
+  Path* _path;
   std::string _start_node;
   std::string _finish_node;
   Time _start_time;
   Time _finish_time;
-  int _travel_time;
-  int _acceleration_duration;
-  int _maintain_speed_duration;
-  int _deceleration_duration;
+  double _travel_time;
+  double _acceleration_duration;
+  double _maintain_speed_duration;
+  double _deceleration_duration;
+  double _target_speed;
 
-  Section(std::string start_node,
-          std::string finish_node,
+  Section(Rail* rail,
+          Path* path,
+          std::string &start_node,
+          std::string &finish_node,
           Time start_time,
           Time finish_time,
-          int travel_time,
-          int acceleration_duration,
-          int maintain_speed_duration,
-          int deceleration_duration)
-    : _start_node(start_node),
+          double travel_time,
+          double acceleration_duration,
+          double maintain_speed_duration,
+          double deceleration_duration,
+          double target_speed)
+    : _rail(rail),
+      _path(path),
+      _start_node(start_node),
       _finish_node(finish_node),
       _start_time(start_time),
       _finish_time(finish_time),
       _travel_time(travel_time),
       _acceleration_duration(acceleration_duration),
       _maintain_speed_duration(maintain_speed_duration),
-      _deceleration_duration(deceleration_duration) {}
-
-  void reverse(Time start_time, Time finish_time) {
-    std::swap(_start_node, _finish_node);
-    _start_time = start_time;
-    _finish_time = finish_time;
-  }
+      _deceleration_duration(deceleration_duration),
+      _target_speed(target_speed) {}
 };
