@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 10:43:37 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/27 11:05:37 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:46:11 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,3 @@ Central::Central()
     _mapper(_network, _trains) {}
 
 Central::~Central() {}
-
-void Central::calculate_paths() {
-  for (auto &train : _trains) {
-    train_path(train);
-  }
-}
-
-void Central::train_path(Train &train) {
-  
-}

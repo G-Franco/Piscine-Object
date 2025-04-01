@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 10:36:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/27 11:04:42 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:46:07 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,4 @@ class Central {
     Central(const Central &copy) = delete;
     Central &operator=(const Central &copy) = delete;
     ~Central();
-    void calculate_paths();
-    void train_path(Train &train);
 };

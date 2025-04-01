@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:33:18 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/27 11:07:38 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:52:39 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,5 @@ class Train {
     std::string get_name() const;
     std::string get_start() const;
     std::string get_end() const;
+    void update_timetable(const Time &current_time);
 };

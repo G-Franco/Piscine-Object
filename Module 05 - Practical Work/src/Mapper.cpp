@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:12:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/27 10:57:12 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:57:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ Timetable Mapper::create_timetable(Mapper::route_info &route, Train &train) {
         path,
         route.stations[i],
         route.stations[i + 1],
-        Time(-1, -1),
-        Time(-1, -1),
+        Time(-1, -1, -1),
+        Time(-1, -1, -1),
         calculate_time_on_path(*path, train),
         acceleration_time,
         maintain_speed_distance / max_speed,

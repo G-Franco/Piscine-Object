@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/25 15:32:20 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:12:56 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,4 +190,9 @@ std::string Train::get_start() const {
 
 std::string Train::get_end() const {
   return _arrival_station;
+}
+
+void Train::update_timetable(const Time &current_time) {
+  _timetable.reverse();
+  _timetable.set_times(current_time, _stop_duration.to_minutes());
 }
