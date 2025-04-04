@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:55:32 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/27 11:02:05 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:00:43 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include <vector>
 #include <algorithm>
+#include <stdexcept>
+#include "Time.hpp"
 
 struct Path {
   double _length; // m

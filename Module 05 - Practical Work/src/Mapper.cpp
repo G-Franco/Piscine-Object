@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:12:00 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/27 14:57:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:48:38 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,10 @@ Mapper::route_info Mapper::find_route(const std::string &start,
   route.stations.push_back(current);
   while (current != start) {
     previous_info info = previous[current];
-    route.rails.insert(route.rails.begin(), info.rail);
-    route.paths.insert(route.paths.begin(), info.path);
+    route.rails.insert(route.rails.begin(), info._rail);
+    route.paths.insert(route.paths.begin(), info._path);
     // Move to previous station
-    current = info.station;
+    current = info._station;
     route.stations.insert(route.stations.begin(), current);
   }
   return route;

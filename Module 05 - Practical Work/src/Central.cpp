@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 10:43:37 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/27 14:46:11 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:53:46 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 #include "../include/helper.hpp"
 #include <cmath>
 
-Central::Central()
-  : _network(_network),
-    _trains(_trains),
-    _mapper(_network, _trains) {}
+Central::Central(std::unordered_map<std::string, std::vector<Rail *>> &network,
+                 std::vector<Train> &trains)
+  : _network(network),
+    _trains(trains),
+    _mapper(_network, _trains) {
+}
 
 Central::~Central() {}

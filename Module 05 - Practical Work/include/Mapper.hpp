@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:07:01 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/26 15:32:02 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:58:40 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <vector>
 #include <iostream>
+#include "Timetable.hpp"
 
 struct Rail;
 struct Path;
@@ -35,14 +36,19 @@ class Mapper {
 
     // Used to store the previous node and path
     struct previous_info {
-      std::string station;
-      Rail* rail;
-      Path* path;
+      std::string _station;
+      Rail* _rail;
+      Path* _path;
+
+      previous_info()
+        : _station(""),
+          _rail(nullptr),
+          _path(nullptr) {}
 
       previous_info(std::string station, Rail* rail, Path* path)
-        : station(station),
-          rail(rail),
-          path(path) {}
+        : _station(station),
+          _rail(rail),
+          _path(path) {}
     };
 
   public:

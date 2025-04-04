@@ -6,11 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 11:34:59 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/04/01 15:52:00 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:06:09 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include <stdexcept>
 
 // TODO: This will probably need more functions
 struct Time {
@@ -43,6 +45,11 @@ struct Time {
     _seconds = 0;
   }
 
+  Time(const Time &copy)
+    : _hours(copy._hours),
+      _minutes(copy._minutes),
+      _seconds(copy._seconds) {}
+
   Time &operator=(const Time &copy) {
     _hours = copy._hours;
     _minutes = copy._minutes;
@@ -50,7 +57,6 @@ struct Time {
     return *this;
   }
 
-  // TODO: Add test cases for this operation
   // Assuming duration is in seconds
   Time operator+(int duration) const {
     // This shouldn't happen, but just in case

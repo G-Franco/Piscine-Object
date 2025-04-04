@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:33:13 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/04/01 16:12:56 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:03:13 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ Train::Train(const Train &copy)
     _aerodynamic_coefficient(copy._aerodynamic_coefficient),
     _acceleration(copy._acceleration),
     _deceleration(copy._deceleration),
+    _max_speed(copy._max_speed),
     _time_to_max_speed(copy._time_to_max_speed),
     _distance_to_max_speed(copy._distance_to_max_speed),
     _distance_to_stop(copy._distance_to_stop),
     _acceleration_deceleration_distance(copy._acceleration_deceleration_distance),
-    _max_speed(copy._max_speed),
     _current_speed(0) {
 }
 

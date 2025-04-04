@@ -6,12 +6,13 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:16:26 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/14 10:16:43 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:42:42 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/File_checker.hpp"
 #include "../include/text.hpp"
+#include "../include/Time.hpp"
 #include <filesystem>
 
 constexpr std::string_view NODE_GOOD_FILE = "files/nodes/good/test";
@@ -125,7 +126,100 @@ bool file_checker_error_cases() {
   return true;
 }
 
+int time_creation(int hours, int minutes, int seconds, bool expected, int &counter) {
+  counter++;
+  Time t(hours, minutes, seconds);
+  if (t._hours == -1 ||
+      t._minutes == -1 ||
+      t._seconds == -1) {
+    if (expected) {
+      std::cout << GREEN << "Correctly detected error in time creation" << RESET << "\n";
+      return 0;
+    }
+    else {
+      std::cout << RED << "Error: Time creation failed when it shouldn't" << RESET << "\n";
+      return 1;
+    }
+  }
+  if (expected) {
+    std::cout << RED << "Error: Time creation succeeded when it shouldn't" << RESET << "\n";
+    return 1;
+  }
+  else {
+    std::cout << GREEN << "Correctly created time" << RESET << "\n";
+    return 0;
+  }
+}
+
+int time_sum(Time t1, int duration, bool expected, int &counter) {
+  counter++;
+  try {
+    t1 + duration;
+    if (expected) {
+      std::cout << RED << "Error: Time sum succeeded when it shouldn't" << RESET << "\n";
+      return 1;
+    }
+    else {
+      std::cout << GREEN << "Correctly summed time" << RESET << "\n";
+      return 0;
+    }
+  }
+  catch (const std::exception &e) {
+    if (expected) {
+      std::cout << GREEN << "Correctly detected error in time sum" << RESET << "\n";
+      return 0;
+    }
+    else {
+      std::cout << RED << "Error: Time sum failed when it shouldn't" << RESET << "\n";
+      return 1;
+    }
+  }
+}
+
+int time_test() {
+  int errors = 0;
+  int test_cases = 0;
+  std::cout << BOLD << "Testing time struct creation" << RESET << "\n";
+  errors += time_creation(-1, 0, 0, true, test_cases);
+  errors += time_creation(0, -1, 0, true, test_cases);
+  errors += time_creation(0, 0, -1, true, test_cases);
+  errors += time_creation(24, 0, 0, true, test_cases);
+  errors += time_creation(0, 60, 0, true, test_cases);
+  errors += time_creation(0, 0, 60, true, test_cases);
+  errors += time_creation(0, 0, 0, false, test_cases);
+  errors += time_creation(23, 59, 59, false, test_cases);
+  errors += time_creation(1, 0, 0, false, test_cases);
+  errors += time_creation(0, 1, 0, false, test_cases);
+  errors += time_creation(0, 0, 1, false, test_cases);
+  std::cout << BOLD << "-------------------------------------" << RESET << "\n";
+  std::cout << BOLD << "Testing time sum" << RESET << "\n";
+  errors += time_sum(Time(0, 0, 0), -1, true, test_cases);
+  errors += time_sum(Time(0, 0, 0), 1, false, test_cases);
+  errors += time_sum(Time(23, 59, 59), 1, false, test_cases);
+  errors += time_sum(Time(23, 59, 59), 60, false, test_cases);
+  errors += time_sum(Time(23, 59, 59), 3600, false, test_cases);
+  errors += time_sum(Time(10, 10, 10), 0, false, test_cases);
+  errors += time_sum(Time(10, 10, 10), 3600, false, test_cases);
+  errors += time_sum(Time(10, 10, 10), 600, false, test_cases);
+  errors += time_sum(Time(10, 10, 10), 60, false, test_cases);
+  std::cout << BOLD << "-------------------------------------" << RESET << "\n";
+
+  if (errors) {
+    std::cout << RED << errors << "/" << test_cases << " tests failed" << RESET << "\n";
+    return 1;
+  }
+  else {
+    std::cout << GREEN << "All tests passed" << RESET << "\n";
+    return 0;
+  }
+}
+
 // TODO: Improve test structure
 int main() {
-  return file_checker_error_cases();
+  std::cout << BOLD << "Testing file_checker error cases" << RESET << "\n";
+  file_checker_error_cases();
+  std::cout << BOLD << "-------------------------------------" << RESET << "\n";
+
+  std::cout << BOLD << "Testing time struct" << RESET << "\n";
+  time_test();
 }

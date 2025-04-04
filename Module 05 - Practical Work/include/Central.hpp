@@ -6,7 +6,7 @@
 /*   By: gacorrei <gacorrei@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 10:36:58 by gacorrei          #+#    #+#             */
-/*   Updated: 2025/03/27 14:46:07 by gacorrei         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:53:04 by gacorrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ class Central {
     Mapper _mapper;
 
   public:
-    Central();
+    Central() = delete;
+    Central(std::unordered_map<std::string, std::vector<Rail *>> &network,
+            std::vector<Train> &trains);
     Central(const Central &copy) = delete;
     Central &operator=(const Central &copy) = delete;
     ~Central();
